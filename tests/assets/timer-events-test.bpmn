@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qbp="http://www.qbp-simulator.com/Schema201212" xmlns:ns5="http://www.processconfiguration.com" xmlns:signavio="http://www.signavio.com" id="sid-38ffae4b-b28b-4a95-8abb-626d5a4d4594" targetNamespace="http://www.signavio.com/bpmn20" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="8.5.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <process id="sid-e4779dd5-c458-4ddc-8c71-d9f63c3ae405" processType="None" isClosed="false" isExecutable="false">
+    <extensionElements>
+      <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="6415c2992a2e4be8bcf85baddff77819" />
+      <ns5:configurationMapping href="" />
+      <qbp:processSimulationInfo xmlns:qbp="http://www.qbp-simulator.com/Schema201212" id="qbp_6fa0ed34-430d-9ed8-6342-de0f9fc06197" processInstances="100" currency="EUR" startDateTime="2015-03-06T15:47:26.000+00:00">
+        <qbp:errors />
+        <qbp:arrivalRateDistribution type="FIXED" mean="1800" arg1="0" arg2="0" id="qbp_64d5ac5f-268f-dade-c9ff-c1c82b82732c">
+          <qbp:timeUnit>minutes</qbp:timeUnit>
+        </qbp:arrivalRateDistribution>
+        <qbp:statsOptions />
+        <qbp:timetables id="qbp_958e3167-8d67-f9d9-d824-fc34d1cebfe6">
+          <qbp:timetable id="QBP_DEFAULT_TIMETABLE" default="true" name="Business Hours">
+            <qbp:rules id="qbp_7eea8786-027e-ab6d-7785-e84f8cd37493">
+              <qbp:rule id="b9da42af-0b3e-4fd7-86c6-94b351ca1994" name="Timeslot" fromTime="09:00:00.000+00:00" toTime="17:00:00.000+00:00" fromWeekDay="MONDAY" toWeekDay="FRIDAY" />
+            </qbp:rules>
+          </qbp:timetable>
+        </qbp:timetables>
+        <qbp:resources id="qbp_4df6c3d0-18d2-4c1b-1c6e-6034962a1c83">
+          <qbp:resource id="QBP_DEFAULT_RESOURCE" name="Marcus" totalAmount="8" costPerHour="1" timetableId="QBP_DEFAULT_TIMETABLE" />
+          <qbp:resource id="qbp_315189ac-8191-4977-b204-da959c5e98c7" name="Anna" totalAmount="1" timetableId="QBP_DEFAULT_TIMETABLE" />
+        </qbp:resources>
+        <qbp:elements id="qbp_9d1c562e-c6fd-c66b-bab8-c1a6ccb2d5c2">
+          <qbp:element elementId="sid-9703AD2C-3219-4B4A-9A91-F4A81EF91130" fixedCost="0" id="qbp_e42f1f80-c7c7-4a2c-1dde-9dcc9ddffb3b">
+            <qbp:durationDistribution type="EXPONENTIAL" mean="0" arg1="1800" arg2="0" id="qbp_40c8cb0e-25d6-fdd1-4036-a108731abd79">
+              <qbp:timeUnit>minutes</qbp:timeUnit>
+            </qbp:durationDistribution>
+            <qbp:resourceIds id="qbp_f9191e60-91c8-5c4b-5255-b7ea1932b215">
+              <qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId>
+            </qbp:resourceIds>
+          </qbp:element>
+          <qbp:element elementId="sid-543CE27B-717A-4583-8BFE-09BF2267ACFC" fixedCost="0" id="qbp_d03bc5f3-b9b3-f35f-bfe8-28a483440a66">
+            <qbp:durationDistribution type="EXPONENTIAL" mean="0" arg1="1800" arg2="0" id="qbp_7ff1e26a-68be-33ee-8115-434fa975e0ca">
+              <qbp:timeUnit>minutes</qbp:timeUnit>
+            </qbp:durationDistribution>
+            <qbp:resourceIds id="qbp_9564a105-b73f-235e-18ce-063fefe5b41d">
+              <qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId>
+            </qbp:resourceIds>
+          </qbp:element>
+          <qbp:element elementId="sid-30EFC8A9-15F6-45A1-B0FE-C9B37FC92D36" fixedCost="0" id="qbp_47918d45-a556-b5d1-734a-f7d1c185c953">
+            <qbp:durationDistribution type="EXPONENTIAL" mean="0" arg1="1800" arg2="0" id="qbp_68e774a5-59c2-bd73-f21b-9db857ab98de">
+              <qbp:timeUnit>minutes</qbp:timeUnit>
+            </qbp:durationDistribution>
+            <qbp:resourceIds id="qbp_76538dcb-8fc7-5884-4846-4a6e232692ce">
+              <qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId>
+            </qbp:resourceIds>
+          </qbp:element>
+          <qbp:element elementId="sid-AD68767C-968B-4DCD-821E-3F5C5C3D0D04" fixedCost="0" id="qbp_98cdcbcd-ca1f-8b63-2e25-183fb1c400e3">
+            <qbp:durationDistribution type="EXPONENTIAL" mean="0" arg1="1800" arg2="0" id="qbp_a472d53a-a829-b247-32c5-dfb2d873b0f4">
+              <qbp:timeUnit>minutes</qbp:timeUnit>
+            </qbp:durationDistribution>
+            <qbp:resourceIds id="qbp_d6134539-8f63-c195-1378-62d2e797e811">
+              <qbp:resourceId>qbp_315189ac-8191-4977-b204-da959c5e98c7</qbp:resourceId>
+            </qbp:resourceIds>
+          </qbp:element>
+          <qbp:element elementId="Activity_1y2vzu0">
+            <qbp:durationDistribution type="EXPONENTIAL" mean="1800" arg1="1800" arg2="NaN" rawMean="NaN" rawArg1="NaN" rawArg2="NaN">
+              <qbp:timeUnit>minutes</qbp:timeUnit>
+            </qbp:durationDistribution>
+            <qbp:resourceIds>
+              <qbp:resourceId>qbp_315189ac-8191-4977-b204-da959c5e98c7</qbp:resourceId>
+            </qbp:resourceIds>
+          </qbp:element>
+        </qbp:elements>
+        <qbp:sequenceFlows id="qbp_c972ffc9-15c9-98bd-5534-fe5dd16623ce">
+          <qbp:sequenceFlow elementId="Flow_0ppjcd5" executionProbability="0.3" rawExecutionProbability="" />
+          <qbp:sequenceFlow elementId="Flow_0zss4n2" executionProbability="0.7" rawExecutionProbability="" />
+        </qbp:sequenceFlows>
+      </qbp:processSimulationInfo>
+    </extensionElements>
+    <task id="sid-9703AD2C-3219-4B4A-9A91-F4A81EF91130" name="A">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
+        <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
+        <signavio:signavioMetaData metaKey="externaldocuments" metaValue="" />
+      </extensionElements>
+      <incoming>sid-04651F44-C5CF-43DE-B0EA-F450CEB0192B</incoming>
+      <outgoing>Flow_12v55p9</outgoing>
+    </task>
+    <task id="sid-543CE27B-717A-4583-8BFE-09BF2267ACFC" name="B">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
+        <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
+        <signavio:signavioMetaData metaKey="externaldocuments" metaValue="" />
+      </extensionElements>
+      <incoming>Flow_0zss4n2</incoming>
+      <outgoing>Flow_1ves5q0</outgoing>
+    </task>
+    <task id="sid-30EFC8A9-15F6-45A1-B0FE-C9B37FC92D36" name="E">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
+        <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
+        <signavio:signavioMetaData metaKey="externaldocuments" metaValue="" />
+      </extensionElements>
+      <incoming>Flow_05m7cd8</incoming>
+      <outgoing>sid-2C9949A2-3F17-49DB-BA56-6C496FCE66F2</outgoing>
+    </task>
+    <endEvent id="sid-EE04FB14-B985-4938-8312-44743D30C3A1" name="End">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
+        <signavio:signavioMetaData metaKey="followingprocesses" metaValue="" />
+      </extensionElements>
+      <incoming>sid-2C9949A2-3F17-49DB-BA56-6C496FCE66F2</incoming>
+    </endEvent>
+    <startEvent id="sid-5B223415-80B9-41F6-BECB-D8D724DDB9F5" name="Start">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
+        <signavio:signavioMetaData metaKey="preceedingprocesses" metaValue="" />
+      </extensionElements>
+      <outgoing>sid-04651F44-C5CF-43DE-B0EA-F450CEB0192B</outgoing>
+    </startEvent>
+    <task id="sid-AD68767C-968B-4DCD-821E-3F5C5C3D0D04" name="C">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
+        <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
+        <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
+      </extensionElements>
+      <incoming>Flow_0ppjcd5</incoming>
+      <outgoing>Flow_16oip0z</outgoing>
+    </task>
+    <sequenceFlow id="sid-2C9949A2-3F17-49DB-BA56-6C496FCE66F2" name="" isImmediate="true" sourceRef="sid-30EFC8A9-15F6-45A1-B0FE-C9B37FC92D36" targetRef="sid-EE04FB14-B985-4938-8312-44743D30C3A1" />
+    <sequenceFlow id="sid-04651F44-C5CF-43DE-B0EA-F450CEB0192B" name="" isImmediate="false" sourceRef="sid-5B223415-80B9-41F6-BECB-D8D724DDB9F5" targetRef="sid-9703AD2C-3219-4B4A-9A91-F4A81EF91130" />
+    <task id="Activity_1y2vzu0" name="D">
+      <incoming>Flow_18jsrq1</incoming>
+      <outgoing>Flow_05m7cd8</outgoing>
+    </task>
+    <sequenceFlow id="Flow_05m7cd8" sourceRef="Activity_1y2vzu0" targetRef="sid-30EFC8A9-15F6-45A1-B0FE-C9B37FC92D36" />
+    <exclusiveGateway id="Gateway_0tknw9f">
+      <incoming>Flow_1ves5q0</incoming>
+      <incoming>Flow_16oip0z</incoming>
+      <outgoing>Flow_18jsrq1</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_1ves5q0" sourceRef="sid-543CE27B-717A-4583-8BFE-09BF2267ACFC" targetRef="Gateway_0tknw9f" />
+    <exclusiveGateway id="Gateway_0mbf192">
+      <incoming>Flow_12v55p9</incoming>
+      <outgoing>Flow_0ppjcd5</outgoing>
+      <outgoing>Flow_0zss4n2</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_12v55p9" sourceRef="sid-9703AD2C-3219-4B4A-9A91-F4A81EF91130" targetRef="Gateway_0mbf192" />
+    <sequenceFlow id="Flow_0ppjcd5" sourceRef="Gateway_0mbf192" targetRef="sid-AD68767C-968B-4DCD-821E-3F5C5C3D0D04" />
+    <sequenceFlow id="Flow_0zss4n2" sourceRef="Gateway_0mbf192" targetRef="sid-543CE27B-717A-4583-8BFE-09BF2267ACFC" />
+    <sequenceFlow id="Flow_16oip0z" sourceRef="sid-AD68767C-968B-4DCD-821E-3F5C5C3D0D04" targetRef="Gateway_0tknw9f" />
+    <sequenceFlow id="Flow_18jsrq1" sourceRef="Gateway_0tknw9f" targetRef="Activity_1y2vzu0" />
+  </process>
+</definitions>

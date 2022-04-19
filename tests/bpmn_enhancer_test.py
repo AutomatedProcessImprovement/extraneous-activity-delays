@@ -7,7 +7,7 @@ from extraneous_activity_delays.config import DurationDistribution
 def test_enhance_bpmn_model_with_delays():
     # Read BPMN model
     parser = etree.XMLParser(remove_blank_text=True)
-    document = etree.parse("assets/timer-events-test.bpmn", parser)
+    document = etree.parse("./tests/assets/timer-events-test.bpmn", parser)
     # Enhance
     timers = {
         'A': DurationDistribution(mean="60"),

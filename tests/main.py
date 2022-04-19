@@ -1,20 +1,15 @@
-from lxml import etree
+import pandas as pd
 
-from extraneous_activity_delays.bpmn_enhancer import enhance_bpmn_model_with_delays
-from extraneous_activity_delays.config import DurationDistribution
+from extraneous_activity_delays.config import DEFAULT_CSV_IDS
+from extraneous_activity_delays.delay_discoverer import calculate_extraneous_activity_delays
 
 if __name__ == '__main__':
-    # Read BPMN model
-    parser = etree.XMLParser(remove_blank_text=True)
-    document = etree.parse("assets/timer-events-example.bpmn", parser)
-    # Enhance
-    timers = {
-        'Check  application  form completeness': DurationDistribution(mean="60"),
-        'Assess loan risk': DurationDistribution(mean="600"),
-        'Approve application': DurationDistribution(mean="3600"),
-        'Design loan offer': DurationDistribution(mean="7200"),
-        'Approve Loan Offer': DurationDistribution(mean="36000")
-    }
-    enhanced_model = enhance_bpmn_model_with_delays(document, timers)
-    # Export the enhanced BPMN model
-    document.write("assets/timer-events-example_output.bpmn", pretty_print=True)
+    log_ids = DEFAULT_CSV_IDS
+    # Read event log
+    event_log = pd.read_csv("../event_logs/BPI_Challenge_2012_W_Two_TS.csv.gz")
+    event_log[log_ids.start_time] = pd.to_datetime(event_log[log_ids.start_time], utc=True)
+    event_log[log_ids.end_time] = pd.to_datetime(event_log[log_ids.end_time], utc=True)
+    event_log[log_ids.resource].fillna("NOT_SET", inplace=True)
+    event_log[log_ids.resource] = event_log[log_ids.resource].astype("string")
+    # Calculate extraneous delays
+    calculate_extraneous_activity_delays(event_log, log_ids)

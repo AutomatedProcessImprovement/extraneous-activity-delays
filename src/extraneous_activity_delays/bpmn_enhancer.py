@@ -74,6 +74,10 @@ def enhance_bpmn_model_with_delays(document: ElementTree, timers: dict):
             duration_distribution = timers[task_name]
             sim_timer = _get_simulation_timer(timer_id, duration_distribution, namespace)
             sim_elements.append(sim_timer)
+    # Remove visualizing data
+    visualization_element = model.find("bpmndi:BPMNDiagram", namespace)
+    if visualization_element is not None:
+        model.remove(visualization_element)
 
 
 def _get_simulation_timer(timer_id: str, duration_distribution: DurationDistribution, namespace: dict) -> etree.Element:

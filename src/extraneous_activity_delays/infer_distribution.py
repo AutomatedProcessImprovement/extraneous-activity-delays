@@ -76,8 +76,6 @@ def check_fix(data_list, delta=5):
 
 
 def _parse_duration_distribution(distribution, params) -> DurationDistribution:
-    print("\n")
-    print(params)
     if distribution == st.norm:
         return DurationDistribution(
             type="NORMAL",

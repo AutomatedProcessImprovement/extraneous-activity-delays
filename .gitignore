@@ -130,4 +130,5 @@ dmypy.json
 
 # custom ignores
 /event_logs/
+/outputs/
 .idea/

@@ -55,7 +55,7 @@ def infer_distribution(data: list, bins: int = 50) -> DurationDistribution:
                         best_sse = sse
             except Exception:
                 pass
-        duration_distribution = _parse_duration_distribution(best_distribution, best_params)
+        duration_distribution = _parse_duration_distribution(best_distribution, data)
     # Return best duration distribution
     return duration_distribution
 
@@ -75,43 +75,52 @@ def check_fix(data_list, delta=5):
     return value
 
 
-def _parse_duration_distribution(distribution, params) -> DurationDistribution:
+def _parse_duration_distribution(distribution, data) -> DurationDistribution:
     if distribution == st.norm:
+        # For the XML arg1=std and arg2=0
         return DurationDistribution(
             type="NORMAL",
-            mean=str(params[0]),
-            arg1=str(params[1])
+            mean=str(np.mean(data)),
+            arg1=str(np.std(data)),
+            arg2="0"
         )
     elif distribution == st.expon:
+        # For the XML arg1=0 and arg2=0
         return DurationDistribution(
             type="EXPONENTIAL",
-            mean=str(params[0]),
-            arg1=str(params[1])
+            mean=str(np.mean(data)),
+            arg1="0",
+            arg2="0"
         )
     elif distribution == st.uniform:
+        # For the XML the mean is always 3600, arg1=min and arg2=max
         return DurationDistribution(
             type="UNIFORM",
-            mean=str(params[0]),
-            arg1=str(params[1])
+            mean="3600",
+            arg1=str(np.min(data)),
+            arg2=str(np.max(data))
         )
     elif distribution == st.triang:
+        # For the XML the mode is stored in the mean parameter, arg1=min and arg2=max
         return DurationDistribution(
             type="TRIANGULAR",
-            mean=str(params[0]),
-            arg1=str(params[1]),
-            arg2=str(params[2])
+            mean=str(st.mode([int(seconds) for seconds in data]).mode[0]),
+            arg1=str(np.min(data)),
+            arg2=str(np.max(data))
         )
     elif distribution == st.lognorm:
+        # For the XML arg1=var and arg2=0
         return DurationDistribution(
             type="LOGNORMAL",
-            mean=str(params[0]),
-            arg1=str(params[1]),
-            arg2=str(params[2])
+            mean=str(np.mean(data)),
+            arg1=str(np.var(data)),
+            arg2="0"
         )
     elif distribution == st.gamma:
+        # For the XML arg1=var and arg2=0
         return DurationDistribution(
             type="GAMMA",
-            mean=str(params[0]),
-            arg1=str(params[1]),
-            arg2=str(params[2])
+            mean=str(np.mean(data)),
+            arg1=str(np.var(data)),
+            arg2="0"
         )

@@ -1,3 +1,4 @@
+import numpy as np
 import scipy.stats as st
 
 from extraneous_activity_delays.infer_distribution import infer_distribution
@@ -28,8 +29,9 @@ def test_infer_distribution_normal():
     data = distribution.rvs(size=1000)
     distribution = infer_distribution(data)
     assert distribution.type == "NORMAL"
-    assert abs(float(distribution.mean) - 100) < 2
-    assert abs(float(distribution.arg1) - 20) < 2
+    assert distribution.mean == str(np.mean(data))
+    assert distribution.arg1 == str(np.std(data))
+    assert distribution.arg2 == "0"
 
 
 def test_infer_distribution_exponential():
@@ -37,8 +39,9 @@ def test_infer_distribution_exponential():
     data = distribution.rvs(size=1000)
     distribution = infer_distribution(data)
     assert distribution.type == "EXPONENTIAL"
-    assert abs(float(distribution.mean) - 3) < 1
-    assert abs(float(distribution.arg1) - 700) < 50
+    assert distribution.mean == str(np.mean(data))
+    assert distribution.arg1 == "0"
+    assert distribution.arg2 == "0"
 
 
 def test_infer_distribution_uniform():
@@ -46,8 +49,9 @@ def test_infer_distribution_uniform():
     data = distribution.rvs(size=1000)
     distribution = infer_distribution(data)
     assert distribution.type == "UNIFORM"
-    assert abs(float(distribution.mean) - 600) < 2
-    assert abs(float(distribution.arg1) - 120) < 2
+    assert distribution.mean == "3600"
+    assert distribution.arg1 == str(np.min(data))
+    assert distribution.arg2 == str(np.max(data))
 
 
 def test_infer_distribution_triangular():
@@ -55,9 +59,9 @@ def test_infer_distribution_triangular():
     data = distribution.rvs(size=1000)
     distribution = infer_distribution(data)
     assert distribution.type == "TRIANGULAR"
-    assert abs(float(distribution.mean) - 0.7) < 0.05
-    assert abs(float(distribution.arg1) - 600) < 30
-    assert abs(float(distribution.arg2) - 1000) < 30
+    assert distribution.mean == str(st.mode([int(seconds) for seconds in data]).mode[0])
+    assert distribution.arg1 == str(np.min(data))
+    assert distribution.arg2 == str(np.max(data))
 
 
 def test_infer_distribution_log_normal():
@@ -65,9 +69,9 @@ def test_infer_distribution_log_normal():
     data = distribution.rvs(size=1000)
     distribution = infer_distribution(data)
     assert distribution.type == "LOGNORMAL"
-    assert abs(float(distribution.mean) - 0.5) < 0.1
-    assert abs(float(distribution.arg1) - 600) < 50
-    assert abs(float(distribution.arg2) - 300) < 50
+    assert distribution.mean == str(np.mean(data))
+    assert distribution.arg1 == str(np.var(data))
+    assert distribution.arg2 == "0"
 
 
 def test_infer_distribution_gamma():
@@ -75,6 +79,6 @@ def test_infer_distribution_gamma():
     data = distribution.rvs(size=1000)
     distribution = infer_distribution(data)
     assert distribution.type == "GAMMA"
-    assert abs(float(distribution.mean) - 0.7) < 0.15
-    assert abs(float(distribution.arg1) - 600) < 20
-    assert abs(float(distribution.arg2) - 300) < 100
+    assert distribution.mean == str(np.mean(data))
+    assert distribution.arg1 == str(np.var(data))
+    assert distribution.arg2 == "0"

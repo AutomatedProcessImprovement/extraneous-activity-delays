@@ -13,11 +13,14 @@ def enhance_bpmn_model_with_delays(document: ElementTree, timers: dict):
     :param document: XML document containing the BPMN model to enhance.
     :param timers: dict with the name of each activity as key, and the timer configuration as value.
     """
-    # Extract process and simulation parameters
+    # Extract process
     model = document.getroot()
     namespace = model.nsmap
     process = model.find("process", namespace)
+    # Extract simulation parameters
     sim_elements = process.find("extensionElements/qbp:processSimulationInfo/qbp:elements", namespace)
+    if sim_elements is None:
+        sim_elements = model.find("qbp:processSimulationInfo/qbp:elements", namespace)
     # Add a timer for each task
     for task in process.findall("task", namespace):
         task_name = task.attrib['name']
@@ -42,7 +45,9 @@ def enhance_bpmn_model_with_delays(document: ElementTree, timers: dict):
                 namespace
             )
             # Update incoming flow information inside the task
-            task.find("incoming", namespace).text = flow_id
+            task_incoming = task.find("incoming", namespace)
+            if task_incoming is not None:
+                task_incoming.text = flow_id
             # Add incoming element inside timer
             timer_incoming = etree.Element(
                 QName(namespace[None], "incoming"),

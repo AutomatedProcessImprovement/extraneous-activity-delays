@@ -1,49 +1,18 @@
 from dataclasses import dataclass
 
+from estimate_start_times.config import EventLogIDs, DEFAULT_CSV_IDS
+
 
 @dataclass
 class DurationDistribution:
     type: str = "NORMAL"
-    mean: str = "6000"  # Warning! this value is always interpreted as seconds
-    arg1: str = "300"
+    mean: str = "NaN"  # Warning! this value is always interpreted as seconds
+    arg1: str = "NaN"
     arg2: str = "NaN"
     rawMean: str = "NaN"
     rawArg1: str = "NaN"
     rawArg2: str = "NaN"
-    unit: str = "seconds"
-
-
-@dataclass
-class EventLogIDs:
-    case: str = 'case'
-    activity: str = 'activity'
-    start_time: str = 'start_timestamp'
-    end_time: str = 'end_timestamp'
-    enabled_time: str = 'enabled_time'
-    available_time: str = 'available_time'
-    estimated_start_time: str = 'estimated_start_time'
-    resource: str = 'resource'
-    lifecycle: str = 'lifecycle'
-
-
-DEFAULT_CSV_IDS = EventLogIDs(case='case_id',
-                              activity='Activity',
-                              start_time='start_time',
-                              end_time='end_time',
-                              enabled_time='enabled_time',
-                              available_time='available_time',
-                              estimated_start_time='estimated_start_time',
-                              resource='Resource',
-                              lifecycle='Lifecycle')
-DEFAULT_XES_IDS = EventLogIDs(case='case:concept:name',
-                              activity='concept:name',
-                              start_time='time:start',
-                              end_time='time:timestamp',
-                              enabled_time='time:enabled',
-                              available_time='time:available',
-                              estimated_start_time='time:estimated_start',
-                              resource='org:resource',
-                              lifecycle='lifecycle:transition')
+    unit: str = "seconds"  # This is the unit to show in the interface by transforming the values in seconds
 
 
 @dataclass

@@ -3,10 +3,9 @@ from estimate_start_times.config import Configuration as StartTimeConfiguration,
     ResourceAvailabilityType
 from estimate_start_times.config import EventLogIDs as StartTimeEventLogIDs
 from estimate_start_times.estimator import StartTimeEstimator
-from numpy import mean
 
-from extraneous_activity_delays.config import EventLogIDs, DurationDistribution
-from extraneous_activity_delays.temp_infer_distribution import best_fit_distribution
+from extraneous_activity_delays.config import EventLogIDs
+from extraneous_activity_delays.infer_distribution import infer_distribution
 
 
 def calculate_extraneous_activity_delays(event_log: pd.DataFrame, log_ids: EventLogIDs) -> dict:
@@ -41,10 +40,8 @@ def calculate_extraneous_activity_delays(event_log: pd.DataFrame, log_ids: Event
     for activity in enhanced_event_log[log_ids.activity].unique():
         delays = (enhanced_event_log[enhanced_event_log[log_ids.activity] == activity][log_ids.start_time] -
                   enhanced_event_log[enhanced_event_log[log_ids.activity] == activity][log_ids.estimated_start_time])
-        # TODO estimate a distribution and its parameters
-        timers[activity] = DurationDistribution(
-            type="NORMAL",
-            mean=str(int(mean(delays).total_seconds()))
+        timers[activity] = infer_distribution(
+            [delay.total_seconds() if delay.total_seconds() > 0 else 0.0 for delay in delays]
         )
-        # Return the delays
+    # Return the delays
     return timers

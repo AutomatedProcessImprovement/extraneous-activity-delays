@@ -1,6 +1,6 @@
 from lxml import etree
 
-from extraneous_activity_delays.bpmn_enhancer import enhance_bpmn_model_with_delays
+from extraneous_activity_delays.bpmn_enhancer import add_timers_to_bpmn_model
 from extraneous_activity_delays.config import DurationDistribution
 
 
@@ -16,7 +16,7 @@ def test_enhance_bpmn_model_with_delays():
         'D': DurationDistribution(mean="7200"),
         'E': DurationDistribution(mean="36000")
     }
-    enhance_bpmn_model_with_delays(document, timers)
+    add_timers_to_bpmn_model(document, timers)
     model = document.getroot()
     namespace = model.nsmap
     process = model.find("process", namespace)

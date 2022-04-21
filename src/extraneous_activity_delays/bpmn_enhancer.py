@@ -6,7 +6,7 @@ from lxml.etree import QName, ElementTree
 from extraneous_activity_delays.config import DurationDistribution
 
 
-def enhance_bpmn_model_with_delays(document: ElementTree, timers: dict):
+def add_timers_to_bpmn_model(document: ElementTree, timers: dict):
     """
     Enhance the BPMN model received by adding a timer previous to each activity denoted by [timers].
 

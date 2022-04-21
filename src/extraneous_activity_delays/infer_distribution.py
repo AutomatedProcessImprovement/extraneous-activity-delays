@@ -85,11 +85,11 @@ def _parse_duration_distribution(distribution, data) -> DurationDistribution:
             arg2="0"
         )
     elif distribution == st.expon:
-        # For the XML arg1=0 and arg2=0
+        # For the XML mean=0 and arg2=0
         return DurationDistribution(
             type="EXPONENTIAL",
-            mean=str(np.mean(data)),
-            arg1="0",
+            mean="0",
+            arg1=str(np.mean(data)),
             arg2="0"
         )
     elif distribution == st.uniform:

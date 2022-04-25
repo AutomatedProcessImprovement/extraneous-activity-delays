@@ -16,6 +16,8 @@ def add_timers_to_bpmn_model(document: ElementTree, timers: dict):
     # Extract process
     model = document.getroot()
     namespace = model.nsmap
+    if 'qbp' not in namespace:
+        namespace['qbp'] = "http://www.qbp-simulator.com/Schema201212"
     process = model.find("process", namespace)
     # Extract simulation parameters
     sim_elements = process.find("extensionElements/qbp:processSimulationInfo/qbp:elements", namespace)

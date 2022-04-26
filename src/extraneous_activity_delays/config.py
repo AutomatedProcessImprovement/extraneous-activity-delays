@@ -1,3 +1,4 @@
+import enum
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,16 +19,26 @@ class DurationDistribution:
     unit: str = "seconds"  # This is the unit to show in the interface by transforming the values in seconds
 
 
+class OptimizationSpaceType(enum.Enum):
+    SINGLE_FACTOR = 1
+    PER_ACTIVITY = 2
+
+
 @dataclass
 class Configuration:
     """Class storing the configuration parameters for the start time estimation.
 
     Attributes:
         log_ids                     Identifiers for each key element (e.g. executed activity or resource).
+        num_evaluations             Number of iterations of the hyper-optimization search.
         num_evaluation_simulations  Number of simulations performed with each enhanced BPMN model to evaluate its quality.
+        optimization_space          Type of scale factor in the optimization, if SINGLE_FACTOR a single factor will be used to scale all
+                                    delays, if PER_ACTIVITY a different factor to scale each activity will be used.
     """
     log_ids: EventLogIDs = DEFAULT_CSV_IDS
+    num_evaluations: int = 10
     num_evaluation_simulations: int = 5
+    optimization_space: OptimizationSpaceType = OptimizationSpaceType.SINGLE_FACTOR
 
     PATH_PROJECT = get_project_dir()
     PATH_INPUTS = PATH_PROJECT.joinpath("event_logs")

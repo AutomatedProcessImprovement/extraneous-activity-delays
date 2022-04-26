@@ -93,10 +93,7 @@ def _get_simulation_timer(timer_id: str, duration_distribution: DurationDistribu
         'type': duration_distribution.type,
         'mean': duration_distribution.mean,
         'arg1': duration_distribution.arg1,
-        'arg2': duration_distribution.arg2,
-        'rawMean': duration_distribution.rawMean,
-        'rawArg1': duration_distribution.rawArg1,
-        'rawArg2': duration_distribution.rawArg2
+        'arg2': duration_distribution.arg2
     }
     sim_timer_duration = etree.Element(QName(namespace['qbp'], "durationDistribution"), duration_params, namespace)
     sim_timer_unit = etree.Element(QName(namespace['qbp'], "timeUnit"), {}, namespace)

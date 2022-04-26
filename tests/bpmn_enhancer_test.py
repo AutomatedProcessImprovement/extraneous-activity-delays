@@ -43,6 +43,3 @@ def test_enhance_bpmn_model_with_delays():
         assert duration_distribution.attrib['mean'] == timers[activity].mean
         assert duration_distribution.attrib['arg1'] == timers[activity].arg1
         assert duration_distribution.attrib['arg2'] == timers[activity].arg2
-        assert duration_distribution.attrib['rawMean'] == timers[activity].rawMean
-        assert duration_distribution.attrib['rawArg1'] == timers[activity].rawArg1
-        assert duration_distribution.attrib['rawArg2'] == timers[activity].rawArg2

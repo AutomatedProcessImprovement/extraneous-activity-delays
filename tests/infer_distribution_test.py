@@ -85,6 +85,16 @@ def test_infer_distribution_gamma():
     assert distribution.arg2 == "0"
 
 
+def test_scale_distribution_log_fixed():
+    alpha = 0.85
+    distribution = DurationDistribution("FIXED", "176", "0", "0")
+    scaled = scale_distribution(distribution, alpha)
+    assert scaled.type == "FIXED"
+    assert scaled.mean == str(176 * alpha)
+    assert scaled.arg1 == "0"
+    assert scaled.arg2 == "0"
+
+
 def test_scale_distribution_normal():
     alpha = 0.1
     distribution = DurationDistribution("NORMAL", "10", "2", "0")

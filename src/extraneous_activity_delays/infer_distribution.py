@@ -124,7 +124,14 @@ def _parse_duration_distribution(distribution, data) -> DurationDistribution:
 
 
 def scale_distribution(distribution: DurationDistribution, alpha: float) -> DurationDistribution:
-    if distribution.type == "NORMAL":
+    if distribution.type == "FIXED":
+        return DurationDistribution(
+            type=distribution.type,
+            mean=str(float(distribution.mean) * alpha),  # Fixed value: scaled by multiplying by [alpha]
+            arg1="0",
+            arg2="0"
+        )
+    elif distribution.type == "NORMAL":
         return DurationDistribution(
             type=distribution.type,
             mean=str(float(distribution.mean) * alpha),  # Mean: scaled by multiplying by [alpha]

@@ -1,4 +1,3 @@
-import sys
 import warnings
 from collections import Counter
 
@@ -120,5 +119,43 @@ def _parse_duration_distribution(distribution, data) -> DurationDistribution:
             type="GAMMA",
             mean=str(np.mean(data)),
             arg1=str(np.var(data)),
+            arg2="0"
+        )
+
+
+def scale_distribution(distribution: DurationDistribution, alpha: float) -> DurationDistribution:
+    if distribution.type == "NORMAL":
+        return DurationDistribution(
+            type=distribution.type,
+            mean=str(float(distribution.mean) * alpha),  # Mean: scaled by multiplying by [alpha]
+            arg1=str(float(distribution.arg1) * alpha),  # STD: scaled by multiplying by [alpha]
+            arg2="0"
+        )
+    elif distribution.type == "EXPONENTIAL":
+        return DurationDistribution(
+            type=distribution.type,
+            mean="0",
+            arg1=str(float(distribution.arg1) * alpha),  # Mean: scaled by multiplying by [alpha]
+            arg2="0"
+        )
+    elif distribution.type == "UNIFORM":
+        return DurationDistribution(
+            type=distribution.type,
+            mean="3600",
+            arg1=str(float(distribution.arg1) * alpha),  # Min: scaled by multiplying by [alpha]
+            arg2=str(float(distribution.arg2) * alpha)  # Max: scaled by multiplying by [alpha]
+        )
+    elif distribution.type == "TRIANGULAR":
+        return DurationDistribution(
+            type=distribution.type,
+            mean=str(float(distribution.mean) * alpha),  # Mode: scaled by multiplying by [alpha]
+            arg1=str(float(distribution.arg1) * alpha),  # Min: scaled by multiplying by [alpha]
+            arg2=str(float(distribution.arg2) * alpha)  # Max: scaled by multiplying by [alpha]
+        )
+    elif distribution.type in ["LOGNORMAL", "GAMMA"]:
+        return DurationDistribution(
+            type=distribution.type,
+            mean=str(float(distribution.mean) * alpha),  # Mean: scaled by multiplying by [alpha]
+            arg1=str(float(distribution.arg1) * alpha * alpha),  # Variance: scaled by multiplying by [alpha]^2
             arg2="0"
         )

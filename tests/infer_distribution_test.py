@@ -1,7 +1,8 @@
 import numpy as np
 import scipy.stats as st
 
-from extraneous_activity_delays.infer_distribution import infer_distribution
+from extraneous_activity_delays.config import DurationDistribution
+from extraneous_activity_delays.infer_distribution import infer_distribution, scale_distribution
 
 
 def test_infer_distribution_fixed():
@@ -39,8 +40,8 @@ def test_infer_distribution_exponential():
     data = distribution.rvs(size=1000)
     distribution = infer_distribution(data)
     assert distribution.type == "EXPONENTIAL"
-    assert distribution.mean == str(np.mean(data))
-    assert distribution.arg1 == "0"
+    assert distribution.mean == "0"
+    assert distribution.arg1 == str(np.mean(data))
     assert distribution.arg2 == "0"
 
 
@@ -82,3 +83,63 @@ def test_infer_distribution_gamma():
     assert distribution.mean == str(np.mean(data))
     assert distribution.arg1 == str(np.var(data))
     assert distribution.arg2 == "0"
+
+
+def test_scale_distribution_normal():
+    alpha = 0.1
+    distribution = DurationDistribution("NORMAL", "10", "2", "0")
+    scaled = scale_distribution(distribution, alpha)
+    assert scaled.type == "NORMAL"
+    assert scaled.mean == str(10 * alpha)
+    assert scaled.arg1 == str(2 * alpha)
+    assert scaled.arg2 == "0"
+
+
+def test_scale_distribution_exponential():
+    alpha = 0.9
+    distribution = DurationDistribution("EXPONENTIAL", "0", "10", "0")
+    scaled = scale_distribution(distribution, alpha)
+    assert scaled.type == "EXPONENTIAL"
+    assert scaled.mean == "0"
+    assert scaled.arg1 == str(10 * alpha)
+    assert scaled.arg2 == "0"
+
+
+def test_scale_distribution_uniform():
+    alpha = 0.75
+    distribution = DurationDistribution("UNIFORM", "3600", "2", "12")
+    scaled = scale_distribution(distribution, alpha)
+    assert scaled.type == "UNIFORM"
+    assert scaled.mean == "3600"
+    assert scaled.arg1 == str(2 * alpha)
+    assert scaled.arg2 == str(12 * alpha)
+
+
+def test_scale_distribution_triangular():
+    alpha = 0.25
+    distribution = DurationDistribution("TRIANGULAR", "10", "2", "18")
+    scaled = scale_distribution(distribution, alpha)
+    assert scaled.type == "TRIANGULAR"
+    assert scaled.mean == str(10 * alpha)
+    assert scaled.arg1 == str(2 * alpha)
+    assert scaled.arg2 == str(18 * alpha)
+
+
+def test_scale_distribution_log_normal():
+    alpha = 0.6
+    distribution = DurationDistribution("LOGNORMAL", "10", "2", "0")
+    scaled = scale_distribution(distribution, alpha)
+    assert scaled.type == "LOGNORMAL"
+    assert scaled.mean == str(10 * alpha)
+    assert scaled.arg1 == str(2 * alpha * alpha)
+    assert scaled.arg2 == "0"
+
+
+def test_scale_distribution_log_gamma():
+    alpha = 0.5
+    distribution = DurationDistribution("GAMMA", "11", "5", "0")
+    scaled = scale_distribution(distribution, alpha)
+    assert scaled.type == "GAMMA"
+    assert scaled.mean == str(11 * alpha)
+    assert scaled.arg1 == str(5 * alpha * alpha)
+    assert scaled.arg2 == "0"

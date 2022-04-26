@@ -1,7 +1,8 @@
-import copy
 import datetime
 import os
 import uuid
+from pathlib import Path
+from statistics import mean
 
 import pandas as pd
 from estimate_start_times.config import EventLogIDs
@@ -61,11 +62,15 @@ class Enhancer:
         # Serialize to temporal BPMN file
         tmp_model_path = str(output_folder.joinpath("enhanced_model.bpmn"))
         enhanced_bpmn_document.write(tmp_model_path, pretty_print=True)
-        # Simulate with model
-        # TODO simulate 5 times and get the mean
-        tmp_simulated_log_path = str(output_folder.joinpath("simulated_log.csv"))
-        simulate_bpmn_model(tmp_model_path, tmp_simulated_log_path, self.configuration)
-        # Read simulated event log
+        # Evaluate candidate
+        cycle_time_emd = self._evaluate(tmp_model_path, output_folder)
+        # Return response
+        return {'loss': cycle_time_emd, 'status': STATUS_OK}
+
+    def _evaluate(self, bpmn_model_path: str, output_folder: Path) -> float:
+        # EMDs of the simulations
+        cycle_time_emds = []
+        # IDs of the simulated logs from BIMP
         simulated_log_ids = EventLogIDs(
             case="caseid",
             activity="task",
@@ -73,14 +78,21 @@ class Enhancer:
             end_time="end_timestamp",
             resource="resource"
         )
-        simulated_event_log = pd.read_csv(tmp_simulated_log_path)
-        simulated_event_log[simulated_log_ids.start_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.start_time], utc=True)
-        simulated_event_log[simulated_log_ids.end_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.end_time], utc=True)
-        # Measure log distance
+        # Bin size for the cycle time EMD
         bin_size = max(
             [events[self.log_ids.end_time].max() - events[self.log_ids.start_time].min()
              for case, events in self.event_log.groupby([self.log_ids.case])]
         ) / 1000
-        cycle_time_emd = trace_duration_emd(self.event_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)
-        # Return response
-        return {'loss': cycle_time_emd, 'status': STATUS_OK}
+        # Simulate and measure quality
+        for i in range(self.configuration.num_evaluation_simulations):
+            # Simulate with model
+            tmp_simulated_log_path = str(output_folder.joinpath("simulated_log_{}.csv".format(i)))
+            simulate_bpmn_model(bpmn_model_path, tmp_simulated_log_path, self.configuration)
+            # Read simulated event log
+            simulated_event_log = pd.read_csv(tmp_simulated_log_path)
+            simulated_event_log[simulated_log_ids.start_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.start_time], utc=True)
+            simulated_event_log[simulated_log_ids.end_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.end_time], utc=True)
+            # Measure log distance
+            cycle_time_emds += [trace_duration_emd(self.event_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)]
+        # Return metric
+        return mean(cycle_time_emds)

@@ -24,8 +24,10 @@ class Configuration:
 
     Attributes:
         log_ids                     Identifiers for each key element (e.g. executed activity or resource).
+        num_evaluation_simulations  Number of simulations performed with each enhanced BPMN model to evaluate its quality.
     """
     log_ids: EventLogIDs = DEFAULT_CSV_IDS
+    num_evaluation_simulations: int = 5
 
     PATH_PROJECT = get_project_dir()
     PATH_INPUTS = PATH_PROJECT.joinpath("event_logs")

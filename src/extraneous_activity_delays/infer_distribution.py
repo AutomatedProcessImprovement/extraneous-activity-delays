@@ -19,8 +19,6 @@ def infer_distribution(data: list, bins: int = 50) -> DurationDistribution:
     else:
         # Model data by finding best fit distribution to data
         # Get histogram of original data
-        d_min = min(data + [sys.float_info.max])
-        d_max = max(data + [0])
         y, x = np.histogram(data, bins=bins, density=True)
         # Transform the start and end of each bin, in its middle point
         x = (x + np.roll(x, -1))[:-1] / 2.0

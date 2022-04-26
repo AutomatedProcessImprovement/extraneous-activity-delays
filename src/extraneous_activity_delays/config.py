@@ -15,9 +15,6 @@ class DurationDistribution:
     mean: str = "NaN"  # Warning! this value is always interpreted as seconds
     arg1: str = "NaN"
     arg2: str = "NaN"
-    rawMean: str = "NaN"
-    rawArg1: str = "NaN"
-    rawArg2: str = "NaN"
     unit: str = "seconds"  # This is the unit to show in the interface by transforming the values in seconds
 
 

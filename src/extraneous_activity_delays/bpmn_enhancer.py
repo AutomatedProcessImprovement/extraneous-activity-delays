@@ -1,3 +1,4 @@
+import copy
 import uuid
 
 from lxml import etree
@@ -6,15 +7,17 @@ from lxml.etree import QName, ElementTree
 from extraneous_activity_delays.config import DurationDistribution
 
 
-def add_timers_to_bpmn_model(document: ElementTree, timers: dict):
+def add_timers_to_bpmn_model(document: ElementTree, timers: dict) -> ElementTree:
     """
     Enhance the BPMN model received by adding a timer previous to each activity denoted by [timers].
 
     :param document: XML document containing the BPMN model to enhance.
     :param timers: dict with the name of each activity as key, and the timer configuration as value.
+    :return a copy of [document] enhanced with the timers in [timers].
     """
     # Extract process
-    model = document.getroot()
+    enhanced_document = copy.deepcopy(document)
+    model = enhanced_document.getroot()
     namespace = model.nsmap
     if 'qbp' not in namespace:
         namespace['qbp'] = "http://www.qbp-simulator.com/Schema201212"
@@ -85,6 +88,8 @@ def add_timers_to_bpmn_model(document: ElementTree, timers: dict):
     visualization_element = model.find("bpmndi:BPMNDiagram", namespace)
     if visualization_element is not None:
         model.remove(visualization_element)
+    # Return enhanced document
+    return enhanced_document
 
 
 def _get_simulation_timer(timer_id: str, duration_distribution: DurationDistribution, namespace: dict) -> etree.Element:

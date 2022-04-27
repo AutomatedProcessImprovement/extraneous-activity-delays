@@ -17,15 +17,8 @@ def add_timers_to_bpmn_model(document: ElementTree, timers: dict) -> ElementTree
     """
     # Extract process
     enhanced_document = copy.deepcopy(document)
-    model = enhanced_document.getroot()
-    namespace = model.nsmap
-    if 'qbp' not in namespace:
-        namespace['qbp'] = "http://www.qbp-simulator.com/Schema201212"
-    process = model.find("process", namespace)
-    # Extract simulation parameters
-    sim_elements = process.find("extensionElements/qbp:processSimulationInfo/qbp:elements", namespace)
-    if sim_elements is None:
-        sim_elements = model.find("qbp:processSimulationInfo/qbp:elements", namespace)
+    model, process, sim_info, namespace = _get_basic_bpmn_elements(enhanced_document)
+    sim_elements = sim_info.find("qbp:elements", namespace)
     # Add a timer for each task
     for task in process.findall("task", namespace):
         task_name = task.attrib['name']
@@ -106,3 +99,24 @@ def _get_simulation_timer(timer_id: str, duration_distribution: DurationDistribu
     sim_timer_duration.append(sim_timer_unit)
     sim_timer.append(sim_timer_duration)
     return sim_timer
+
+
+def _get_basic_bpmn_elements(document: ElementTree) -> tuple:
+    model = document.getroot()
+    namespace = model.nsmap
+    if 'qbp' not in namespace:
+        namespace['qbp'] = "http://www.qbp-simulator.com/Schema201212"
+    process = model.find("process", namespace)
+    # Extract simulation parameters
+    sim_info = process.find("extensionElements/qbp:processSimulationInfo", namespace)
+    if sim_info is None:
+        sim_info = model.find("qbp:processSimulationInfo", namespace)
+    # Return elements
+    return model, process, sim_info, namespace
+
+
+def set_number_instances_to_simulate(document: ElementTree, num_instances: int):
+    # Get basic elements
+    _, _, sim_info, _ = _get_basic_bpmn_elements(document)
+    # Edit num instances
+    sim_info.attrib['processInstances'] = str(num_instances)

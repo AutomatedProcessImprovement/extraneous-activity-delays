@@ -4,7 +4,6 @@ import shutil
 import uuid
 from pathlib import Path
 from statistics import mean
-from typing import Union
 
 import pandas as pd
 from estimate_start_times.config import EventLogIDs
@@ -12,7 +11,7 @@ from hyperopt import fmin, hp, Trials, tpe, STATUS_OK
 from lxml.etree import ElementTree
 
 from extraneous_activity_delays.bpmn_enhancer import add_timers_to_bpmn_model
-from extraneous_activity_delays.config import Configuration, OptimizationSpaceType
+from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.delay_discoverer import calculate_extraneous_activity_delays
 from extraneous_activity_delays.infer_distribution import scale_distribution
 from extraneous_activity_delays.metrics import trace_duration_emd
@@ -30,15 +29,16 @@ class Enhancer:
         self.timers = calculate_extraneous_activity_delays(self.event_log, self.log_ids)
         # Variable to store the information of each optimization trial
         self.opt_trials = Trials()
-        # Hyper-optimization search space: one scale factor (float from 0 to 1) per activity
-        if self.configuration.optimization_space == OptimizationSpaceType.SINGLE_FACTOR:
-            self.opt_space = hp.uniform('alpha', 0, 1)
-        else:
-            self.opt_space = {activity: hp.uniform(activity, 0, 1) for activity in self.timers.keys()}
+        # Hyper-optimization search space: a choice between a factor (float from 0 to 1)
+        # to scale all activities, or one different factor per activity.
+        self.opt_space = hp.choice('_params', [
+            hp.uniform('alpha', 0, 1),
+            {activity: hp.uniform(activity, 0, 1) for activity in self.timers.keys()}
+        ])
 
     def enhance_bpmn_model_with_delays(self) -> ElementTree:
         # Launch hyper-optimization with the timers
-        best_alphas = fmin(
+        best_result = fmin(
             fn=self._enhancement_iteration,
             space=self.opt_space,
             algo=tpe.suggest,
@@ -50,9 +50,14 @@ class Enhancer:
         for result in self.opt_trials.results:
             if result['output_folder'] != self.opt_trials.best_trial['result']['output_folder']:
                 shutil.rmtree(result['output_folder'], ignore_errors=True)  # TODO externalize to utils.py or something like that
-        # If only one scale factor create dictionary with that factor for each activity
-        if self.configuration.optimization_space == OptimizationSpaceType.SINGLE_FACTOR:
-            best_alphas = {activity: best_alphas['alpha'] for activity in self.timers.keys()}
+        # Process best parameters result
+        if best_result['_params'] == 0:
+            # First choice, one scale factor
+            best_alphas = {activity: best_result['alpha'] for activity in self.timers.keys()}
+        else:
+            # [_params] == 1, dictionary with one scale factor per activity
+            del best_result['_params']
+            best_alphas = best_result
         # Transform timers based on [best_alphas]
         scaled_timers = {activity: scale_distribution(self.timers[activity], best_alphas[activity]) for activity in self.timers}
         # Enhance process model
@@ -60,10 +65,14 @@ class Enhancer:
         # Return enhanced document
         return enhanced_document
 
-    def _enhancement_iteration(self, alphas: Union[float, dict]) -> dict:
-        # If only one scale factor create dictionary with that factor for each activity
-        if self.configuration.optimization_space == OptimizationSpaceType.SINGLE_FACTOR:
-            alphas = {activity: alphas for activity in self.timers.keys()}
+    def _enhancement_iteration(self, params: dict) -> dict:
+        # Process params
+        if type(params) is float:
+            # Only one scale factor, create dictionary with that factor for each activity
+            alphas = {activity: params for activity in self.timers.keys()}
+        else:
+            # Dictionary with a scale factor for each activity, so let it be
+            alphas = params
         # Get iteration folder
         output_folder = self.configuration.PATH_OUTPUTS.joinpath(
             datetime.datetime.today().strftime('%Y%m%d_') + str(uuid.uuid4()).upper().replace('-', '_')

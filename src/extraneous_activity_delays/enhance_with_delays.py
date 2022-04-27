@@ -19,7 +19,25 @@ from extraneous_activity_delays.simulator import simulate_bpmn_model
 from extraneous_activity_delays.utils import split_log_training_test
 
 
-class Enhancer:
+class NaiveEnhancer:
+    def __init__(self, event_log: pd.DataFrame, bpmn_document: ElementTree, configuration: Configuration):
+        # Save parameters
+        self.event_log = event_log
+        self.bpmn_document = bpmn_document
+        self.configuration = configuration
+        self.log_ids = configuration.log_ids
+        # Calculate extraneous delay timers
+        self.timers = calculate_extraneous_activity_delays(self.event_log, self.log_ids)
+
+    def enhance_bpmn_model_with_delays(self) -> ElementTree:
+        # Enhance process model
+        enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, self.timers)
+        set_number_instances_to_simulate(enhanced_bpmn_document, len(self.event_log[self.log_ids.case].unique()))
+        # Return enhanced document
+        return enhanced_bpmn_document
+
+
+class HyperOptEnhancer:
     def __init__(self, event_log: pd.DataFrame, bpmn_document: ElementTree, configuration: Configuration):
         # Save parameters
         self.event_log = event_log

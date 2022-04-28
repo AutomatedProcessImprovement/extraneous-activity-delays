@@ -1,7 +1,3 @@
-import datetime
-import os
-import shutil
-import uuid
 from pathlib import Path
 from statistics import mean
 
@@ -16,7 +12,7 @@ from extraneous_activity_delays.delay_discoverer import calculate_extraneous_act
 from extraneous_activity_delays.infer_distribution import scale_distribution
 from extraneous_activity_delays.metrics import trace_duration_emd
 from extraneous_activity_delays.simulator import simulate_bpmn_model
-from extraneous_activity_delays.utils import split_log_training_test
+from extraneous_activity_delays.utils import split_log_training_test, delete_folder, create_new_tmp_folder
 
 
 class NaiveEnhancer:
@@ -69,13 +65,13 @@ class HyperOptEnhancer:
         # Remove all folders except best trial one
         for result in self.opt_trials.results:
             if result['output_folder'] != self.opt_trials.best_trial['result']['output_folder']:
-                shutil.rmtree(result['output_folder'], ignore_errors=True)  # TODO externalize to utils.py or something like that
+                delete_folder(result['output_folder'])
         # Process best parameters result
         if best_result['_params'] == 0:
             # First choice, one scale factor
             best_alphas = {activity: best_result['alpha'] for activity in self.timers.keys()}
         else:
-            # [_params] == 1, dictionary with one scale factor per activity
+            # [_params] == 1, second choice, dictionary with one scale factor per activity
             del best_result['_params']
             best_alphas = best_result
         # Transform timers based on [best_alphas]
@@ -95,28 +91,24 @@ class HyperOptEnhancer:
             # Dictionary with a scale factor for each activity, so let it be
             alphas = params
         # Get iteration folder
-        output_folder = self.configuration.PATH_OUTPUTS.joinpath(
-            datetime.datetime.today().strftime('%Y%m%d_') + str(uuid.uuid4()).upper().replace('-', '_')
-        )
-        if not os.path.exists(output_folder):
-            os.makedirs(output_folder)  # TODO externalize to utils.py file or something like that
+        output_folder = create_new_tmp_folder(self.configuration.PATH_OUTPUTS)
         # Transform timers based on [alpha]
         scaled_timers = {activity: scale_distribution(self.timers[activity], alphas[activity]) for activity in self.timers}
         # Enhance process model
         enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
         set_number_instances_to_simulate(enhanced_bpmn_document, len(self.test_log[self.log_ids.case].unique()))
         # Serialize to temporal BPMN file
-        tmp_model_path = str(output_folder.joinpath("enhanced_model.bpmn"))
-        enhanced_bpmn_document.write(tmp_model_path, pretty_print=True)
+        enhanced_model_path = str(output_folder.joinpath("{}_enhanced.bpmn".format(self.configuration.process_name)))
+        enhanced_bpmn_document.write(enhanced_model_path, pretty_print=True)
         # Evaluate candidate
-        cycle_time_emd = self._evaluate_iteration(tmp_model_path, output_folder)
-        # TODO write results (EMDs) to a file in output folder
+        cycle_time_emd = self._evaluate_iteration(enhanced_model_path, output_folder, alphas)
         # Return response
         return {'loss': cycle_time_emd, 'status': STATUS_OK, 'output_folder': str(output_folder)}
 
-    def _evaluate_iteration(self, bpmn_model_path: str, output_folder: Path) -> float:
+    def _evaluate_iteration(self, bpmn_model_path: str, output_folder: Path, params: dict) -> float:
         # EMDs of the simulations
         cycle_time_emds = []
+        metrics_report = []
         # IDs of the simulated logs from BIMP
         simulated_log_ids = EventLogIDs(
             case="caseid",
@@ -133,13 +125,24 @@ class HyperOptEnhancer:
         # Simulate and measure quality
         for i in range(self.configuration.num_evaluation_simulations):
             # Simulate with model
-            tmp_simulated_log_path = str(output_folder.joinpath("simulated_log_{}.csv".format(i)))
+            tmp_simulated_log_path = str(output_folder.joinpath("{}_simulated_{}.csv".format(self.configuration.process_name, i)))
             simulate_bpmn_model(bpmn_model_path, tmp_simulated_log_path, self.configuration)
             # Read simulated event log
             simulated_event_log = pd.read_csv(tmp_simulated_log_path)
             simulated_event_log[simulated_log_ids.start_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.start_time], utc=True)
             simulated_event_log[simulated_log_ids.end_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.end_time], utc=True)
             # Measure log distance
-            cycle_time_emds += [trace_duration_emd(self.test_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)]
+            cycle_time_emd = trace_duration_emd(self.test_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)
+            cycle_time_emds += [cycle_time_emd]
+            metrics_report += ["\tCycle time EMD {}: {}\n".format(i, cycle_time_emd)]
+        # Get mean metric
+        mean_cycle_time_emd = mean(cycle_time_emds)
+        # Write metrics to file
+        with open(output_folder.joinpath("metrics.txt"), 'a') as file:
+            file.write("Iteration params: {}\n".format(params))
+            file.write("\nMetrics:\n")
+            for line in metrics_report:
+                file.write(line)
+            file.write("\nMean cycle time EMD: {}\n".format(mean_cycle_time_emd))
         # Return metric
-        return mean(cycle_time_emds)
+        return mean_cycle_time_emd

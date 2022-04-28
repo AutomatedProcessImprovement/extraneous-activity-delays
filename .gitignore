@@ -129,6 +129,6 @@ dmypy.json
 .pyre/
 
 # custom ignores
-/event_logs/
+/inputs/
 /outputs/
 .idea/

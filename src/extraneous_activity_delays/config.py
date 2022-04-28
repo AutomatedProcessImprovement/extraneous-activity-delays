@@ -26,14 +26,15 @@ class Configuration:
         log_ids                     Identifiers for each key element (e.g. executed activity or resource).
         num_evaluations             Number of iterations of the hyper-optimization search.
         num_evaluation_simulations  Number of simulations performed with each enhanced BPMN model to evaluate its quality.
+        process_name                Name of the process to use in the output files (BPMN and simulated log files).
     """
     log_ids: EventLogIDs = DEFAULT_CSV_IDS
     num_evaluations: int = 10
     num_evaluation_simulations: int = 5
+    process_name: str = "process_model"
 
     PATH_PROJECT = get_project_dir()
-    PATH_INPUTS = PATH_PROJECT.joinpath("event_logs")
+    PATH_INPUTS = PATH_PROJECT.joinpath("inputs")
     PATH_OUTPUTS = PATH_PROJECT.joinpath("outputs")
-    PATH_SIMULATED = PATH_OUTPUTS.joinpath("simulated_logs")
     PATH_EXTERNAL_TOOLS = PATH_PROJECT.joinpath("external_tools")
     PATH_BIMP = PATH_PROJECT.joinpath("external_tools").joinpath("simulator").joinpath("qbp-simulator-engine.jar")

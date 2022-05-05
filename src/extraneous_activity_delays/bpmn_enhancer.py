@@ -1,4 +1,5 @@
 import copy
+import datetime
 import uuid
 
 from lxml import etree
@@ -120,3 +121,10 @@ def set_number_instances_to_simulate(document: ElementTree, num_instances: int):
     _, _, sim_info, _ = _get_basic_bpmn_elements(document)
     # Edit num instances
     sim_info.attrib['processInstances'] = str(num_instances)
+
+
+def set_start_datetime_to_simulate(document: ElementTree, time: datetime.datetime):
+    # Get basic elements
+    _, _, sim_info, _ = _get_basic_bpmn_elements(document)
+    # Edit num instances
+    sim_info.attrib['startDateTime'] = time.strftime('%Y-%m-%dT%H:%M:%S.%f') + time.strftime("%z")[:-2] + ":" + time.strftime("%z")[-2:]

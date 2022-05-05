@@ -3,10 +3,12 @@ from statistics import mean
 
 import pandas as pd
 from estimate_start_times.config import EventLogIDs
-from hyperopt import fmin, hp, Trials, tpe, STATUS_OK
+from hyperopt import fmin, hp, tpe, STATUS_OK
+from hyperopt.fmin import generate_trials_to_calculate
 from lxml.etree import ElementTree
 
-from extraneous_activity_delays.bpmn_enhancer import add_timers_to_bpmn_model, set_number_instances_to_simulate
+from extraneous_activity_delays.bpmn_enhancer import add_timers_to_bpmn_model, set_number_instances_to_simulate, \
+    set_start_datetime_to_simulate
 from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.delay_discoverer import calculate_extraneous_activity_delays
 from extraneous_activity_delays.infer_distribution import scale_distribution
@@ -29,6 +31,7 @@ class NaiveEnhancer:
         # Enhance process model
         enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, self.timers)
         set_number_instances_to_simulate(enhanced_bpmn_document, len(self.event_log[self.log_ids.case].unique()))
+        set_start_datetime_to_simulate(enhanced_bpmn_document, min(self.event_log[self.log_ids.start_time]))
         # Return enhanced document
         return enhanced_bpmn_document
 
@@ -43,14 +46,15 @@ class HyperOptEnhancer:
         self.log_ids = configuration.log_ids
         # Calculate extraneous delay timers
         self.timers = calculate_extraneous_activity_delays(self.training_log, self.log_ids)
-        # Variable to store the information of each optimization trial
-        self.opt_trials = Trials()
         # Hyper-optimization search space: a choice between a factor (float from 0 to 1)
         # to scale all activities, or one different factor per activity.
         self.opt_space = hp.choice('_params', [
-            hp.uniform('alpha', 0, 1),
-            {activity: hp.uniform(activity, 0, 1) for activity in self.timers.keys()}
+            hp.uniform('alpha', 0.0, 1.0),
+            {activity: hp.uniform(activity, 0.0, 1.0) for activity in self.timers.keys()}
         ])
+        # Variable to store the information of each optimization trial
+        baseline_iteration_params = [{'alpha': 1.0, '_params': 0}]
+        self.opt_trials = generate_trials_to_calculate(baseline_iteration_params)  # Force the first trial to be with this values
 
     def enhance_bpmn_model_with_delays(self) -> ElementTree:
         # Launch hyper-optimization with the timers
@@ -79,6 +83,7 @@ class HyperOptEnhancer:
         # Enhance process model
         enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
         set_number_instances_to_simulate(enhanced_bpmn_document, len(self.event_log[self.log_ids.case].unique()))
+        set_start_datetime_to_simulate(enhanced_bpmn_document, min(self.event_log[self.log_ids.start_time]))
         # Return enhanced document
         return enhanced_bpmn_document
 
@@ -97,6 +102,7 @@ class HyperOptEnhancer:
         # Enhance process model
         enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
         set_number_instances_to_simulate(enhanced_bpmn_document, len(self.test_log[self.log_ids.case].unique()))
+        set_start_datetime_to_simulate(enhanced_bpmn_document, min(self.test_log[self.log_ids.start_time]))
         # Serialize to temporal BPMN file
         enhanced_model_path = str(output_folder.joinpath("{}_enhanced.bpmn".format(self.configuration.process_name)))
         enhanced_bpmn_document.write(enhanced_model_path, pretty_print=True)

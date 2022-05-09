@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 
 from extraneous_activity_delays.config import DEFAULT_CSV_IDS
@@ -16,11 +18,11 @@ logs = [
     "cvs_pharmacy",
     "Procure_to_Pay",
 ]
-raw_path = "../../event_logs/{}.csv.gz"
-output_path = "../../event_logs/filtered/{}.csv.gz"
+raw_path = "../../inputs/{}.csv.gz"
+output_path = "../../inputs/filtered/{}.csv.gz"
 
 
-def preprocess_logs():
+def remove_duplicated_events():
     log_ids = DEFAULT_CSV_IDS
     for log_name in logs:
         print(log_name)
@@ -37,5 +39,20 @@ def preprocess_logs():
     print("\n\n")
 
 
+def remove_intermediate_event_instances():
+    timer_ids = [
+        ' EVENT 27 CATCH TIMER', ' EVENT 29 CATCH TIMER', ' EVENT 30 CATCH TIMER', ' EVENT 33 CATCH TIMER', ' EVENT 34 CATCH TIMER',
+        ' EVENT 35 CATCH TIMER', ' EVENT 36 CATCH TIMER', ' EVENT 31 CATCH TIMER', ' EVENT 32 CATCH TIMER', ' EVENT 37 CATCH TIMER',
+        ' EVENT 3 START', ' EVENT 27 END'
+    ]
+    for log in ["CVS-Pharmacy.csv.gz", "Loan_Application.csv.gz", "Procure_to_Pay_as_is.csv.gz"]:
+        print("\n" + log)
+        log_path = "../../inputs/synthetic-simulation-models/" + log
+        event_log = pd.read_csv(log_path)
+        event_log = event_log[~event_log['Activity'].isin(timer_ids)]
+        os.remove(log_path)
+        event_log.to_csv(log_path, encoding="utf-8")
+
+
 if __name__ == '__main__':
-    preprocess_logs()
+    remove_intermediate_event_instances()

@@ -1,5 +1,5 @@
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
 
@@ -42,12 +42,17 @@ class Configuration:
         should_consider_timer       Function taking as input a list of seconds for all the delays that activity has registered, and
                                     returning a bool indicating if those delays should be considered as a timer, or discarded as outliers.
         process_name                Name of the process to use in the output files (BPMN and simulated log files).
+        bot_resources               Set of resource IDs corresponding bots, in order to set the estimated start time of its events as
+                                    their end time.
+        instant_activities          Set of instantaneous activities, in order to set their estimated start time as their end time.
     """
     log_ids: EventLogIDs = DEFAULT_CSV_IDS
     num_evaluations: int = 10
     num_evaluation_simulations: int = 5
     should_consider_timer: Callable[[list], bool] = _should_consider_timer
     process_name: str = "process_model"
+    bot_resources: set = field(default_factory=set)
+    instant_activities: set = field(default_factory=set)
 
     PATH_PROJECT = get_project_dir()
     PATH_INPUTS = PATH_PROJECT.joinpath("inputs")

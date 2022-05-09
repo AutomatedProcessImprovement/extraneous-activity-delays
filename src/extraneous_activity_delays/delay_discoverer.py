@@ -1,10 +1,13 @@
+import datetime
+from typing import Callable
+
 import pandas as pd
 from estimate_start_times.config import Configuration as StartTimeConfiguration, ConcurrencyOracleType, ReEstimationMethod, \
     ResourceAvailabilityType
 from estimate_start_times.config import EventLogIDs as StartTimeEventLogIDs
 from estimate_start_times.estimator import StartTimeEstimator
 
-from extraneous_activity_delays.config import EventLogIDs
+from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.infer_distribution import infer_distribution
 
 
@@ -39,6 +42,8 @@ def calculate_extraneous_activity_delays(
         concurrency_oracle_type=ConcurrencyOracleType.HEURISTICS,
         re_estimation_method=ReEstimationMethod.MODE,
         resource_availability_type=ResourceAvailabilityType.SIMPLE,
+        bot_resources=config.bot_resources,
+        instant_activities=config.instant_activities,
         consider_start_times=True
     )
     enhanced_event_log = StartTimeEstimator(event_log, start_time_config).estimate()

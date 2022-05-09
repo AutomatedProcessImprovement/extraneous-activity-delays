@@ -79,7 +79,7 @@ class HyperOptEnhancer:
             del best_result['_params']
             best_alphas = best_result
         # Transform timers based on [best_alphas]
-        scaled_timers = {activity: scale_distribution(self.timers[activity], best_alphas[activity]) for activity in self.timers}
+        scaled_timers = self._get_scaled_timers(best_alphas)
         # Enhance process model
         enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
         set_number_instances_to_simulate(enhanced_bpmn_document, len(self.event_log[self.log_ids.case].unique()))
@@ -98,7 +98,7 @@ class HyperOptEnhancer:
         # Get iteration folder
         output_folder = create_new_tmp_folder(self.configuration.PATH_OUTPUTS)
         # Transform timers based on [alpha]
-        scaled_timers = {activity: scale_distribution(self.timers[activity], alphas[activity]) for activity in self.timers}
+        scaled_timers = self._get_scaled_timers(alphas)
         # Enhance process model
         enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
         set_number_instances_to_simulate(enhanced_bpmn_document, len(self.test_log[self.log_ids.case].unique()))
@@ -152,3 +152,13 @@ class HyperOptEnhancer:
             file.write("\nMean cycle time EMD: {}\n".format(mean_cycle_time_emd))
         # Return metric
         return mean_cycle_time_emd
+
+    def _get_scaled_timers(self, alphas: dict):
+        scaled_timers = {}
+        # For each timer
+        for activity in self.timers:
+            # If the scaling factor is not 0.0 create a timer
+            if (activity in alphas) and (alphas[activity] > 0.0):
+                scaled_timers[activity] = scale_distribution(self.timers[activity], alphas[activity])
+        # Return timers
+        return scaled_timers

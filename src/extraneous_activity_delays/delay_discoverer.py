@@ -8,16 +8,23 @@ from extraneous_activity_delays.config import EventLogIDs
 from extraneous_activity_delays.infer_distribution import infer_distribution
 
 
-def calculate_extraneous_activity_delays(event_log: pd.DataFrame, log_ids: EventLogIDs) -> dict:
+def calculate_extraneous_activity_delays(
+        event_log: pd.DataFrame,
+        config: Configuration,
+        should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0
+) -> dict:
     """
     Calculate, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed since the
     activity is both enabled and its resource available, and the recorded start of the activity.
 
     :param event_log: Event log storing the information of the process.
-    :param log_ids: id mapping for each of the columns.
+    :param config: configuration of the estimation search.
+    :param should_consider_timer: lambda function that, given a list of floats representing all the delays registered, returns a boolean
+    denoting if a timer should be considered or not. By default, always consider a timer unless there is some delay different from 0.
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
     # Calculate estimated start times (with enablement and resource availability)
+    log_ids = config.log_ids
     start_time_config = StartTimeConfiguration(
         log_ids=StartTimeEventLogIDs(
             case=log_ids.case,
@@ -40,8 +47,8 @@ def calculate_extraneous_activity_delays(event_log: pd.DataFrame, log_ids: Event
     for activity in enhanced_event_log[log_ids.activity].unique():
         delays = (enhanced_event_log[enhanced_event_log[log_ids.activity] == activity][log_ids.start_time] -
                   enhanced_event_log[enhanced_event_log[log_ids.activity] == activity][log_ids.estimated_start_time])
-        timers[activity] = infer_distribution(
-            [delay.total_seconds() if delay.total_seconds() > 0 else 0.0 for delay in delays]
-        )
+        delays = [delay.total_seconds() if delay > datetime.timedelta(0) else 0.0 for delay in delays]
+        if should_consider_timer(delays):
+            timers[activity] = infer_distribution(delays)
     # Return the delays
     return timers

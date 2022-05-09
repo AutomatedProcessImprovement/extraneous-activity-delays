@@ -25,7 +25,7 @@ class NaiveEnhancer:
         self.configuration = configuration
         self.log_ids = configuration.log_ids
         # Calculate extraneous delay timers
-        self.timers = calculate_extraneous_activity_delays(self.event_log, self.log_ids)
+        self.timers = calculate_extraneous_activity_delays(self.event_log, self.configuration, self.configuration.should_consider_timer)
 
     def enhance_bpmn_model_with_delays(self) -> ElementTree:
         # Enhance process model
@@ -45,7 +45,7 @@ class HyperOptEnhancer:
         self.configuration = configuration
         self.log_ids = configuration.log_ids
         # Calculate extraneous delay timers
-        self.timers = calculate_extraneous_activity_delays(self.training_log, self.log_ids)
+        self.timers = calculate_extraneous_activity_delays(self.training_log, self.configuration, self.configuration.should_consider_timer)
         # Hyper-optimization search space: a choice between a factor (float from 0 to 1)
         # to scale all activities, or one different factor per activity.
         self.opt_space = hp.choice('_params', [

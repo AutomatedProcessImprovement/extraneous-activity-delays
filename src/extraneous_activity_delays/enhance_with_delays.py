@@ -1,5 +1,6 @@
 from pathlib import Path
 from statistics import mean
+from typing import Union
 
 import pandas as pd
 from estimate_start_times.config import EventLogIDs
@@ -46,15 +47,17 @@ class HyperOptEnhancer:
         self.log_ids = configuration.log_ids
         # Calculate extraneous delay timers
         self.timers = calculate_extraneous_activity_delays(self.training_log, self.configuration, self.configuration.should_consider_timer)
-        # Hyper-optimization search space: a choice between a factor (float from 0 to 1)
-        # to scale all activities, or one different factor per activity.
-        self.opt_space = hp.choice('_params', [
-            hp.uniform('alpha', 0.0, 1.0),
-            {activity: hp.uniform(activity, 0.0, 1.0) for activity in self.timers.keys()}
-        ])
+        # Hyper-optimization search space
+        if self.configuration.multi_parametrization:
+            self.opt_space = {activity: hp.uniform(activity, 0.0, 1.0) for activity in self.timers.keys()}
+            baseline_iteration_params = [{activity: 1.0 for activity in self.timers.keys()}]
+        else:
+            self.opt_space = hp.uniform('alpha', 0.0, 1.0)
+            baseline_iteration_params = [{'alpha': 1.0}]
         # Variable to store the information of each optimization trial
-        baseline_iteration_params = [{'alpha': 1.0, '_params': 0}]
         self.opt_trials = generate_trials_to_calculate(baseline_iteration_params)  # Force the first trial to be with this values
+        # Result attributes
+        self.best_timers = {}
 
     def enhance_bpmn_model_with_delays(self) -> ElementTree:
         # Launch hyper-optimization with the timers
@@ -71,15 +74,15 @@ class HyperOptEnhancer:
             if result['output_folder'] != self.opt_trials.best_trial['result']['output_folder']:
                 delete_folder(result['output_folder'])
         # Process best parameters result
-        if best_result['_params'] == 0:
-            # First choice, one scale factor
-            best_alphas = {activity: best_result['alpha'] for activity in self.timers.keys()}
+        if self.configuration.multi_parametrization:
+            # One scale factor per timer
+            best_alphas = {activity: round(best_result[activity], 2) for activity in best_result}
         else:
-            # [_params] == 1, second choice, dictionary with one scale factor per activity
-            del best_result['_params']
-            best_alphas = best_result
+            # One scale factor for each timer
+            best_alphas = {activity: round(best_result['alpha'], 2) for activity in self.timers.keys()}
         # Transform timers based on [best_alphas]
         scaled_timers = self._get_scaled_timers(best_alphas)
+        self.best_timers = scaled_timers
         # Enhance process model
         enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
         set_number_instances_to_simulate(enhanced_bpmn_document, len(self.event_log[self.log_ids.case].unique()))
@@ -87,14 +90,15 @@ class HyperOptEnhancer:
         # Return enhanced document
         return enhanced_bpmn_document
 
-    def _enhancement_iteration(self, params: dict) -> dict:
+    def _enhancement_iteration(self, params: Union[float, dict]) -> dict:
         # Process params
-        if type(params) is float:
-            # Only one scale factor, create dictionary with that factor for each activity
-            alphas = {activity: params for activity in self.timers.keys()}
-        else:
+        if self.configuration.multi_parametrization:
             # Dictionary with a scale factor for each activity, so let it be
-            alphas = params
+            alphas = {activity: round(params[activity], 2) for activity in params}
+        else:
+            # Only one scale factor, create dictionary with that factor for each activity
+            alphas = {activity: round(params, 2) for activity in self.timers.keys()}
+        print(alphas)
         # Get iteration folder
         output_folder = create_new_tmp_folder(self.configuration.PATH_OUTPUTS)
         # Transform timers based on [alpha]

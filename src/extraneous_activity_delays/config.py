@@ -41,15 +41,18 @@ class Configuration:
         num_evaluation_simulations  Number of simulations performed with each enhanced BPMN model to evaluate its quality.
         should_consider_timer       Function taking as input a list of seconds for all the delays that activity has registered, and
                                     returning a bool indicating if those delays should be considered as a timer, or discarded as outliers.
+        multi_parametrization       Boolean indicating whether to launch the optimization with one scale factor per timer, or use the same
+                                    scale factor for all timers at the same time.
         process_name                Name of the process to use in the output files (BPMN and simulated log files).
         bot_resources               Set of resource IDs corresponding bots, in order to set the estimated start time of its events as
                                     their end time.
         instant_activities          Set of instantaneous activities, in order to set their estimated start time as their end time.
     """
     log_ids: EventLogIDs = DEFAULT_CSV_IDS
-    num_evaluations: int = 10
-    num_evaluation_simulations: int = 5
+    num_evaluations: int = 100
+    num_evaluation_simulations: int = 10
     should_consider_timer: Callable[[list], bool] = _should_consider_timer
+    multi_parametrization: bool = True
     process_name: str = "process_model"
     bot_resources: set = field(default_factory=set)
     instant_activities: set = field(default_factory=set)

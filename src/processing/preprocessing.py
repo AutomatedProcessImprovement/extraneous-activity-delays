@@ -41,11 +41,21 @@ def remove_duplicated_events():
 
 def remove_intermediate_event_instances():
     timer_ids = [
-        ' EVENT 27 CATCH TIMER', ' EVENT 29 CATCH TIMER', ' EVENT 30 CATCH TIMER', ' EVENT 33 CATCH TIMER', ' EVENT 34 CATCH TIMER',
-        ' EVENT 35 CATCH TIMER', ' EVENT 36 CATCH TIMER', ' EVENT 31 CATCH TIMER', ' EVENT 32 CATCH TIMER', ' EVENT 37 CATCH TIMER',
-        ' EVENT 3 START', ' EVENT 27 END'
+        ' EVENT 27 CATCH TIMER', ' EVENT 28 CATCH TIMER', ' EVENT 29 CATCH TIMER', ' EVENT 30 CATCH TIMER', ' EVENT 31 CATCH TIMER',
+        ' EVENT 32 CATCH TIMER', ' EVENT 33 CATCH TIMER', ' EVENT 34 CATCH TIMER', ' EVENT 35 CATCH TIMER', ' EVENT 36 CATCH TIMER',
+        ' EVENT 37 CATCH TIMER', ' EVENT 3 START', ' EVENT 27 END'
     ]
-    for log in ["CVS-Pharmacy.csv.gz", "Loan_Application.csv.gz", "Procure_to_Pay_as_is.csv.gz"]:
+    for log in [
+        "Loan_Application.csv.gz",
+        "Loan_Application_1_timer.csv.gz",
+        "Loan_Application_4_timers.csv.gz",
+        "Pharmacy.csv.gz",
+        "Pharmacy_1_timer.csv.gz",
+        "Pharmacy_4_timers.csv.gz",
+        "Procure_to_Pay.csv.gz",
+        "Procure_to_Pay_1_timer.csv.gz",
+        "Procure_to_Pay_4_timers.csv.gz"
+    ]:
         print("\n" + log)
         log_path = "../../inputs/synthetic-simulation-models/" + log
         event_log = pd.read_csv(log_path)

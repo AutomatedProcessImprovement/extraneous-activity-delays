@@ -23,18 +23,16 @@ def split_log_training_test(event_log: pd.DataFrame, log_ids: EventLogIDs, train
     # Take first trace until the number of events is [training_percentage] * total size
     total_events = len(event_log)
     training_case_ids = []
-    test_case_ids = []
+    training_full = False
     # Go over the case IDs (sorted by start and end time of its events)
     for case_id in sorted_event_log[log_ids.case].unique():
         # The first traces until the size limit is met goes to the training set
-        if len(event_log[event_log[log_ids.case].isin(training_case_ids + [case_id])]) < (training_percentage * total_events):
+        if not training_full:
             training_case_ids += [case_id]
-        # The rest goes to the test set
-        else:
-            test_case_ids += [case_id]
+            training_full = len(event_log[event_log[log_ids.case].isin(training_case_ids)]) >= (training_percentage * total_events)
     # Return the two splits
     return (event_log[event_log[log_ids.case].isin(training_case_ids)],
-            event_log[event_log[log_ids.case].isin(test_case_ids)])
+            event_log[~event_log[log_ids.case].isin(training_case_ids)])
 
 
 def delete_folder(folder_path: str):

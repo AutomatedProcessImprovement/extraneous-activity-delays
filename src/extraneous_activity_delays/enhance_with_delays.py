@@ -1,3 +1,4 @@
+import copy
 from pathlib import Path
 from statistics import mean
 from typing import Union
@@ -60,33 +61,37 @@ class HyperOptEnhancer:
         self.best_timers = {}
 
     def enhance_bpmn_model_with_delays(self) -> ElementTree:
-        # Launch hyper-optimization with the timers
-        best_result = fmin(
-            fn=self._enhancement_iteration,
-            space=self.opt_space,
-            algo=tpe.suggest,
-            max_evals=self.configuration.num_evaluations,
-            trials=self.opt_trials,
-            show_progressbar=False
-        )
-        # Remove all folders except best trial one
-        for result in self.opt_trials.results:
-            if result['output_folder'] != self.opt_trials.best_trial['result']['output_folder']:
-                delete_folder(result['output_folder'])
-        # Process best parameters result
-        if self.configuration.multi_parametrization:
-            # One scale factor per timer
-            best_alphas = {activity: round(best_result[activity], 2) for activity in best_result}
+        if len(self.timers) > 0:
+            # Launch hyper-optimization with the timers
+            best_result = fmin(
+                fn=self._enhancement_iteration,
+                space=self.opt_space,
+                algo=tpe.suggest,
+                max_evals=self.configuration.num_evaluations,
+                trials=self.opt_trials,
+                show_progressbar=False
+            )
+            # Remove all folders except best trial one
+            for result in self.opt_trials.results:
+                if result['output_folder'] != self.opt_trials.best_trial['result']['output_folder']:
+                    delete_folder(result['output_folder'])
+            # Process best parameters result
+            if self.configuration.multi_parametrization:
+                # One scale factor per timer
+                best_alphas = {activity: round(best_result[activity], 2) for activity in best_result}
+            else:
+                # One scale factor for each timer
+                best_alphas = {activity: round(best_result['alpha'], 2) for activity in self.timers.keys()}
+            # Transform timers based on [best_alphas]
+            scaled_timers = self._get_scaled_timers(best_alphas)
+            self.best_timers = scaled_timers
+            # Enhance process model
+            enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
+            set_number_instances_to_simulate(enhanced_bpmn_document, len(self.event_log[self.log_ids.case].unique()))
+            set_start_datetime_to_simulate(enhanced_bpmn_document, min(self.event_log[self.log_ids.start_time]))
         else:
-            # One scale factor for each timer
-            best_alphas = {activity: round(best_result['alpha'], 2) for activity in self.timers.keys()}
-        # Transform timers based on [best_alphas]
-        scaled_timers = self._get_scaled_timers(best_alphas)
-        self.best_timers = scaled_timers
-        # Enhance process model
-        enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
-        set_number_instances_to_simulate(enhanced_bpmn_document, len(self.event_log[self.log_ids.case].unique()))
-        set_start_datetime_to_simulate(enhanced_bpmn_document, min(self.event_log[self.log_ids.start_time]))
+            # No timers discovered, make a copy of current BPMN document
+            enhanced_bpmn_document = copy.deepcopy(self.bpmn_document)
         # Return enhanced document
         return enhanced_bpmn_document
 

@@ -43,6 +43,7 @@ class Configuration:
                                     returning a bool indicating if those delays should be considered as a timer, or discarded as outliers.
         multi_parametrization       Boolean indicating whether to launch the optimization with one scale factor per timer, or use the same
                                     scale factor for all timers at the same time.
+        max_alpha                   Maximum scale factor to multiply the discovered timers in the hyper-optimization.
         process_name                Name of the process to use in the output files (BPMN and simulated log files).
         bot_resources               Set of resource IDs corresponding bots, in order to set the estimated start time of its events as
                                     their end time.
@@ -53,6 +54,7 @@ class Configuration:
     num_evaluation_simulations: int = 10
     should_consider_timer: Callable[[list], bool] = _should_consider_timer
     multi_parametrization: bool = True
+    max_alpha: float = 1.0
     process_name: str = "process_model"
     bot_resources: set = field(default_factory=set)
     instant_activities: set = field(default_factory=set)

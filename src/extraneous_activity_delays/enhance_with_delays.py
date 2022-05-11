@@ -50,10 +50,10 @@ class HyperOptEnhancer:
         self.timers = calculate_extraneous_activity_delays(self.training_log, self.configuration, self.configuration.should_consider_timer)
         # Hyper-optimization search space
         if self.configuration.multi_parametrization:
-            self.opt_space = {activity: hp.uniform(activity, 0.0, 1.0) for activity in self.timers.keys()}
+            self.opt_space = {activity: hp.uniform(activity, 0.0, self.configuration.max_alpha) for activity in self.timers.keys()}
             baseline_iteration_params = [{activity: 1.0 for activity in self.timers.keys()}]
         else:
-            self.opt_space = hp.uniform('alpha', 0.0, 1.0)
+            self.opt_space = hp.uniform('alpha', 0.0, self.configuration.max_alpha)
             baseline_iteration_params = [{'alpha': 1.0}]
         # Variable to store the information of each optimization trial
         self.opt_trials = generate_trials_to_calculate(baseline_iteration_params)  # Force the first trial to be with this values

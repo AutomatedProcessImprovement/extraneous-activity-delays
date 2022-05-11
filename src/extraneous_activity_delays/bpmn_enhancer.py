@@ -111,6 +111,7 @@ def _get_basic_bpmn_elements(document: ElementTree) -> tuple:
     # Extract simulation parameters
     sim_info = process.find("extensionElements/qbp:processSimulationInfo", namespace)
     if sim_info is None:
+        # SIMOD exported BPMN models
         sim_info = model.find("qbp:processSimulationInfo", namespace)
     # Return elements
     return model, process, sim_info, namespace

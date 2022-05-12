@@ -45,7 +45,7 @@ def experimentation_synthetic_logs():
             config = Configuration(
                 log_ids=sim_log_ids,
                 process_name=log,
-                instant_activities={" Check if refill is allowed", " Check DUR", " Check Insurance"},  # for Pharmacy log
+                instant_activities={"Check if refill is allowed", "Check DUR", "Check Insurance"},  # for Pharmacy log
                 max_alpha=2.0,
                 num_evaluations=100
             )

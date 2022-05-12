@@ -41,6 +41,11 @@ class Configuration:
         num_evaluation_simulations  Number of simulations performed with each enhanced BPMN model to evaluate its quality.
         should_consider_timer       Function taking as input a list of seconds for all the delays that activity has registered, and
                                     returning a bool indicating if those delays should be considered as a timer, or discarded as outliers.
+        training_partition_ratio    Float value between 0.0 and 1.0 (or None). If None, train and validate the hyper-parametrization using
+                                    the full event log passed as argument. Otherwise, perform the hyper-parametrization with a hold-out
+                                    retaining this percentage of events (in full traces) for the training set. For example, if the value is
+                                    0.8 it will train with approximately a subset of traces of the event log with the 80% of the total
+                                    events, and validate with the remaining traces.
         multi_parametrization       Boolean indicating whether to launch the optimization with one scale factor per timer, or use the same
                                     scale factor for all timers at the same time.
         max_alpha                   Maximum scale factor to multiply the discovered timers in the hyper-optimization.
@@ -53,6 +58,7 @@ class Configuration:
     num_evaluations: int = 100
     num_evaluation_simulations: int = 10
     should_consider_timer: Callable[[list], bool] = _should_consider_timer
+    training_partition_ratio: float = None
     multi_parametrization: bool = True
     max_alpha: float = 1.0
     process_name: str = "process_model"

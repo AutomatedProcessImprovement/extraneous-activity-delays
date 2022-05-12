@@ -42,7 +42,15 @@ class HyperOptEnhancer:
     def __init__(self, event_log: pd.DataFrame, bpmn_document: ElementTree, configuration: Configuration):
         # Save parameters
         self.event_log = event_log
-        self.training_log, self.test_log = split_log_training_test(event_log, configuration.log_ids, 0.8)
+        if configuration.training_partition_ratio is not None:
+            # Train the enhancement with hold-out
+            self.training_log, self.validation_log = split_log_training_test(
+                event_log,
+                configuration.log_ids,
+                configuration.training_partition_ratio
+            )
+        else:
+            self.training_log, self.validation_log = self.event_log.copy(), self.event_log.copy()
         self.bpmn_document = bpmn_document
         self.configuration = configuration
         self.log_ids = configuration.log_ids
@@ -110,8 +118,8 @@ class HyperOptEnhancer:
         scaled_timers = self._get_scaled_timers(alphas)
         # Enhance process model
         enhanced_bpmn_document = add_timers_to_bpmn_model(self.bpmn_document, scaled_timers)
-        set_number_instances_to_simulate(enhanced_bpmn_document, len(self.test_log[self.log_ids.case].unique()))
-        set_start_datetime_to_simulate(enhanced_bpmn_document, min(self.test_log[self.log_ids.start_time]))
+        set_number_instances_to_simulate(enhanced_bpmn_document, len(self.validation_log[self.log_ids.case].unique()))
+        set_start_datetime_to_simulate(enhanced_bpmn_document, min(self.validation_log[self.log_ids.start_time]))
         # Serialize to temporal BPMN file
         enhanced_model_path = str(output_folder.joinpath("{}_enhanced.bpmn".format(self.configuration.process_name)))
         enhanced_bpmn_document.write(enhanced_model_path, pretty_print=True)
@@ -135,7 +143,7 @@ class HyperOptEnhancer:
         # Bin size for the cycle time EMD
         bin_size = max(
             [events[self.log_ids.end_time].max() - events[self.log_ids.start_time].min()
-             for case, events in self.test_log.groupby([self.log_ids.case])]
+             for case, events in self.validation_log.groupby([self.log_ids.case])]
         ) / 1000
         # Simulate and measure quality
         for i in range(self.configuration.num_evaluation_simulations):
@@ -147,7 +155,7 @@ class HyperOptEnhancer:
             simulated_event_log[simulated_log_ids.start_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.start_time], utc=True)
             simulated_event_log[simulated_log_ids.end_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.end_time], utc=True)
             # Measure log distance
-            cycle_time_emd = trace_duration_emd(self.test_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)
+            cycle_time_emd = trace_duration_emd(self.validation_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)
             cycle_time_emds += [cycle_time_emd]
             metrics_report += ["\tCycle time EMD {}: {}\n".format(i, cycle_time_emd)]
         # Get mean metric

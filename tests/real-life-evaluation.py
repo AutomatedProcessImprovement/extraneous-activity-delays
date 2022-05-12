@@ -30,12 +30,12 @@ def experimentation_real_life():
         "poc_processmining"
     ]
     # Write CSV header
-    with open("../outputs/evaluation/metrics.csv", 'a') as output_file:
+    with open("../outputs/real-life-evaluation/metrics.csv", 'a') as output_file:
         output_file.write("dataset,cycle_time_raw,cycle_time_naive_enhanced,cycle_time_hyperopt_enhanced,"
                           "timestamps_raw,timestamps_naive_enhanced,timestamps_hyperopt_enhanced\n")
     # Launch analysis for each dataset
     for dataset in datasets:
-        with open("../outputs/evaluation/metrics.csv", 'a') as output_file:
+        with open("../outputs/real-life-evaluation/metrics.csv", 'a') as output_file:
             configuration = Configuration(process_name=dataset, num_evaluations=100)
             experimentation_real_life_run(dataset, configuration, output_file)
 
@@ -58,7 +58,7 @@ def experimentation_real_life_run(dataset: str, config: Configuration, metrics_f
     hyperopt_enhancer = HyperOptEnhancer(event_log, bpmn_document, config)
     hyperopt_enhanced_bpmn_document = hyperopt_enhancer.enhance_bpmn_model_with_delays()
     # Write BPMN models to files
-    evaluation_folder = config.PATH_OUTPUTS.joinpath("evaluation").joinpath(dataset)
+    evaluation_folder = config.PATH_OUTPUTS.joinpath("real-life-evaluation").joinpath(dataset)
     create_folder(evaluation_folder)
     raw_bpmn_model_path = evaluation_folder.joinpath("{}_raw.bpmn".format(dataset))
     bpmn_document.write(raw_bpmn_model_path, pretty_print=True)

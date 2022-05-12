@@ -44,7 +44,8 @@ def remove_intermediate_event_instances():
         ' EVENT 27 CATCH TIMER', ' EVENT 28 CATCH TIMER', ' EVENT 29 CATCH TIMER', ' EVENT 30 CATCH TIMER', ' EVENT 31 CATCH TIMER',
         ' EVENT 32 CATCH TIMER', ' EVENT 33 CATCH TIMER', ' EVENT 34 CATCH TIMER', ' EVENT 35 CATCH TIMER', ' EVENT 36 CATCH TIMER',
         ' EVENT 37 CATCH TIMER', ' EVENT 3 START', ' EVENT 27 END', ' EVENT 18 END ERROR', " Loan application rejected",
-        " Loan  application approved", " Loan  application canceled", " Loan  application received"
+        " Loan  application approved", " Loan  application canceled", " Loan  application received", " Prescription received",
+        " Prescription fulfilled"
     ]
     for log in [
         "Loan_Application_1_timer_train.csv.gz", "Loan_Application_1_timer_test.csv.gz",

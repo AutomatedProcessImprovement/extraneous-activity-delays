@@ -1,4 +1,3 @@
-import datetime
 from typing import Callable
 
 import pandas as pd
@@ -50,9 +49,17 @@ def calculate_extraneous_activity_delays(
     # Discover the time distribution of each activity's delay
     timers = {}
     for activity in enhanced_event_log[log_ids.activity].unique():
-        delays = (enhanced_event_log[enhanced_event_log[log_ids.activity] == activity][log_ids.start_time] -
-                  enhanced_event_log[enhanced_event_log[log_ids.activity] == activity][log_ids.estimated_start_time])
-        delays = [delay.total_seconds() if delay > datetime.timedelta(0) else 0.0 for delay in delays]
+        # Get the activity instances which start was estimated with, at least, the enabled time
+        activity_instances = enhanced_event_log[
+            (enhanced_event_log[log_ids.activity] == activity) &  # An execution of this activity, AND
+            (enhanced_event_log[log_ids.enabled_time] != start_time_config.non_estimated_time)  # having an enabled time
+            ]
+        # Transform the delay to seconds
+        delays = [
+            delay.total_seconds()
+            for delay in (activity_instances[log_ids.start_time] - activity_instances[log_ids.estimated_start_time])
+        ]
+        # If the delay should be considered, add it
         if should_consider_timer(delays):
             timers[activity] = infer_distribution(delays)
     # Return the delays

@@ -50,6 +50,7 @@ class HyperOptEnhancer:
                 configuration.training_partition_ratio
             )
         else:
+            # Train and validate with the full event log
             self.training_log, self.validation_log = self.event_log.copy(), self.event_log.copy()
         self.bpmn_document = bpmn_document
         self.configuration = configuration

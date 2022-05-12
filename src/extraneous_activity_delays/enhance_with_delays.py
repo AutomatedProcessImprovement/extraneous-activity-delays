@@ -111,7 +111,6 @@ class HyperOptEnhancer:
         else:
             # Only one scale factor, create dictionary with that factor for each activity
             alphas = {activity: round(params, 2) for activity in self.timers.keys()}
-        print(alphas)
         # Get iteration folder
         output_folder = create_new_tmp_folder(self.configuration.PATH_OUTPUTS)
         # Transform timers based on [alpha]

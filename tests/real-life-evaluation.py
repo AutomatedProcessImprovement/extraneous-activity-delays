@@ -20,42 +20,27 @@ sim_log_ids = EventLogIDs(
 )
 
 
-def individual_run():
-    # Configuration
-    config = Configuration(process_name="Production", num_evaluations=2)
-    # Read event log
-    event_log = read_event_log("../inputs/Production.csv.gz", config.log_ids)
-    # Read BPMN model
-    parser = etree.XMLParser(remove_blank_text=True)
-    bpmn_document = etree.parse("../inputs/Production.bpmn", parser)
-    set_number_instances_to_simulate(bpmn_document, len(event_log[config.log_ids.case].unique()))
-    set_start_datetime_to_simulate(bpmn_document, min(event_log[config.log_ids.start_time]))
-    # Enhance with activity delays and hyper-optimization
-    hyperopt_enhancer = HyperOptEnhancer(event_log, bpmn_document, config)
-    hyperopt_enhanced_bpmn_document = hyperopt_enhancer.enhance_bpmn_model_with_delays()
-
-
-def experimentation():
+def experimentation_real_life():
     datasets = [
         "Production",
-        "callcentre",
         "insurance",
         "ConsultaDataMining201618",
         "BPI_Challenge_2012_W_Two_TS",
         "BPI_Challenge_2017_W_Two_TS",
-        "poc_processmining",
-        "Application_to_Approval_Government_Agency"
+        "poc_processmining"
     ]
+    # Write CSV header
+    with open("../outputs/evaluation/metrics.csv", 'a') as output_file:
+        output_file.write("dataset,cycle_time_raw,cycle_time_naive_enhanced,cycle_time_hyperopt_enhanced,"
+                          "timestamps_raw,timestamps_naive_enhanced,timestamps_hyperopt_enhanced\n")
     # Launch analysis for each dataset
     for dataset in datasets:
         with open("../outputs/evaluation/metrics.csv", 'a') as output_file:
-            output_file.write("dataset,cycle_time_raw,cycle_time_naive_enhanced,cycle_time_hyperopt_enhanced,"
-                              "timestamps_raw,timestamps_naive_enhanced,timestamps_hyperopt_enhanced\n")
             configuration = Configuration(process_name=dataset, num_evaluations=100)
-            experimentation_run(dataset, configuration, output_file)
+            experimentation_real_life_run(dataset, configuration, output_file)
 
 
-def experimentation_run(dataset: str, config: Configuration, metrics_file):
+def experimentation_real_life_run(dataset: str, config: Configuration, metrics_file):
     # Raw paths
     raw_log_path = str(config.PATH_INPUTS.joinpath(dataset + ".csv.gz"))
     raw_model_path = str(config.PATH_INPUTS.joinpath(dataset + ".bpmn"))
@@ -133,5 +118,4 @@ def read_event_log(log_path: str, log_ids: EventLogIDs):
 
 
 if __name__ == '__main__':
-    # experimentation()
-    individual_run()
+    experimentation_real_life()

@@ -123,11 +123,11 @@ class HyperOptEnhancer:
         enhanced_model_path = str(output_folder.joinpath("{}_enhanced.bpmn".format(self.configuration.process_name)))
         enhanced_bpmn_document.write(enhanced_model_path, pretty_print=True)
         # Evaluate candidate
-        cycle_time_emd = self._evaluate_iteration(enhanced_model_path, output_folder, alphas)
+        cycle_time_emd = self._evaluate_iteration(enhanced_model_path, output_folder, alphas, scaled_timers)
         # Return response
         return {'loss': cycle_time_emd, 'status': STATUS_OK, 'output_folder': str(output_folder)}
 
-    def _evaluate_iteration(self, bpmn_model_path: str, output_folder: Path, params: dict) -> float:
+    def _evaluate_iteration(self, bpmn_model_path: str, output_folder: Path, params: dict, iteration_timers: dict) -> float:
         # EMDs of the simulations
         cycle_time_emds = []
         metrics_report = []
@@ -162,6 +162,9 @@ class HyperOptEnhancer:
         # Write metrics to file
         with open(output_folder.joinpath("metrics.txt"), 'a') as file:
             file.write("Iteration params: {}\n".format(params))
+            file.write("\nTimers:\n")
+            for activity in iteration_timers:
+                file.write("\t'{}': {}\n".format(activity, iteration_timers[activity]))
             file.write("\nMetrics:\n")
             for line in metrics_report:
                 file.write(line)

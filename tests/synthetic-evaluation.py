@@ -43,6 +43,7 @@ def experimentation_synthetic_logs():
         with open("../outputs/synthetic-evaluation/metrics.csv", 'a') as output_file:
             # Configuration
             config = Configuration(
+                log_ids=sim_log_ids,
                 process_name=log,
                 instant_activities={" Check if refill is allowed", " Check DUR", " Check Insurance"},  # for Pharmacy log
                 max_alpha=2.0,
@@ -53,7 +54,7 @@ def experimentation_synthetic_logs():
 
 def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, config: Configuration, metrics_file):
     # --- Raw paths --- #
-    synthetic_input_path = config.PATH_INPUTS.joinpath("synthetic-simulation-models")
+    synthetic_input_path = config.PATH_INPUTS.joinpath("synthetic")
     train_log_path = str(synthetic_input_path.joinpath(dataset + "_train.csv.gz"))
     test_log_path = str(synthetic_input_path.joinpath(dataset + "_test.csv.gz"))
     original_model_path = str(synthetic_input_path.joinpath(dataset + ".bpmn"))

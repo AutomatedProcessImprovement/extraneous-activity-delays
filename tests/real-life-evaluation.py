@@ -22,89 +22,111 @@ sim_log_ids = EventLogIDs(
 
 def experimentation_real_life():
     datasets = [
-        "Production",
-        "insurance",
-        "ConsultaDataMining201618",
-        "BPI_Challenge_2012_W_Two_TS",
-        "BPI_Challenge_2017_W_Two_TS",
-        "poc_processmining"
+        ("BPIC_2012_W", "BPIC_2012_W_contained_Oct16_Dec15", "BPIC_2012_W_contained_Jan07_Mar08"),
+        ("BPIC_2017_W", "BPIC_2017_W_contained_Jun20_Sep16", "BPIC_2017_W_contained_Sep17_Dec19"),
+        ("Governmental_Agency", "Governmental_Agency_contained_Jul18-16_Jun30-17", "Governmental_Agency_contained_Jul03-17_Sep14-18"),
+        ("poc_processmining", "poc_processmining_contained_Dec01_Feb15", "poc_processmining_contained_Feb16_Apr27")
     ]
     # Write CSV header
     with open("../outputs/real-life-evaluation/metrics.csv", 'a') as output_file:
         output_file.write("dataset,cycle_time_raw,cycle_time_naive_enhanced,cycle_time_hyperopt_enhanced,"
-                          "timestamps_raw,timestamps_naive_enhanced,timestamps_hyperopt_enhanced\n")
+                          "cycle_time_hyperopt_enhanced_vs_train,timestamps_raw,timestamps_naive_enhanced,"
+                          "timestamps_hyperopt_enhanced,timestamps_hyperopt_enhanced_vs_train\n")
     # Launch analysis for each dataset
-    for dataset in datasets:
+    for dataset, train, test in datasets:
         with open("../outputs/real-life-evaluation/metrics.csv", 'a') as output_file:
-            configuration = Configuration(process_name=dataset, num_evaluations=100)
-            experimentation_real_life_run(dataset, configuration, output_file)
+            configuration = Configuration(process_name=dataset, max_alpha=2.0, num_evaluations=100)
+            experimentation_real_life_run(dataset, train, test, configuration, output_file)
 
 
-def experimentation_real_life_run(dataset: str, config: Configuration, metrics_file):
-    # Raw paths
-    raw_log_path = str(config.PATH_INPUTS.joinpath(dataset + ".csv.gz"))
-    raw_model_path = str(config.PATH_INPUTS.joinpath(dataset + ".bpmn"))
-    # Read event log
-    event_log = read_event_log(raw_log_path, config.log_ids)
-    # Read BPMN model
+def experimentation_real_life_run(dataset: str, train_dataset: str, test_dataset: str, config: Configuration, metrics_file):
+    # --- Raw paths --- #
+    real_input_path = config.PATH_INPUTS.joinpath("real-life")
+    train_log_path = str(real_input_path.joinpath(train_dataset + ".csv.gz"))
+    test_log_path = str(real_input_path.joinpath(test_dataset + ".csv.gz"))
+    original_model_path = str(real_input_path.joinpath(dataset + ".bpmn"))
+
+    # --- Read event logs --- #
+    train_log = read_event_log(train_log_path, config.log_ids)
+    test_log = read_event_log(test_log_path, config.log_ids)
+
+    # --- Read BPMN models --- #
     parser = etree.XMLParser(remove_blank_text=True)
-    bpmn_document = etree.parse(raw_model_path, parser)
-    set_number_instances_to_simulate(bpmn_document, len(event_log[config.log_ids.case].unique()))
-    set_start_datetime_to_simulate(bpmn_document, min(event_log[config.log_ids.start_time]))
-    # Enhance with activity delays
-    naive_enhancer = NaiveEnhancer(event_log, bpmn_document, config)
-    naive_enhanced_bpmn_document = naive_enhancer.enhance_bpmn_model_with_delays()
-    # Enhance with activity delays and hyper-optimization
-    hyperopt_enhancer = HyperOptEnhancer(event_log, bpmn_document, config)
-    hyperopt_enhanced_bpmn_document = hyperopt_enhancer.enhance_bpmn_model_with_delays()
-    # Write BPMN models to files
+    original_bpmn_model = etree.parse(original_model_path, parser)
+    set_number_instances_to_simulate(original_bpmn_model, len(train_log[config.log_ids.case].unique()))
+    set_start_datetime_to_simulate(original_bpmn_model, min(train_log[config.log_ids.start_time]))
+
+    # --- Enhance with full discovered activity delays --- #
+    naive_enhancer = NaiveEnhancer(train_log, original_bpmn_model, config)
+    naive_enhanced_bpmn_model = naive_enhancer.enhance_bpmn_model_with_delays()
+
+    # --- Enhance with hyper-parametrized activity delays --- #
+    hyperopt_enhancer = HyperOptEnhancer(train_log, original_bpmn_model, config)
+    hyperopt_enhanced_bpmn_model = hyperopt_enhancer.enhance_bpmn_model_with_delays()
+
+    # --- Write BPMN models to files (change their start_time and num_instances to fit with test log) --- #
     evaluation_folder = config.PATH_OUTPUTS.joinpath("real-life-evaluation").joinpath(dataset)
     create_folder(evaluation_folder)
-    raw_bpmn_model_path = evaluation_folder.joinpath("{}_raw.bpmn".format(dataset))
-    bpmn_document.write(raw_bpmn_model_path, pretty_print=True)
+    # Original one
+    set_number_instances_to_simulate(original_bpmn_model, len(test_log[config.log_ids.case].unique()))
+    set_start_datetime_to_simulate(original_bpmn_model, min(test_log[config.log_ids.start_time]))
+    original_bpmn_model_path = evaluation_folder.joinpath("{}_original.bpmn".format(dataset))
+    original_bpmn_model.write(original_bpmn_model_path, pretty_print=True)
+    # Enhanced with naive technique (full delays)
+    set_number_instances_to_simulate(naive_enhanced_bpmn_model, len(test_log[config.log_ids.case].unique()))
+    set_start_datetime_to_simulate(naive_enhanced_bpmn_model, min(test_log[config.log_ids.start_time]))
     naive_enhanced_bpmn_model_path = evaluation_folder.joinpath("{}_naive_enhanced.bpmn".format(dataset))
-    naive_enhanced_bpmn_document.write(naive_enhanced_bpmn_model_path, pretty_print=True)
+    naive_enhanced_bpmn_model.write(naive_enhanced_bpmn_model_path, pretty_print=True)
+    # Enhanced with hyper-parametrized delays
+    set_number_instances_to_simulate(hyperopt_enhanced_bpmn_model, len(test_log[config.log_ids.case].unique()))
+    set_start_datetime_to_simulate(hyperopt_enhanced_bpmn_model, min(test_log[config.log_ids.start_time]))
     hyperopt_enhanced_bpmn_model_path = evaluation_folder.joinpath("{}_hyperopt_enhanced.bpmn".format(dataset))
-    hyperopt_enhanced_bpmn_document.write(hyperopt_enhanced_bpmn_model_path, pretty_print=True)
-    # Simulate and measure quality
+    hyperopt_enhanced_bpmn_model.write(hyperopt_enhanced_bpmn_model_path, pretty_print=True)
+
+    # --- Simulate and measure quality --- #
     bin_size = max(
         [events[config.log_ids.end_time].max() - events[config.log_ids.start_time].min()
-         for case, events in event_log.groupby([config.log_ids.case])]
-    ) / 1000
-    raw_cycle_emds = []
-    naive_cycle_emds = []
-    hyperopt_cycle_emds = []
-    raw_timestamps_emds = []
-    naive_timestamps_emds = []
-    hyperopt_timestamps_emds = []
+         for case, events in test_log.groupby([config.log_ids.case])]
+    ) / 1000  # 1.000 bins
+    # Set lists to store the results of each comparison and get the mean
+    original_cycle_emds, original_timestamps_emds = [], []
+    naive_cycle_emds, naive_timestamps_emds = [], []
+    hyperopt_cycle_emds, hyperopt_timestamps_emds = [], []
+    hyperopt_vs_train_cycle_emds, hyperopt_vs_train_timestamps_emds = [], []
+    # Simulate many times and compute the mean
     for i in range(config.num_evaluation_simulations):
-        # Simulate with model
-        raw_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_raw_{}.csv".format(dataset, i)))
-        simulate_bpmn_model(raw_bpmn_model_path, raw_simulated_log_path, config)
+        # Simulate, read, and evaluate original model
+        original_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_original_{}.csv".format(dataset, i)))
+        simulate_bpmn_model(original_bpmn_model_path, original_simulated_log_path, config)
+        original_simulated_event_log = read_event_log(original_simulated_log_path, sim_log_ids)
+        original_cycle_emds += [trace_duration_emd(test_log, config.log_ids, original_simulated_event_log, sim_log_ids, bin_size)]
+        original_timestamps_emds += [absolute_hour_emd(test_log, config.log_ids, original_simulated_event_log, sim_log_ids)]
+        # Simulate, read, and evaluate naively enhanced model
         naive_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_naive_enhanced_{}.csv".format(dataset, i)))
         simulate_bpmn_model(naive_enhanced_bpmn_model_path, naive_simulated_log_path, config)
+        naive_simulated_event_log = read_event_log(naive_simulated_log_path, sim_log_ids)
+        naive_cycle_emds += [trace_duration_emd(test_log, config.log_ids, naive_simulated_event_log, sim_log_ids, bin_size)]
+        naive_timestamps_emds += [absolute_hour_emd(test_log, config.log_ids, naive_simulated_event_log, sim_log_ids)]
+        # Simulate, read, and evaluate hyper-parametrized enhanced model (also against train)
         hyperopt_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_hyperopt_enhanced_{}.csv".format(dataset, i)))
         simulate_bpmn_model(hyperopt_enhanced_bpmn_model_path, hyperopt_simulated_log_path, config)
-        # Read simulated event logs
-        raw_simulated_event_log = read_event_log(raw_simulated_log_path, sim_log_ids)
-        naive_simulated_event_log = read_event_log(naive_simulated_log_path, sim_log_ids)
         hyperopt_simulated_event_log = read_event_log(hyperopt_simulated_log_path, sim_log_ids)
-        # Measure log distances
-        raw_cycle_emds += [trace_duration_emd(event_log, config.log_ids, raw_simulated_event_log, sim_log_ids, bin_size)]
-        naive_cycle_emds += [trace_duration_emd(event_log, config.log_ids, naive_simulated_event_log, sim_log_ids, bin_size)]
-        hyperopt_cycle_emds += [trace_duration_emd(event_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids, bin_size)]
-        raw_timestamps_emds += [absolute_hour_emd(event_log, config.log_ids, raw_simulated_event_log, sim_log_ids)]
-        naive_timestamps_emds += [absolute_hour_emd(event_log, config.log_ids, naive_simulated_event_log, sim_log_ids)]
-        hyperopt_timestamps_emds += [absolute_hour_emd(event_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids)]
-    # Print results
-    metrics_file.write("{},{},{},{},{},{},{}\n".format(
+        hyperopt_cycle_emds += [trace_duration_emd(test_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids, bin_size)]
+        hyperopt_timestamps_emds += [absolute_hour_emd(test_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids)]
+        hyperopt_vs_train_cycle_emds += [trace_duration_emd(train_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids, bin_size)]
+        hyperopt_vs_train_timestamps_emds += [absolute_hour_emd(train_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids)]
+
+    # --- Print results --- #
+    metrics_file.write("{},{},{},{},{},{},{},{},{}\n".format(
         dataset,
-        mean(raw_cycle_emds),
+        mean(original_cycle_emds),
         mean(naive_cycle_emds),
         mean(hyperopt_cycle_emds),
-        mean(raw_timestamps_emds),
+        mean(hyperopt_vs_train_cycle_emds),
+        mean(original_timestamps_emds),
         mean(naive_timestamps_emds),
-        mean(hyperopt_timestamps_emds)
+        mean(hyperopt_timestamps_emds),
+        mean(hyperopt_vs_train_timestamps_emds)
     ))
 
 

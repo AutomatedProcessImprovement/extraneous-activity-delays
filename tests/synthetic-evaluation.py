@@ -60,6 +60,10 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, con
     original_model_path = str(synthetic_input_path.joinpath(dataset + ".bpmn"))
     no_timers_model_path = str(synthetic_input_path.joinpath(no_timers_dataset + ".bpmn"))
 
+    # --- Evaluation folder --- #
+    evaluation_folder = config.PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath(dataset)
+    create_folder(evaluation_folder)
+
     # --- Read event logs --- #
     train_log = read_event_log(train_log_path, config.log_ids)
     test_log = read_event_log(test_log_path, config.log_ids)
@@ -74,14 +78,18 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, con
     # --- Enhance with full discovered activity delays --- #
     naive_enhancer = NaiveEnhancer(train_log, no_timers_bpmn_model, config)
     naive_enhanced_bpmn_model = naive_enhancer.enhance_bpmn_model_with_delays()
+    with open(evaluation_folder.joinpath("naive_enhancer_timers.txt"), 'w') as output_file:
+        for activity in naive_enhancer.timers:
+            output_file.write("'{}': {}\n".format(activity, naive_enhancer.timers[activity]))
 
     # --- Enhance with hyper-parametrized activity delays --- #
     hyperopt_enhancer = HyperOptEnhancer(train_log, no_timers_bpmn_model, config)
     hyperopt_enhanced_bpmn_model = hyperopt_enhancer.enhance_bpmn_model_with_delays()
+    with open(evaluation_folder.joinpath("hyperopt_enhancer_timers.txt"), 'w') as output_file:
+        for activity in hyperopt_enhancer.best_timers:
+            output_file.write("'{}': {}\n".format(activity, hyperopt_enhancer.timers[activity]))
 
     # --- Write BPMN models to files (change their start_time and num_instances to fit with test log) --- #
-    evaluation_folder = config.PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath(dataset)
-    create_folder(evaluation_folder)
     # Original one (with or without timers, it depends on the test)
     set_number_instances_to_simulate(original_bpmn_model, len(test_log[config.log_ids.case].unique()))
     set_start_datetime_to_simulate(original_bpmn_model, min(test_log[config.log_ids.start_time]))

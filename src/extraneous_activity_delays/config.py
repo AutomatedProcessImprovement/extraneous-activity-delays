@@ -28,7 +28,7 @@ def _should_consider_timer(delays: list) -> bool:
     :return: a boolean denoting if there should be a timer for that activity or not.
     """
     num_positive_delays = sum([delay > 0.0 for delay in delays])
-    return len(delays) > 0 and (num_positive_delays / len(delays)) > 0.1
+    return len(delays) > 0 and (num_positive_delays / len(delays)) > 0.05
 
 
 @dataclass

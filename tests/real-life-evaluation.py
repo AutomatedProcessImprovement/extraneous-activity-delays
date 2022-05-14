@@ -24,7 +24,7 @@ def experimentation_real_life():
     datasets = [
         ("BPIC_2012_W", "BPIC_2012_W_contained_Oct16_Dec15", "BPIC_2012_W_contained_Jan07_Mar08"),
         ("BPIC_2017_W", "BPIC_2017_W_contained_Jun20_Sep16", "BPIC_2017_W_contained_Sep17_Dec19"),
-        ("Governmental_Agency", "Governmental_Agency_contained_Jul18-16_Jun30-17", "Governmental_Agency_contained_Jul03-17_Sep14-18"),
+        # ("Governmental_Agency", "Governmental_Agency_contained_Jul18-16_Jun30-17", "Governmental_Agency_contained_Jul03-17_Sep14-18"),
         ("poc_processmining", "poc_processmining_contained_Dec01_Feb15", "poc_processmining_contained_Feb16_Apr27")
     ]
     # Write CSV header
@@ -77,14 +77,14 @@ def experimentation_real_life_run(dataset: str, train_dataset: str, test_dataset
     hyperopt_enhanced_bpmn_model = hyperopt_enhancer.enhance_bpmn_model_with_delays()
     with open(evaluation_folder.joinpath("hyperopt_enhancer_timers.txt"), 'w') as output_file:
         for activity in hyperopt_enhancer.best_timers:
-            output_file.write("'{}': {}\n".format(activity, hyperopt_enhancer.timers[activity]))
+            output_file.write("'{}': {}\n".format(activity, hyperopt_enhancer.best_timers[activity]))
 
     # --- Enhance with hyper-parametrized activity delays with hold-out --- #
     hyperopt_holdout_enhancer = HyperOptEnhancer(train_log, original_bpmn_model, hold_out_config)
     hyperopt_holdout_enhanced_bpmn_model = hyperopt_holdout_enhancer.enhance_bpmn_model_with_delays()
     with open(evaluation_folder.joinpath("hyperopt_enhancer_timers_holdout.txt"), 'w') as output_file:
         for activity in hyperopt_holdout_enhancer.best_timers:
-            output_file.write("'{}': {}\n".format(activity, hyperopt_holdout_enhancer.timers[activity]))
+            output_file.write("'{}': {}\n".format(activity, hyperopt_holdout_enhancer.best_timers[activity]))
 
     # --- Write BPMN models to files (change their start_time and num_instances to fit with test log) --- #
     # Original one

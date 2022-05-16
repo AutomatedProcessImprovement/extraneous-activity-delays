@@ -36,10 +36,9 @@ def experimentation_synthetic_logs():
     with open("../outputs/synthetic-evaluation/metrics.csv", 'a') as output_file:
         output_file.write("dataset,cycle_time_original,cycle_time_no_timers,cycle_time_naive_enhanced,"
                           "cycle_time_hyperopt_enhanced,cycle_time_hyperopt_enhanced_vs_train,"
-                          "cycle_time_hyperopt_holdout_enhanced,cycle_time_hyperopt_holdout_enhanced_vs_train,"
-                          "timestamps_original,timestamps_no_timers,timestamps_naive_enhanced,"
-                          "timestamps_hyperopt_enhanced,timestamps_hyperopt_enhanced_vs_train,"
-                          "timestamps_hyperopt_holdout_enhanced,timestamps_hyperopt_holdout_enhanced_vs_train\n")
+                          "cycle_time_hyperopt_holdout_enhanced,timestamps_original,timestamps_no_timers,"
+                          "timestamps_naive_enhanced,timestamps_hyperopt_enhanced,"
+                          "timestamps_hyperopt_enhanced_vs_train,timestamps_hyperopt_holdout_enhanced\n")
     # Launch analysis for each dataset
     for log, no_timers_log in datasets:
         with open("../outputs/synthetic-evaluation/metrics.csv", 'a') as output_file:
@@ -141,7 +140,6 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     hyperopt_cycle_emds, hyperopt_timestamps_emds = [], []
     hyperopt_vs_train_cycle_emds, hyperopt_vs_train_timestamps_emds = [], []
     hyperopt_holdout_cycle_emds, hyperopt_holdout_timestamps_emds = [], []
-    hyperopt_holdout_vs_train_cycle_emds, hyperopt_holdout_vs_train_timestamps_emds = [], []
     # Simulate many times and compute the mean
     for i in range(config.num_evaluation_simulations):
         # Simulate, read, and evaluate original model
@@ -168,8 +166,12 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
         hyperopt_simulated_event_log = read_event_log(hyperopt_simulated_log_path, sim_log_ids)
         hyperopt_cycle_emds += [trace_duration_emd(test_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids, bin_size)]
         hyperopt_timestamps_emds += [absolute_hour_emd(test_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids)]
-        hyperopt_vs_train_cycle_emds += [trace_duration_emd(train_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids, bin_size)]
-        hyperopt_vs_train_timestamps_emds += [absolute_hour_emd(train_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids)]
+        displaced_hyperopt = hyperopt_simulated_event_log.copy()
+        start_time_difference = displaced_hyperopt[sim_log_ids.start_time].min() - train_log[config.log_ids.start_time].min()
+        displaced_hyperopt[sim_log_ids.start_time] = displaced_hyperopt[sim_log_ids.start_time] - start_time_difference
+        displaced_hyperopt[sim_log_ids.end_time] = displaced_hyperopt[sim_log_ids.end_time] - start_time_difference
+        hyperopt_vs_train_cycle_emds += [trace_duration_emd(train_log, config.log_ids, displaced_hyperopt, sim_log_ids, bin_size)]
+        hyperopt_vs_train_timestamps_emds += [absolute_hour_emd(train_log, config.log_ids, displaced_hyperopt, sim_log_ids)]
         # Simulate, read, and evaluate hyper-parametrized (with hold-out) enhanced model (also against train)
         hyperopt_holdout_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_hyperopt_holdout_enhanced_{}.csv".format(dataset, i)))
         simulate_bpmn_model(hyperopt_holdout_enhanced_bpmn_model_path, hyperopt_holdout_simulated_log_path, config)
@@ -180,15 +182,9 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
         hyperopt_holdout_timestamps_emds += [
             absolute_hour_emd(test_log, config.log_ids, hyperopt_holdout_simulated_event_log, sim_log_ids)
         ]
-        hyperopt_holdout_vs_train_cycle_emds += [
-            trace_duration_emd(train_log, config.log_ids, hyperopt_holdout_simulated_event_log, sim_log_ids, bin_size)
-        ]
-        hyperopt_holdout_vs_train_timestamps_emds += [
-            absolute_hour_emd(train_log, config.log_ids, hyperopt_holdout_simulated_event_log, sim_log_ids)
-        ]
 
     # --- Print results --- #
-    metrics_file.write("{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format(
+    metrics_file.write("{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format(
         dataset,
         mean(original_cycle_emds),
         mean(no_timers_cycle_emds),
@@ -196,14 +192,12 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
         mean(hyperopt_cycle_emds),
         mean(hyperopt_vs_train_cycle_emds),
         mean(hyperopt_holdout_cycle_emds),
-        mean(hyperopt_holdout_vs_train_cycle_emds),
         mean(original_timestamps_emds),
         mean(no_timers_timestamps_emds),
         mean(naive_timestamps_emds),
         mean(hyperopt_timestamps_emds),
         mean(hyperopt_vs_train_timestamps_emds),
-        mean(hyperopt_holdout_timestamps_emds),
-        mean(hyperopt_holdout_vs_train_timestamps_emds)
+        mean(hyperopt_holdout_timestamps_emds)
     ))
 
 

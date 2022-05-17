@@ -43,7 +43,7 @@ class HyperOptEnhancer:
         # Save parameters
         self.event_log = event_log
         if configuration.training_partition_ratio is not None:
-            # Train the enhancement with hold-out
+            # Train and validate the enhancement with hold-out
             self.training_log, self.validation_log = split_log_training_test(
                 event_log,
                 configuration.log_ids,
@@ -68,6 +68,7 @@ class HyperOptEnhancer:
         self.opt_trials = generate_trials_to_calculate(baseline_iteration_params)  # Force the first trial to be with this values
         # Result attributes
         self.best_timers = {}
+        self.losses = []
 
     def enhance_bpmn_model_with_delays(self) -> ElementTree:
         if len(self.timers) > 0:
@@ -125,6 +126,7 @@ class HyperOptEnhancer:
         enhanced_bpmn_document.write(enhanced_model_path, pretty_print=True)
         # Evaluate candidate
         cycle_time_emd = self._evaluate_iteration(enhanced_model_path, output_folder, alphas, scaled_timers)
+        self.losses += [cycle_time_emd]
         # Return response
         return {'loss': cycle_time_emd, 'status': STATUS_OK, 'output_folder': str(output_folder)}
 

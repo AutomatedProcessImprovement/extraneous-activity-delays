@@ -93,6 +93,7 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     with open(evaluation_folder.joinpath("hyperopt_enhancer_timers.txt"), 'w') as output_file:
         for activity in hyperopt_enhancer.best_timers:
             output_file.write("'{}': {}\n".format(activity, hyperopt_enhancer.best_timers[activity]))
+        output_file.write("\nLosses: {}".format(hyperopt_enhancer.losses))
 
     # --- Enhance with hyper-parametrized activity delays with hold-out --- #
     hyperopt_holdout_enhancer = HyperOptEnhancer(train_log, no_timers_bpmn_model, hold_out_config)
@@ -100,6 +101,7 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     with open(evaluation_folder.joinpath("hyperopt_enhancer_timers_holdout.txt"), 'w') as output_file:
         for activity in hyperopt_holdout_enhancer.best_timers:
             output_file.write("'{}': {}\n".format(activity, hyperopt_holdout_enhancer.best_timers[activity]))
+        output_file.write("\nLosses: {}".format(hyperopt_holdout_enhancer.losses))
 
     # --- Write BPMN models to files (change their start_time and num_instances to fit with test log) --- #
     # Original one (with or without timers, it depends on the test)

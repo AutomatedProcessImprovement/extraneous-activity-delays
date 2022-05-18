@@ -50,12 +50,12 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     config = Configuration(
         log_ids=sim_log_ids, process_name=dataset,
         instant_activities={"Check if refill is allowed", "Check DUR", "Check Insurance"},  # for Pharmacy log
-        max_alpha=2.0, num_evaluations=100
+        max_alpha=50.0, num_evaluations=200
     )
     hold_out_config = Configuration(
         log_ids=sim_log_ids, process_name=dataset,
         instant_activities={"Check if refill is allowed", "Check DUR", "Check Insurance"},  # for Pharmacy log
-        max_alpha=2.0, training_partition_ratio=0.5, num_evaluations=100
+        max_alpha=50.0, training_partition_ratio=0.5, num_evaluations=200
     )
 
     # --- Raw paths --- #

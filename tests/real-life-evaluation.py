@@ -41,8 +41,8 @@ def experimentation_real_life():
 
 def experimentation_real_life_run(dataset: str, train_dataset: str, test_dataset: str, metrics_file):
     # Configuration
-    config = Configuration(process_name=dataset, max_alpha=2.0, num_evaluations=100)
-    hold_out_config = Configuration(process_name=dataset, max_alpha=2.0, training_partition_ratio=0.5, num_evaluations=100)
+    config = Configuration(process_name=dataset, max_alpha=50.0, num_evaluations=200)
+    hold_out_config = Configuration(process_name=dataset, max_alpha=50.0, training_partition_ratio=0.5, num_evaluations=200)
 
     # --- Raw paths --- #
     real_input_path = config.PATH_INPUTS.joinpath("real-life")

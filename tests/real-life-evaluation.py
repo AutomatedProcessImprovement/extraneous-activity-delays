@@ -25,7 +25,7 @@ def experimentation_real_life():
         ("BPIC_2012_W", "BPIC_2012_W_contained_Oct16_Dec15", "BPIC_2012_W_contained_Jan07_Mar08"),
         ("BPIC_2017_W", "BPIC_2017_W_contained_Jun20_Sep16", "BPIC_2017_W_contained_Sep17_Dec19"),
         # ("Governmental_Agency", "Governmental_Agency_contained_Jul18-16_Jun30-17", "Governmental_Agency_contained_Jul03-17_Sep14-18"),
-        ("poc_processmining", "poc_processmining_contained_Dec01_Feb15", "poc_processmining_contained_Feb16_Apr27")
+        # ("poc_processmining", "poc_processmining_contained_Dec01_Feb15", "poc_processmining_contained_Feb16_Apr27")
     ]
     # Write CSV header
     with open("../outputs/real-life-evaluation/metrics.csv", 'a') as output_file:
@@ -37,6 +37,29 @@ def experimentation_real_life():
     for dataset, train, test in datasets:
         with open("../outputs/real-life-evaluation/metrics.csv", 'a') as output_file:
             experimentation_real_life_run(dataset, train, test, output_file)
+
+
+def real_life_log_stats():
+    datasets = [
+        "BPIC_2012_W_contained_Oct16_Dec15",
+        "BPIC_2012_W_contained_Jan07_Mar08",
+        "BPIC_2017_W_contained_Jun20_Sep16",
+        "BPIC_2017_W_contained_Sep17_Dec19",
+    ]
+    config = Configuration()
+    print("Dataset,Traces,Activity instances,Variants,Activities,Resources")
+    # Launch analysis for each dataset
+    for dataset in datasets:
+        log_path = str(config.PATH_INPUTS.joinpath("real-life").joinpath(dataset + ".csv.gz"))
+        log = read_event_log(log_path, config.log_ids)
+        print("{},{},{},{},{},{}".format(
+            dataset,
+            len(log[config.log_ids.case].unique()),
+            len(log),
+            len(set([",".join(list(events[config.log_ids.activity])) for key, events in log.groupby(config.log_ids.case)])),
+            len(log[config.log_ids.activity].unique()),
+            len(log[config.log_ids.resource].unique())
+        ))
 
 
 def experimentation_real_life_run(dataset: str, train_dataset: str, test_dataset: str, metrics_file):

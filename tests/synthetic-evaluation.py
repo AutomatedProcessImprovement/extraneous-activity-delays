@@ -30,7 +30,10 @@ def experimentation_synthetic_logs():
         ("Loan_Application_4_timers", "Loan_Application"),
         ("Procure_to_Pay", "Procure_to_Pay"),
         ("Procure_to_Pay_1_timer", "Procure_to_Pay"),
-        ("Procure_to_Pay_4_timers", "Procure_to_Pay")
+        ("Procure_to_Pay_4_timers", "Procure_to_Pay"),
+        ("Insurance_Claims", "Insurance_Claims"),
+        ("Insurance_Claims_1_timer", "Insurance_Claims"),
+        ("Insurance_Claims_4_timers", "Insurance_Claims")
     ]
     # Write CSV header
     with open("../outputs/synthetic-evaluation/metrics.csv", 'a') as output_file:

@@ -17,7 +17,8 @@ The result is an enhanced version of the input BPS model with timer events to mo
 ## Basic Usage
 
 Check the [synthetic](https://github.com/AutomatedProcessImprovement/extraneous-activity-delays/blob/main/tests/synthetic-evaluation.py) and [real-life](https://github.com/AutomatedProcessImprovement/extraneous-activity-delays/blob/main/tests/real-life-evaluation.py) evaluation files for an example of the different executions of the technique, and [config file](https://github.com/AutomatedProcessImprovement/extraneous-activity-delays/blob/main/src/extraneous_activity_delays/config.py) for an explanation of the configuration parameters.
-However, here we provide a simple example of the hyper-parameter optimization version of the proposal.
+
+We provide a simple example of the hyper-parameter optimization version of the proposal:
 
 ```python
 # Set up default configuration

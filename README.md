@@ -1,4 +1,4 @@
-# BPS model enhancer
+# Extraneous activity delays BPS model enhancer
 
 Python implementation of the approach to enhance BPS models by modeling the extraneous activity delays with timer events.
 This technique has been presented in the paper "Modeling Extraneous Activity Delays in Business Process Simulation", by David Chapela-Campa and Marlon Dumas.

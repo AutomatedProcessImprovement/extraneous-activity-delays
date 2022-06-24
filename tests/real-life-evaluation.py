@@ -24,8 +24,6 @@ def experimentation_real_life():
     datasets = [
         ("BPIC_2012_W", "BPIC_2012_W_contained_Oct16_Dec15", "BPIC_2012_W_contained_Jan07_Mar08"),
         ("BPIC_2017_W", "BPIC_2017_W_contained_Jun20_Sep16", "BPIC_2017_W_contained_Sep17_Dec19"),
-        # ("Governmental_Agency", "Governmental_Agency_contained_Jul18-16_Jun30-17", "Governmental_Agency_contained_Jul03-17_Sep14-18"),
-        # ("poc_processmining", "poc_processmining_contained_Dec01_Feb15", "poc_processmining_contained_Feb16_Apr27")
     ]
     # Write CSV header
     with open("../outputs/real-life-evaluation/metrics.csv", 'a') as output_file:

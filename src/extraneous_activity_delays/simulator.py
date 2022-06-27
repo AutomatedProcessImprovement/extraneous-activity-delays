@@ -7,7 +7,6 @@ from extraneous_activity_delays.config import Configuration
 class SimulationOutput(enum.Enum):
     SUCCESS = 1
     ERROR = 2
-    MAX_CYCLE_ERROR = 3
 
 
 def simulate_bpmn_model(model_path: str, output_path: str, config: Configuration) -> SimulationOutput:
@@ -28,6 +27,7 @@ def simulate_bpmn_model(model_path: str, output_path: str, config: Configuration
         print(message)
     # Return standard output
     if "BPSimulatorException" in stdout and "Maximum allowed cycle time exceeded" in stdout:
-        return SimulationOutput.MAX_CYCLE_ERROR
+        print("Warning! Simulation error due to max cycle time exceeded.")
+        return SimulationOutput.ERROR
     else:
         return SimulationOutput.SUCCESS

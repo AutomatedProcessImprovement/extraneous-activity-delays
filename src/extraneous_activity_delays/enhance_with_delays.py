@@ -15,7 +15,7 @@ from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.delay_discoverer import calculate_extraneous_activity_delays
 from extraneous_activity_delays.infer_distribution import scale_distribution
 from extraneous_activity_delays.metrics import trace_duration_emd
-from extraneous_activity_delays.simulator import simulate_bpmn_model
+from extraneous_activity_delays.simulator import simulate_bpmn_model, SimulationOutput
 from extraneous_activity_delays.utils import delete_folder, create_new_tmp_folder, split_log_training_validation_event_wise
 
 
@@ -151,17 +151,22 @@ class HyperOptEnhancer:
         for i in range(self.configuration.num_evaluation_simulations):
             # Simulate with model
             tmp_simulated_log_path = str(output_folder.joinpath("{}_simulated_{}.csv".format(self.configuration.process_name, i)))
-            simulate_bpmn_model(bpmn_model_path, tmp_simulated_log_path, self.configuration)
-            # Read simulated event log
-            simulated_event_log = pd.read_csv(tmp_simulated_log_path)
-            simulated_event_log[simulated_log_ids.start_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.start_time], utc=True)
-            simulated_event_log[simulated_log_ids.end_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.end_time], utc=True)
-            # Measure log distance
-            cycle_time_emd = trace_duration_emd(self.validation_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)
-            cycle_time_emds += [cycle_time_emd]
-            metrics_report += ["\tCycle time EMD {}: {}\n".format(i, cycle_time_emd)]
+            sim_out = simulate_bpmn_model(bpmn_model_path, tmp_simulated_log_path, self.configuration)
+            if sim_out == SimulationOutput.SUCCESS:
+                # Read simulated event log
+                simulated_event_log = pd.read_csv(tmp_simulated_log_path)
+                simulated_event_log[simulated_log_ids.start_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.start_time], utc=True)
+                simulated_event_log[simulated_log_ids.end_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.end_time], utc=True)
+                # Measure log distance
+                cycle_time_emd = trace_duration_emd(self.validation_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)
+                cycle_time_emds += [cycle_time_emd]
+                metrics_report += ["\tCycle time EMD {}: {}\n".format(i, cycle_time_emd)]
         # Get mean metric
-        mean_cycle_time_emd = mean(cycle_time_emds)
+        if len(cycle_time_emds) > 0:
+            mean_cycle_time_emd = mean(cycle_time_emds)
+        else:
+            # All simulations ended in error, set default value
+            mean_cycle_time_emd = 1000000
         # Write metrics to file
         with open(output_folder.joinpath("metrics.txt"), 'a') as file:
             file.write("Iteration params: {}\n".format(params))

@@ -16,7 +16,7 @@ from extraneous_activity_delays.delay_discoverer import calculate_extraneous_act
 from extraneous_activity_delays.infer_distribution import scale_distribution
 from extraneous_activity_delays.metrics import trace_duration_emd
 from extraneous_activity_delays.simulator import simulate_bpmn_model
-from extraneous_activity_delays.utils import delete_folder, create_new_tmp_folder, split_log_training_test_event_wise
+from extraneous_activity_delays.utils import delete_folder, create_new_tmp_folder, split_log_training_validation_event_wise
 
 
 class NaiveEnhancer:
@@ -44,7 +44,7 @@ class HyperOptEnhancer:
         self.event_log = event_log
         if configuration.training_partition_ratio is not None:
             # Train and validate the enhancement with hold-out
-            self.training_log, self.validation_log = split_log_training_test_event_wise(
+            self.training_log, self.validation_log = split_log_training_validation_event_wise(
                 event_log,
                 configuration.log_ids,
                 configuration.training_partition_ratio

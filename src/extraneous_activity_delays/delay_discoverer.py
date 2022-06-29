@@ -3,7 +3,6 @@ from typing import Callable
 import pandas as pd
 from estimate_start_times.config import Configuration as StartTimeConfiguration, ConcurrencyOracleType, ReEstimationMethod, \
     ResourceAvailabilityType
-from estimate_start_times.config import EventLogIDs as StartTimeEventLogIDs
 from estimate_start_times.estimator import StartTimeEstimator
 
 from extraneous_activity_delays.config import Configuration
@@ -22,22 +21,13 @@ def calculate_extraneous_activity_delays(
     :param event_log: Event log storing the information of the process.
     :param config: configuration of the estimation search.
     :param should_consider_timer: lambda function that, given a list of floats representing all the delays registered, returns a boolean
-    denoting if a timer should be considered or not. By default, always consider a timer unless there is some delay different from 0.
+    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
     # Calculate estimated start times (with enablement and resource availability)
     log_ids = config.log_ids
     start_time_config = StartTimeConfiguration(
-        log_ids=StartTimeEventLogIDs(
-            case=log_ids.case,
-            activity=log_ids.activity,
-            start_time=log_ids.start_time,
-            end_time=log_ids.end_time,
-            enabled_time=log_ids.enabled_time,
-            available_time=log_ids.available_time,
-            estimated_start_time=log_ids.estimated_start_time,
-            resource=log_ids.resource
-        ),
+        log_ids=log_ids,
         concurrency_oracle_type=ConcurrencyOracleType.HEURISTICS,
         re_estimation_method=ReEstimationMethod.MODE,
         resource_availability_type=ResourceAvailabilityType.SIMPLE,

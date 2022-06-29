@@ -12,7 +12,12 @@ The result is an enhanced version of the input BPS model with timer events to mo
 
 - **Python v3.9.5+**
 - **PIP v21.1.2+**
-- Python dependencies: The packages listed in `requirements.txt`.
+- Python dependencies: Packages listed in `requirements.txt`, the package [Log Similarity Metrics](https://github.com/AutomatedProcessImprovement/log-similarity-metrics) can be installed it with:
+  ```shell
+  $ git submodule update --init --recursive
+  $ cd ./external_tools/log-similarity-metrics/
+  $ pip install -e .
+  ```
 
 ## Basic Usage
 

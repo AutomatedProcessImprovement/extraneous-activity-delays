@@ -14,7 +14,7 @@ from extraneous_activity_delays.bpmn_enhancer import add_timers_to_bpmn_model, s
 from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.delay_discoverer import calculate_extraneous_activity_delays
 from extraneous_activity_delays.infer_distribution import scale_distribution
-from extraneous_activity_delays.metrics import trace_duration_emd
+from log_similarity_metrics.cycle_time_emd import cycle_time_emd
 from extraneous_activity_delays.simulator import simulate_bpmn_model, SimulationOutput
 from extraneous_activity_delays.utils import delete_folder, create_new_tmp_folder, split_log_training_validation_event_wise
 
@@ -135,7 +135,7 @@ class HyperOptEnhancer:
         cycle_time_emds = []
         metrics_report = []
         # IDs of the simulated logs from BIMP
-        simulated_log_ids = EventLogIDs(
+        sim_log_ids = EventLogIDs(
             case="caseid",
             activity="task",
             start_time="start_timestamp",
@@ -155,12 +155,12 @@ class HyperOptEnhancer:
             if sim_out == SimulationOutput.SUCCESS:
                 # Read simulated event log
                 simulated_event_log = pd.read_csv(tmp_simulated_log_path)
-                simulated_event_log[simulated_log_ids.start_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.start_time], utc=True)
-                simulated_event_log[simulated_log_ids.end_time] = pd.to_datetime(simulated_event_log[simulated_log_ids.end_time], utc=True)
+                simulated_event_log[sim_log_ids.start_time] = pd.to_datetime(simulated_event_log[sim_log_ids.start_time], utc=True)
+                simulated_event_log[sim_log_ids.end_time] = pd.to_datetime(simulated_event_log[sim_log_ids.end_time], utc=True)
                 # Measure log distance
-                cycle_time_emd = trace_duration_emd(self.validation_log, self.log_ids, simulated_event_log, simulated_log_ids, bin_size)
-                cycle_time_emds += [cycle_time_emd]
-                metrics_report += ["\tCycle time EMD {}: {}\n".format(i, cycle_time_emd)]
+                cycle_time_emd_value = cycle_time_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids, bin_size)
+                cycle_time_emds += [cycle_time_emd_value]
+                metrics_report += ["\tCycle time EMD {}: {}\n".format(i, cycle_time_emd_value)]
         # Get mean metric
         if len(cycle_time_emds) > 0:
             mean_cycle_time_emd = mean(cycle_time_emds)

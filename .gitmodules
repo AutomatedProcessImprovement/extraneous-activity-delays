@@ -1,0 +1,3 @@
+[submodule "external_tools/log-similarity-metrics"]
+	path = external_tools/log-similarity-metrics
+	url = https://github.com/AutomatedProcessImprovement/log-similarity-metrics.git

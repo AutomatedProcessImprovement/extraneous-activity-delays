@@ -14,7 +14,7 @@ from extraneous_activity_delays.bpmn_enhancer import add_timers_to_bpmn_model, s
 from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.delay_discoverer import calculate_extraneous_activity_delays
 from extraneous_activity_delays.infer_distribution import scale_distribution
-from log_similarity_metrics.cycle_time_emd import cycle_time_emd
+from log_similarity_metrics.cycle_times import cycle_time_emd
 from extraneous_activity_delays.simulator import simulate_bpmn_model, SimulationOutput
 from extraneous_activity_delays.utils import delete_folder, create_new_tmp_folder, split_log_training_validation_event_wise
 

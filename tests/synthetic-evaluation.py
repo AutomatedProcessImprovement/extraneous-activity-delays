@@ -9,8 +9,8 @@ from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer, NaiveEnhancer
 from extraneous_activity_delays.simulator import simulate_bpmn_model
 from extraneous_activity_delays.utils import create_folder
-from log_similarity_metrics.absolute_timestamps_emd import absolute_timestamps_emd
-from log_similarity_metrics.cycle_time_emd import cycle_time_emd
+from log_similarity_metrics.absolute_timestamps import absolute_timestamps_emd
+from log_similarity_metrics.cycle_times import cycle_time_emd
 
 sim_log_ids = EventLogIDs(
     case="caseid",

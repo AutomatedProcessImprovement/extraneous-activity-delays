@@ -42,7 +42,7 @@ def calculate_extraneous_activity_delays(
         # Get the activity instances which start was estimated with, at least, the enabled time
         activity_instances = enhanced_event_log[
             (enhanced_event_log[log_ids.activity] == activity) &  # An execution of this activity, AND
-            (enhanced_event_log[log_ids.enabled_time] != start_time_config.non_estimated_time)  # having an enabled time
+            (~pd.isna(enhanced_event_log[log_ids.estimated_start_time]))  # having an enabled time
             ]
         # Transform the delay to seconds
         delays = [

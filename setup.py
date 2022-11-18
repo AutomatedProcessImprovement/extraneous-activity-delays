@@ -12,6 +12,7 @@ setup(
         'numpy',
         'scipy',
         'hyperopt',
-        'log_similarity_metrics'
+        'log_similarity_metrics',
+        'estimate_start_times'
     ]
 )

@@ -7,7 +7,7 @@ from lxml import etree
 from extraneous_activity_delays.bpmn_enhancer import set_number_instances_to_simulate, set_start_datetime_to_simulate
 from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer, NaiveEnhancer
-from extraneous_activity_delays.simulator import simulate_bpmn_model
+from extraneous_activity_delays.simulator import simulate_bpmn_model_bimp
 from extraneous_activity_delays.utils import create_folder
 from log_similarity_metrics.absolute_timestamps import absolute_timestamps_emd
 from log_similarity_metrics.cycle_times import cycle_time_emd
@@ -147,19 +147,19 @@ def experimentation_real_life_run(dataset: str, train_dataset: str, test_dataset
     for i in range(config.num_evaluation_simulations):
         # Simulate, read, and evaluate original model
         original_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_original_{}.csv".format(dataset, i)))
-        simulate_bpmn_model(original_bpmn_model_path, original_simulated_log_path, config)
+        simulate_bpmn_model_bimp(original_bpmn_model_path, original_simulated_log_path, config)
         original_simulated_event_log = read_event_log(original_simulated_log_path, sim_log_ids)
         original_cycle_emds += [cycle_time_emd(test_log, config.log_ids, original_simulated_event_log, sim_log_ids, bin_size)]
         original_timestamps_emds += [absolute_timestamps_emd(test_log, config.log_ids, original_simulated_event_log, sim_log_ids)]
         # Simulate, read, and evaluate naively enhanced model
         naive_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_naive_enhanced_{}.csv".format(dataset, i)))
-        simulate_bpmn_model(naive_enhanced_bpmn_model_path, naive_simulated_log_path, config)
+        simulate_bpmn_model_bimp(naive_enhanced_bpmn_model_path, naive_simulated_log_path, config)
         naive_simulated_event_log = read_event_log(naive_simulated_log_path, sim_log_ids)
         naive_cycle_emds += [cycle_time_emd(test_log, config.log_ids, naive_simulated_event_log, sim_log_ids, bin_size)]
         naive_timestamps_emds += [absolute_timestamps_emd(test_log, config.log_ids, naive_simulated_event_log, sim_log_ids)]
         # Simulate, read, and evaluate hyper-parametrized enhanced model (also against train)
         hyperopt_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_hyperopt_enhanced_{}.csv".format(dataset, i)))
-        simulate_bpmn_model(hyperopt_enhanced_bpmn_model_path, hyperopt_simulated_log_path, config)
+        simulate_bpmn_model_bimp(hyperopt_enhanced_bpmn_model_path, hyperopt_simulated_log_path, config)
         hyperopt_simulated_event_log = read_event_log(hyperopt_simulated_log_path, sim_log_ids)
         hyperopt_cycle_emds += [cycle_time_emd(test_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids, bin_size)]
         hyperopt_timestamps_emds += [absolute_timestamps_emd(test_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids)]
@@ -171,7 +171,7 @@ def experimentation_real_life_run(dataset: str, train_dataset: str, test_dataset
         hyperopt_vs_train_timestamps_emds += [absolute_timestamps_emd(train_log, config.log_ids, displaced_hyperopt, sim_log_ids)]
         # Simulate, read, and evaluate hyper-parametrized (with hold-out) enhanced model (also against train)
         hyperopt_holdout_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_hyperopt_holdout_enhanced_{}.csv".format(dataset, i)))
-        simulate_bpmn_model(hyperopt_holdout_enhanced_bpmn_model_path, hyperopt_holdout_simulated_log_path, config)
+        simulate_bpmn_model_bimp(hyperopt_holdout_enhanced_bpmn_model_path, hyperopt_holdout_simulated_log_path, config)
         hyperopt_holdout_simulated_event_log = read_event_log(hyperopt_holdout_simulated_log_path, sim_log_ids)
         hyperopt_holdout_cycle_emds += [
             cycle_time_emd(test_log, config.log_ids, hyperopt_holdout_simulated_event_log, sim_log_ids, bin_size)

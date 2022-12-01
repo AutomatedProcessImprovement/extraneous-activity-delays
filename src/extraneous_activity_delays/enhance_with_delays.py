@@ -15,7 +15,7 @@ from extraneous_activity_delays.config import Configuration
 from extraneous_activity_delays.delay_discoverer import calculate_extraneous_activity_delays
 from extraneous_activity_delays.infer_distribution import scale_distribution
 from log_similarity_metrics.cycle_times import cycle_time_emd
-from extraneous_activity_delays.simulator import simulate_bpmn_model, SimulationOutput
+from extraneous_activity_delays.simulator import simulate_bpmn_model_bimp, SimulationOutput
 from extraneous_activity_delays.utils import delete_folder, create_new_tmp_folder, split_log_training_validation_event_wise
 
 
@@ -125,10 +125,10 @@ class HyperOptEnhancer:
         enhanced_model_path = str(output_folder.joinpath("{}_enhanced.bpmn".format(self.configuration.process_name)))
         enhanced_bpmn_document.write(enhanced_model_path, pretty_print=True)
         # Evaluate candidate
-        cycle_time_emd = self._evaluate_iteration(enhanced_model_path, output_folder, alphas, scaled_timers)
-        self.losses += [cycle_time_emd]
+        distance_value = self._evaluate_iteration(enhanced_model_path, output_folder, alphas, scaled_timers)
+        self.losses += [distance_value]
         # Return response
-        return {'loss': cycle_time_emd, 'status': STATUS_OK, 'output_folder': str(output_folder)}
+        return {'loss': distance_value, 'status': STATUS_OK, 'output_folder': str(output_folder)}
 
     def _evaluate_iteration(self, bpmn_model_path: str, output_folder: Path, params: dict, iteration_timers: dict) -> float:
         # EMDs of the simulations
@@ -151,7 +151,7 @@ class HyperOptEnhancer:
         for i in range(self.configuration.num_evaluation_simulations):
             # Simulate with model
             tmp_simulated_log_path = str(output_folder.joinpath("{}_simulated_{}.csv".format(self.configuration.process_name, i)))
-            sim_out = simulate_bpmn_model(bpmn_model_path, tmp_simulated_log_path, self.configuration)
+            sim_out = simulate_bpmn_model_bimp(bpmn_model_path, tmp_simulated_log_path, self.configuration)
             if sim_out == SimulationOutput.SUCCESS:
                 # Read simulated event log
                 simulated_event_log = pd.read_csv(tmp_simulated_log_path)

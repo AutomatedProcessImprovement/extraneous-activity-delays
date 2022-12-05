@@ -1,8 +1,8 @@
 import numpy as np
 import scipy.stats as st
 
-from extraneous_activity_delays.config import DurationDistribution
-from extraneous_activity_delays.infer_distribution import infer_distribution, scale_distribution
+from extraneous_activity_delays.config import QBPDurationDistribution
+from extraneous_activity_delays.qbp.infer_distribution import infer_distribution, scale_distribution
 
 
 def test_infer_distribution_fixed():
@@ -87,7 +87,7 @@ def test_infer_distribution_gamma():
 
 def test_scale_distribution_log_fixed():
     alpha = 0.85
-    distribution = DurationDistribution("FIXED", "176", "0", "0")
+    distribution = QBPDurationDistribution("FIXED", "176", "0", "0")
     scaled = scale_distribution(distribution, alpha)
     assert scaled.type == "FIXED"
     assert scaled.mean == str(176 * alpha)
@@ -97,7 +97,7 @@ def test_scale_distribution_log_fixed():
 
 def test_scale_distribution_normal():
     alpha = 0.1
-    distribution = DurationDistribution("NORMAL", "10", "2", "0")
+    distribution = QBPDurationDistribution("NORMAL", "10", "2", "0")
     scaled = scale_distribution(distribution, alpha)
     assert scaled.type == "NORMAL"
     assert scaled.mean == str(10 * alpha)
@@ -107,7 +107,7 @@ def test_scale_distribution_normal():
 
 def test_scale_distribution_exponential():
     alpha = 0.9
-    distribution = DurationDistribution("EXPONENTIAL", "0", "10", "0")
+    distribution = QBPDurationDistribution("EXPONENTIAL", "0", "10", "0")
     scaled = scale_distribution(distribution, alpha)
     assert scaled.type == "EXPONENTIAL"
     assert scaled.mean == "0"
@@ -117,7 +117,7 @@ def test_scale_distribution_exponential():
 
 def test_scale_distribution_uniform():
     alpha = 0.75
-    distribution = DurationDistribution("UNIFORM", "3600", "2", "12")
+    distribution = QBPDurationDistribution("UNIFORM", "3600", "2", "12")
     scaled = scale_distribution(distribution, alpha)
     assert scaled.type == "UNIFORM"
     assert scaled.mean == "3600"
@@ -127,7 +127,7 @@ def test_scale_distribution_uniform():
 
 def test_scale_distribution_triangular():
     alpha = 0.25
-    distribution = DurationDistribution("TRIANGULAR", "10", "2", "18")
+    distribution = QBPDurationDistribution("TRIANGULAR", "10", "2", "18")
     scaled = scale_distribution(distribution, alpha)
     assert scaled.type == "TRIANGULAR"
     assert scaled.mean == str(10 * alpha)
@@ -137,7 +137,7 @@ def test_scale_distribution_triangular():
 
 def test_scale_distribution_log_normal():
     alpha = 0.6
-    distribution = DurationDistribution("LOGNORMAL", "10", "2", "0")
+    distribution = QBPDurationDistribution("LOGNORMAL", "10", "2", "0")
     scaled = scale_distribution(distribution, alpha)
     assert scaled.type == "LOGNORMAL"
     assert scaled.mean == str(10 * alpha)
@@ -147,7 +147,7 @@ def test_scale_distribution_log_normal():
 
 def test_scale_distribution_log_gamma():
     alpha = 0.5
-    distribution = DurationDistribution("GAMMA", "11", "5", "0")
+    distribution = QBPDurationDistribution("GAMMA", "11", "5", "0")
     scaled = scale_distribution(distribution, alpha)
     assert scaled.type == "GAMMA"
     assert scaled.mean == str(11 * alpha)

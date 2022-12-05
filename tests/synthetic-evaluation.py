@@ -1,13 +1,13 @@
 from statistics import mean
 
 import pandas as pd
-from estimate_start_times.config import EventLogIDs
 from lxml import etree
 
-from extraneous_activity_delays.bpmn_enhancer import set_number_instances_to_simulate, set_start_datetime_to_simulate
-from extraneous_activity_delays.config import Configuration
+from estimate_start_times.config import EventLogIDs
+from extraneous_activity_delays.config import Configuration, SimulationModel, SimulationEngine
 from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer, NaiveEnhancer
-from extraneous_activity_delays.simulator import simulate_bpmn_model_bimp
+from extraneous_activity_delays.qbp.simulation_model_enhancer import set_number_instances_to_simulate, set_start_datetime_to_simulate
+from extraneous_activity_delays.qbp.simulator import simulate
 from extraneous_activity_delays.utils import create_folder
 from log_similarity_metrics.absolute_timestamps import absolute_timestamps_emd
 from log_similarity_metrics.cycle_times import cycle_time_emd
@@ -55,12 +55,14 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     config = Configuration(
         log_ids=sim_log_ids, process_name=dataset,
         instant_activities={"Check if refill is allowed", "Check DUR", "Check Insurance"},  # for Pharmacy log
-        max_alpha=50.0, num_evaluations=200
+        max_alpha=50.0, num_iterations=200,
+        simulation_engine=SimulationEngine.QBP
     )
     hold_out_config = Configuration(
         log_ids=sim_log_ids, process_name=dataset,
         instant_activities={"Check if refill is allowed", "Check DUR", "Check Insurance"},  # for Pharmacy log
-        max_alpha=50.0, training_partition_ratio=0.5, num_evaluations=200
+        max_alpha=50.0, training_partition_ratio=0.5, num_iterations=200,
+        simulation_engine=SimulationEngine.QBP
     )
 
     # --- Raw paths --- #
@@ -84,25 +86,26 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     no_timers_bpmn_model = etree.parse(no_timers_model_path, parser)
     set_number_instances_to_simulate(no_timers_bpmn_model, len(train_log[config.log_ids.case].unique()))
     set_start_datetime_to_simulate(no_timers_bpmn_model, min(train_log[config.log_ids.start_time]))
+    simulation_model = SimulationModel(no_timers_bpmn_model)
 
     # --- Enhance with full discovered activity delays --- #
-    naive_enhancer = NaiveEnhancer(train_log, no_timers_bpmn_model, config)
-    naive_enhanced_bpmn_model = naive_enhancer.enhance_bpmn_model_with_delays()
+    naive_enhancer = NaiveEnhancer(train_log, simulation_model, config)
+    naive_enhanced_bpmn_model = naive_enhancer.enhance_simulation_model_with_delays().bpmn_document
     with open(evaluation_folder.joinpath("naive_enhancer_timers.txt"), 'w') as output_file:
         for activity in naive_enhancer.timers:
             output_file.write("'{}': {}\n".format(activity, naive_enhancer.timers[activity]))
 
     # --- Enhance with hyper-parametrized activity delays --- #
-    hyperopt_enhancer = HyperOptEnhancer(train_log, no_timers_bpmn_model, config)
-    hyperopt_enhanced_bpmn_model = hyperopt_enhancer.enhance_bpmn_model_with_delays()
+    hyperopt_enhancer = HyperOptEnhancer(train_log, simulation_model, config)
+    hyperopt_enhanced_bpmn_model = hyperopt_enhancer.enhance_simulation_model_with_delays().bpmn_document
     with open(evaluation_folder.joinpath("hyperopt_enhancer_timers.txt"), 'w') as output_file:
         for activity in hyperopt_enhancer.best_timers:
             output_file.write("'{}': {}\n".format(activity, hyperopt_enhancer.best_timers[activity]))
         output_file.write("\nLosses: {}".format(hyperopt_enhancer.losses))
 
     # --- Enhance with hyper-parametrized activity delays with hold-out --- #
-    hyperopt_holdout_enhancer = HyperOptEnhancer(train_log, no_timers_bpmn_model, hold_out_config)
-    hyperopt_holdout_enhanced_bpmn_model = hyperopt_holdout_enhancer.enhance_bpmn_model_with_delays()
+    hyperopt_holdout_enhancer = HyperOptEnhancer(train_log, simulation_model, hold_out_config)
+    hyperopt_holdout_enhanced_bpmn_model = hyperopt_holdout_enhancer.enhance_simulation_model_with_delays().bpmn_document
     with open(evaluation_folder.joinpath("hyperopt_enhancer_timers_holdout.txt"), 'w') as output_file:
         for activity in hyperopt_holdout_enhancer.best_timers:
             output_file.write("'{}': {}\n".format(activity, hyperopt_holdout_enhancer.best_timers[activity]))
@@ -151,25 +154,25 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     for i in range(config.num_evaluation_simulations):
         # Simulate, read, and evaluate original model
         original_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_original_{}.csv".format(dataset, i)))
-        simulate_bpmn_model_bimp(original_bpmn_model_path, original_simulated_log_path, config)
+        simulate(original_bpmn_model_path, original_simulated_log_path, config)
         original_simulated_event_log = read_event_log(original_simulated_log_path, sim_log_ids)
         original_cycle_emds += [cycle_time_emd(test_log, config.log_ids, original_simulated_event_log, sim_log_ids, bin_size)]
         original_timestamps_emds += [absolute_timestamps_emd(test_log, config.log_ids, original_simulated_event_log, sim_log_ids)]
         # Simulate, read, and evaluate original model with no timers
         no_timers_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_no_timers_{}.csv".format(dataset, i)))
-        simulate_bpmn_model_bimp(no_timers_bpmn_model_path, no_timers_simulated_log_path, config)
+        simulate(no_timers_bpmn_model_path, no_timers_simulated_log_path, config)
         no_timers_simulated_event_log = read_event_log(no_timers_simulated_log_path, sim_log_ids)
         no_timers_cycle_emds += [cycle_time_emd(test_log, config.log_ids, no_timers_simulated_event_log, sim_log_ids, bin_size)]
         no_timers_timestamps_emds += [absolute_timestamps_emd(test_log, config.log_ids, no_timers_simulated_event_log, sim_log_ids)]
         # Simulate, read, and evaluate naively enhanced model
         naive_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_naive_enhanced_{}.csv".format(dataset, i)))
-        simulate_bpmn_model_bimp(naive_enhanced_bpmn_model_path, naive_simulated_log_path, config)
+        simulate(naive_enhanced_bpmn_model_path, naive_simulated_log_path, config)
         naive_simulated_event_log = read_event_log(naive_simulated_log_path, sim_log_ids)
         naive_cycle_emds += [cycle_time_emd(test_log, config.log_ids, naive_simulated_event_log, sim_log_ids, bin_size)]
         naive_timestamps_emds += [absolute_timestamps_emd(test_log, config.log_ids, naive_simulated_event_log, sim_log_ids)]
         # Simulate, read, and evaluate hyper-parametrized enhanced model (also against train)
         hyperopt_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_hyperopt_enhanced_{}.csv".format(dataset, i)))
-        simulate_bpmn_model_bimp(hyperopt_enhanced_bpmn_model_path, hyperopt_simulated_log_path, config)
+        simulate(hyperopt_enhanced_bpmn_model_path, hyperopt_simulated_log_path, config)
         hyperopt_simulated_event_log = read_event_log(hyperopt_simulated_log_path, sim_log_ids)
         hyperopt_cycle_emds += [cycle_time_emd(test_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids, bin_size)]
         hyperopt_timestamps_emds += [absolute_timestamps_emd(test_log, config.log_ids, hyperopt_simulated_event_log, sim_log_ids)]
@@ -181,7 +184,7 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
         hyperopt_vs_train_timestamps_emds += [absolute_timestamps_emd(train_log, config.log_ids, displaced_hyperopt, sim_log_ids)]
         # Simulate, read, and evaluate hyper-parametrized (with hold-out) enhanced model (also against train)
         hyperopt_holdout_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_hyperopt_holdout_enhanced_{}.csv".format(dataset, i)))
-        simulate_bpmn_model_bimp(hyperopt_holdout_enhanced_bpmn_model_path, hyperopt_holdout_simulated_log_path, config)
+        simulate(hyperopt_holdout_enhanced_bpmn_model_path, hyperopt_holdout_simulated_log_path, config)
         hyperopt_holdout_simulated_event_log = read_event_log(hyperopt_holdout_simulated_log_path, sim_log_ids)
         hyperopt_holdout_cycle_emds += [
             cycle_time_emd(test_log, config.log_ids, hyperopt_holdout_simulated_event_log, sim_log_ids, bin_size)

@@ -1,15 +1,16 @@
 from typing import Callable
 
 import pandas as pd
+
 from estimate_start_times.config import Configuration as StartTimeConfiguration, ConcurrencyOracleType, ReEstimationMethod, \
     ResourceAvailabilityType
 from estimate_start_times.estimator import StartTimeEstimator
+from extraneous_activity_delays.config import Configuration, SimulationEngine
+from extraneous_activity_delays.prosimos.infer_distribution import infer_distribution as infer_distribution_prosimos
+from extraneous_activity_delays.qbp.infer_distribution import infer_distribution as infer_distribution_qbp
 
-from extraneous_activity_delays.config import Configuration
-from extraneous_activity_delays.infer_distribution import infer_distribution
 
-
-def calculate_extraneous_activity_delays(
+def compute_extraneous_activity_delays(
         event_log: pd.DataFrame,
         config: Configuration,
         should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0
@@ -51,6 +52,9 @@ def calculate_extraneous_activity_delays(
         ]
         # If the delay should be considered, add it
         if should_consider_timer(delays):
-            timers[activity] = infer_distribution(delays)
+            if config.simulation_engine == SimulationEngine.PROSIMOS:
+                timers[activity] = infer_distribution_prosimos(delays)
+            else:
+                timers[activity] = infer_distribution_qbp(delays)
     # Return the delays
     return timers

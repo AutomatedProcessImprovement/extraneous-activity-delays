@@ -1,23 +1,24 @@
 from lxml import etree
 
-from extraneous_activity_delays.bpmn_enhancer import add_timers_to_bpmn_model
-from extraneous_activity_delays.config import DurationDistribution
+from extraneous_activity_delays.config import QBPDurationDistribution, SimulationModel
+from extraneous_activity_delays.qbp.simulation_model_enhancer import add_timers_to_simulation_model
 
 
 def test_enhance_bpmn_model_with_delays():
     # Read BPMN model
     parser = etree.XMLParser(remove_blank_text=True)
     document = etree.parse("./tests/assets/timer-events-test.bpmn", parser)
+    simulation_model = SimulationModel(document)
     # Enhance
     timers = {
-        'A': DurationDistribution(mean="60"),
-        'B': DurationDistribution(mean="600"),
-        'C': DurationDistribution(mean="3600"),
-        'D': DurationDistribution(mean="7200"),
-        'E': DurationDistribution(mean="36000")
+        'A': QBPDurationDistribution(mean="60"),
+        'B': QBPDurationDistribution(mean="600"),
+        'C': QBPDurationDistribution(mean="3600"),
+        'D': QBPDurationDistribution(mean="7200"),
+        'E': QBPDurationDistribution(mean="36000")
     }
-    add_timers_to_bpmn_model(document, timers)
-    model = document.getroot()
+    enhanced_simulation_model = add_timers_to_simulation_model(simulation_model, timers)
+    model = enhanced_simulation_model.bpmn_document.getroot()
     namespace = model.nsmap
     process = model.find("process", namespace)
     sim_elements = process.find("extensionElements/qbp:processSimulationInfo/qbp:elements", namespace)

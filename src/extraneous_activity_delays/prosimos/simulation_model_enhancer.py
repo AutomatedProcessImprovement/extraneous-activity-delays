@@ -3,7 +3,7 @@ import copy
 from lxml.etree import ElementTree
 
 from extraneous_activity_delays.config import SimulationModel
-from extraneous_activity_delays.prosimos.infer_distribution import parse_duration_distribution
+from extraneous_activity_delays.prosimos.parse_distribution import parse_duration_distribution
 from extraneous_activity_delays.utils.bpmn_enhancement import add_timer_to_bpmn_model
 
 

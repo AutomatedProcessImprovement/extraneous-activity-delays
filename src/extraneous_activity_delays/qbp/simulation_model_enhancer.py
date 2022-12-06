@@ -5,7 +5,7 @@ from lxml import etree
 from lxml.etree import QName, ElementTree
 
 from extraneous_activity_delays.config import SimulationModel
-from extraneous_activity_delays.qbp.infer_distribution import QBPDurationDistribution, parse_duration_distribution
+from extraneous_activity_delays.qbp.parse_distribution import QBPDurationDistribution, parse_duration_distribution
 from extraneous_activity_delays.utils.bpmn_enhancement import add_timer_to_bpmn_model
 
 

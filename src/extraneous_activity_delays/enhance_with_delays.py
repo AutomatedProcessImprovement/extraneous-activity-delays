@@ -10,18 +10,18 @@ from hyperopt.fmin import generate_trials_to_calculate
 
 from extraneous_activity_delays.config import Configuration, SimulationOutput, SimulationModel, SimulationEngine
 from extraneous_activity_delays.delay_discoverer import compute_extraneous_activity_delays
-from extraneous_activity_delays.prosimos.infer_distribution import scale_distribution as scale_distribution_prosimos
 from extraneous_activity_delays.prosimos.simulation_model_enhancer import \
     add_timers_to_simulation_model as add_timers_to_simulation_model_prosimos
 from extraneous_activity_delays.prosimos.simulator import LOG_IDS as PROSIMOS_LOG_IDS
 from extraneous_activity_delays.prosimos.simulator import simulate as simulate_prosimos
-from extraneous_activity_delays.qbp.infer_distribution import scale_distribution as scale_distribution_qbp
 from extraneous_activity_delays.qbp.simulation_model_enhancer import add_timers_to_simulation_model as add_timers_to_simulation_model_qbp
 from extraneous_activity_delays.qbp.simulation_model_enhancer import set_number_instances_to_simulate, \
     set_start_datetime_to_simulate
 from extraneous_activity_delays.qbp.simulator import LOG_IDS as QBP_LOG_IDS
 from extraneous_activity_delays.qbp.simulator import simulate as simulate_qbp
-from extraneous_activity_delays.utils import delete_folder, create_new_tmp_folder, split_log_training_validation_event_wise
+from extraneous_activity_delays.utils.distributions import scale_distribution
+from extraneous_activity_delays.utils.file_manager import delete_folder, create_new_tmp_folder
+from extraneous_activity_delays.utils.log_split import split_log_training_validation_event_wise
 from log_similarity_metrics.cycle_times import cycle_time_emd
 
 
@@ -210,11 +210,6 @@ class HyperOptEnhancer:
         for activity in self.timers:
             # If the scaling factor is not 0.0 create a timer
             if (activity in alphas) and (alphas[activity] > 0.0):
-                if self.configuration.simulation_engine == SimulationEngine.PROSIMOS:
-                    # Scale Prosimos timer
-                    scaled_timers[activity] = scale_distribution_prosimos(self.timers[activity], alphas[activity])
-                else:
-                    # Scale QBP timer
-                    scaled_timers[activity] = scale_distribution_qbp(self.timers[activity], alphas[activity])
+                scaled_timers[activity] = scale_distribution(self.timers[activity], alphas[activity])
         # Return timers
         return scaled_timers

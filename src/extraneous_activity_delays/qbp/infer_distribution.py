@@ -1,166 +1,67 @@
-import warnings
-from collections import Counter
+from dataclasses import dataclass
 
-import numpy as np
-import scipy.stats as st
-
-from extraneous_activity_delays.config import QBPDurationDistribution
+from extraneous_activity_delays.utils.distributions import DurationDistribution
 
 
-def infer_distribution(data: list, bins: int = 50) -> QBPDurationDistribution:
-    # Check if the value is fixed and no distribution is needed
-    fix_value = check_fix(data)
-    if fix_value is not None:
-        # Save fixed value
-        duration_distribution = QBPDurationDistribution(type="FIXED", mean=str(fix_value))
-    else:
-        # Model data by finding best fit distribution to data
-        # Get histogram of original data
-        y, x = np.histogram(data, bins=bins, density=True)
-        # Transform the start and end of each bin, in its middle point
-        x = (x + np.roll(x, -1))[:-1] / 2.0
-
-        # Possible distributions: QBP supported
-        distributions = [st.norm, st.expon, st.uniform, st.triang, st.lognorm, st.gamma]
-        # Initialize search with normal distribution
-        best_distribution = st.norm
-        best_params = (0.0, 1.0)
-        best_sse = np.inf
-
-        # Estimate distribution parameters from data
-        for distribution in distributions:
-            # Try to fit the distribution
-            try:
-                # Ignore warnings from data that can't be fit
-                with warnings.catch_warnings():
-                    warnings.filterwarnings('ignore')
-                    # Fit distribution to data
-                    params = distribution.fit(data)
-                    # Separate parts of parameters
-                    arg = params[:-2]
-                    loc = params[-2]
-                    scale = params[-1]
-                    # Calculate fitted PDF and error with fit in distribution
-                    pdf = distribution.pdf(x, loc=loc, scale=scale, *arg)
-                    sse = np.sum(np.power(y - pdf, 2.0))
-                    # identify if this distribution is better
-                    if best_sse > sse > 0:
-                        best_distribution = distribution
-                        best_params = params
-                        best_sse = sse
-            except Exception:
-                pass
-        duration_distribution = _parse_duration_distribution(best_distribution, data)
-    # Return best duration distribution
-    return duration_distribution
+@dataclass
+class QBPDurationDistribution:
+    type: str = "NORMAL"
+    mean: str = "NaN"  # Warning! these values are always interpreted as seconds
+    arg1: str = "NaN"
+    arg2: str = "NaN"
+    unit: str = "seconds"  # This is the unit to show in the interface by transforming the values in seconds
 
 
-def check_fix(data_list, delta=5):
-    value = None
-    counter = Counter(data_list)
-    counter[None] = 0
-    for d1 in counter:
-        if (counter[d1] > counter[value]) and (sum([abs(d1 - d2) < delta for d2 in data_list]) / len(data_list) > 0.95):
-            # If the value [d1] is more frequent than the current fixed one [value]
-            # and
-            # the ratio of values similar (or with a difference lower than [delta]) to [d1] is more than 90%
-            # update value
-            value = d1
-    # Return fixed value with more apparitions
-    return value
-
-
-def _parse_duration_distribution(distribution, data) -> QBPDurationDistribution:
-    if distribution == st.norm:
-        # For the XML arg1=std and arg2=0
-        return QBPDurationDistribution(
-            type="NORMAL",
-            mean=str(np.mean(data)),
-            arg1=str(np.std(data)),
-            arg2="0"
-        )
-    elif distribution == st.expon:
-        # For the XML mean=0 and arg2=0
-        return QBPDurationDistribution(
-            type="EXPONENTIAL",
-            mean="0",
-            arg1=str(np.mean(data)),
-            arg2="0"
-        )
-    elif distribution == st.uniform:
-        # For the XML the mean is always 3600, arg1=min and arg2=max
-        return QBPDurationDistribution(
-            type="UNIFORM",
-            mean="3600",
-            arg1=str(np.min(data)),
-            arg2=str(np.max(data))
-        )
-    elif distribution == st.triang:
-        # For the XML the mode is stored in the mean parameter, arg1=min and arg2=max
-        return QBPDurationDistribution(
-            type="TRIANGULAR",
-            mean=str(st.mode([int(seconds) for seconds in data]).mode[0]),
-            arg1=str(np.min(data)),
-            arg2=str(np.max(data))
-        )
-    elif distribution == st.lognorm:
-        # For the XML arg1=var and arg2=0
-        return QBPDurationDistribution(
-            type="LOGNORMAL",
-            mean=str(np.mean(data)),
-            arg1=str(np.var(data)),
-            arg2="0"
-        )
-    elif distribution == st.gamma:
-        # For the XML arg1=var and arg2=0
-        return QBPDurationDistribution(
-            type="GAMMA",
-            mean=str(np.mean(data)),
-            arg1=str(np.var(data)),
-            arg2="0"
-        )
-
-
-def scale_distribution(distribution: QBPDurationDistribution, alpha: float) -> QBPDurationDistribution:
-    if distribution.type == "FIXED":
-        return QBPDurationDistribution(
-            type=distribution.type,
-            mean=str(float(distribution.mean) * alpha),  # Fixed value: scaled by multiplying by [alpha]
+def parse_duration_distribution(distribution: DurationDistribution) -> QBPDurationDistribution:
+    # Initialize empty distribution
+    qbp_distribution = None
+    # Parse distribution
+    if distribution.name == 'fix':
+        qbp_distribution = QBPDurationDistribution(
+            type="FIXED",
+            mean=str(distribution.mean),
             arg1="0",
             arg2="0"
         )
-    elif distribution.type == "NORMAL":
-        return QBPDurationDistribution(
-            type=distribution.type,
-            mean=str(float(distribution.mean) * alpha),  # Mean: scaled by multiplying by [alpha]
-            arg1=str(float(distribution.arg1) * alpha),  # STD: scaled by multiplying by [alpha]
-            arg2="0"
-        )
-    elif distribution.type == "EXPONENTIAL":
-        return QBPDurationDistribution(
-            type=distribution.type,
+    elif distribution.name == 'expon':
+        # For the XML mean=0 and arg2=0
+        qbp_distribution = QBPDurationDistribution(
+            type="EXPONENTIAL",
             mean="0",
-            arg1=str(float(distribution.arg1) * alpha),  # Mean: scaled by multiplying by [alpha]
+            arg1=str(distribution.mean),
             arg2="0"
         )
-    elif distribution.type == "UNIFORM":
-        return QBPDurationDistribution(
-            type=distribution.type,
+    elif distribution.name == 'norm':
+        # For the XML arg1=std and arg2=0
+        qbp_distribution = QBPDurationDistribution(
+            type="NORMAL",
+            mean=str(distribution.mean),
+            arg1=str(distribution.std),
+            arg2="0"
+        )
+    elif distribution.name == 'uniform':
+        # For the XML the mean is always 3600, arg1=min and arg2=max
+        qbp_distribution = QBPDurationDistribution(
+            type="UNIFORM",
             mean="3600",
-            arg1=str(float(distribution.arg1) * alpha),  # Min: scaled by multiplying by [alpha]
-            arg2=str(float(distribution.arg2) * alpha)  # Max: scaled by multiplying by [alpha]
+            arg1=str(distribution.min),
+            arg2=str(distribution.max)
         )
-    elif distribution.type == "TRIANGULAR":
-        return QBPDurationDistribution(
-            type=distribution.type,
-            mean=str(float(distribution.mean) * alpha),  # Mode: scaled by multiplying by [alpha]
-            arg1=str(float(distribution.arg1) * alpha),  # Min: scaled by multiplying by [alpha]
-            arg2=str(float(distribution.arg2) * alpha)  # Max: scaled by multiplying by [alpha]
-        )
-    elif distribution.type in ["LOGNORMAL", "GAMMA"]:
-        return QBPDurationDistribution(
-            type=distribution.type,
-            mean=str(float(distribution.mean) * alpha),  # Mean: scaled by multiplying by [alpha]
-            arg1=str(float(distribution.arg1) * alpha * alpha),  # Variance: scaled by multiplying by [alpha]^2
+    elif distribution.name == 'lognorm':
+        # For the XML arg1=var and arg2=0
+        qbp_distribution = QBPDurationDistribution(
+            type="LOGNORMAL",
+            mean=str(distribution.mean),
+            arg1=str(distribution.var),
             arg2="0"
         )
+    elif distribution.name == 'gamma':
+        # For the XML arg1=var and arg2=0
+        qbp_distribution = QBPDurationDistribution(
+            type="GAMMA",
+            mean=str(distribution.mean),
+            arg1=str(distribution.var),
+            arg2="0"
+        )
+    # Return parsed distribution
+    return qbp_distribution

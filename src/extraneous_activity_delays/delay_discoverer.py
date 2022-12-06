@@ -5,9 +5,8 @@ import pandas as pd
 from estimate_start_times.config import Configuration as StartTimeConfiguration, ConcurrencyOracleType, ReEstimationMethod, \
     ResourceAvailabilityType
 from estimate_start_times.estimator import StartTimeEstimator
-from extraneous_activity_delays.config import Configuration, SimulationEngine
-from extraneous_activity_delays.prosimos.infer_distribution import infer_distribution as infer_distribution_prosimos
-from extraneous_activity_delays.qbp.infer_distribution import infer_distribution as infer_distribution_qbp
+from extraneous_activity_delays.config import Configuration
+from extraneous_activity_delays.utils.distributions import get_best_distribution
 
 
 def compute_extraneous_activity_delays(
@@ -52,9 +51,6 @@ def compute_extraneous_activity_delays(
         ]
         # If the delay should be considered, add it
         if should_consider_timer(delays):
-            if config.simulation_engine == SimulationEngine.PROSIMOS:
-                timers[activity] = infer_distribution_prosimos(delays)
-            else:
-                timers[activity] = infer_distribution_qbp(delays)
+            timers[activity] = get_best_distribution(delays)
     # Return the delays
     return timers

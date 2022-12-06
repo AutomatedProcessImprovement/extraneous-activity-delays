@@ -8,7 +8,7 @@ from extraneous_activity_delays.config import Configuration, SimulationModel, Si
 from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer, NaiveEnhancer
 from extraneous_activity_delays.qbp.simulation_model_enhancer import set_number_instances_to_simulate, set_start_datetime_to_simulate
 from extraneous_activity_delays.qbp.simulator import simulate
-from extraneous_activity_delays.utils import create_folder
+from extraneous_activity_delays.utils.file_manager import create_folder
 from log_similarity_metrics.absolute_timestamps import absolute_timestamps_emd
 from log_similarity_metrics.cycle_times import cycle_time_emd
 

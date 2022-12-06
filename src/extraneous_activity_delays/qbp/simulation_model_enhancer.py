@@ -4,8 +4,9 @@ import datetime
 from lxml import etree
 from lxml.etree import QName, ElementTree
 
-from extraneous_activity_delays.config import QBPDurationDistribution, SimulationModel
-from extraneous_activity_delays.utils import add_timer_to_bpmn_model
+from extraneous_activity_delays.config import SimulationModel
+from extraneous_activity_delays.qbp.infer_distribution import QBPDurationDistribution, parse_duration_distribution
+from extraneous_activity_delays.utils.bpmn_enhancement import add_timer_to_bpmn_model
 
 
 def add_timers_to_simulation_model(simulation_model: SimulationModel, timers: dict) -> SimulationModel:
@@ -27,7 +28,7 @@ def add_timers_to_simulation_model(simulation_model: SimulationModel, timers: di
             # The activity has a prepared timer -> add it!
             timer_id = add_timer_to_bpmn_model(task, process, namespace)
             # Add the simulation config for the timer
-            duration_distribution = timers[task_name]
+            duration_distribution = parse_duration_distribution(timers[task_name])
             sim_timer = _get_simulation_timer(timer_id, duration_distribution, namespace)
             sim_elements.append(sim_timer)
     # Remove visualizing data

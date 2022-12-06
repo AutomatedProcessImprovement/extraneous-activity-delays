@@ -19,15 +19,6 @@ class SimulationModel:
     simulation_parameters: dict = None
 
 
-@dataclass
-class QBPDurationDistribution:
-    type: str = "NORMAL"
-    mean: str = "NaN"  # Warning! these values are always interpreted as seconds
-    arg1: str = "NaN"
-    arg2: str = "NaN"
-    unit: str = "seconds"  # This is the unit to show in the interface by transforming the values in seconds
-
-
 class SimulationEngine(enum.Enum):
     PROSIMOS = 1
     QBP = 2

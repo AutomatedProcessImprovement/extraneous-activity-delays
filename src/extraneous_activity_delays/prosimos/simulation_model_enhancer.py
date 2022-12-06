@@ -3,7 +3,8 @@ import copy
 from lxml.etree import ElementTree
 
 from extraneous_activity_delays.config import SimulationModel
-from extraneous_activity_delays.utils import add_timer_to_bpmn_model
+from extraneous_activity_delays.prosimos.infer_distribution import parse_duration_distribution
+from extraneous_activity_delays.utils.bpmn_enhancement import add_timer_to_bpmn_model
 
 
 def add_timers_to_simulation_model(simulation_model: SimulationModel, timers: dict) -> SimulationModel:
@@ -25,7 +26,8 @@ def add_timers_to_simulation_model(simulation_model: SimulationModel, timers: di
             # The activity has a prepared timer -> add it!
             timer_id = add_timer_to_bpmn_model(task, process, namespace)
             # Add the simulation config for the timer
-            json_timers += {'event_id': timer_id} | timers[task_name]
+            duration_distribution = parse_duration_distribution(timers[task_name])
+            json_timers += {'event_id': timer_id} | duration_distribution
     # Add timers to simulation parameters
     enhanced_parameters = simulation_model.simulation_parameters | {'event_distribution': json_timers}
     # Return enhanced document

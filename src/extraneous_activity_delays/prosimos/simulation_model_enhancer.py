@@ -27,7 +27,7 @@ def add_timers_to_simulation_model(simulation_model: SimulationModel, timers: di
             timer_id = add_timer_to_bpmn_model(task, process, namespace)
             # Add the simulation config for the timer
             duration_distribution = parse_duration_distribution(timers[task_name])
-            json_timers += {'event_id': timer_id} | duration_distribution
+            json_timers += [{'event_id': timer_id} | duration_distribution]
     # Add timers to simulation parameters
     enhanced_parameters = simulation_model.simulation_parameters | {'event_distribution': json_timers}
     # Return enhanced document

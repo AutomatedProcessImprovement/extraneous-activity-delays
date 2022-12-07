@@ -30,6 +30,47 @@ for an explanation of the configuration parameters.
 
 We provide a simple example of the hyper-parameter optimization version of the proposal:
 
+### Using Prosimos as simulation engine
+
+```python
+import json
+
+import pandas as pd
+from lxml import etree
+
+from estimate_start_times.config import DEFAULT_CSV_IDS
+from extraneous_activity_delays.config import Configuration, SimulationModel, SimulationEngine
+from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer
+
+# Set up default configuration
+log_ids = DEFAULT_CSV_IDS
+config = Configuration(
+    log_ids=log_ids, process_name="prosimos-example",
+    max_alpha=50.0, training_partition_ratio=0.5,
+    num_iterations=200, simulation_engine=SimulationEngine.PROSIMOS
+)
+# Read event log
+event_log = pd.read_csv("path_to_input_log.csv")
+event_log[log_ids.start_time] = pd.to_datetime(event_log[log_ids.start_time], utc=True)
+event_log[log_ids.end_time] = pd.to_datetime(event_log[log_ids.end_time], utc=True)
+event_log[log_ids.resource].fillna("NOT_SET", inplace=True)
+event_log[log_ids.resource] = event_log[log_ids.resource].astype("string")
+# Read BPMN model
+parser = etree.XMLParser(remove_blank_text=True)
+bpmn_model = etree.parse("path_to_bps_model.bpmn", parser)
+# Read simulation parameters
+with open("path_to_bps_parameters.json") as json_file:
+    simulation_parameters = json.load(json_file)
+simulation_model = SimulationModel(bpmn_model, simulation_parameters)
+# Enhance with hyper-parametrized activity delays with hold-out
+enhancer = HyperOptEnhancer(event_log, simulation_model, config)
+enhanced_simulation_model = enhancer.enhance_simulation_model_with_delays()
+# Write enhanced BPS model
+enhanced_simulation_model.bpmn_document.write("path_of_enhanced_bps_model.bpmn", pretty_print=True)
+```
+
+### Using QBP as simulation engine
+
 ```python
 import pandas as pd
 from lxml import etree
@@ -41,7 +82,7 @@ from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer
 # Set up default configuration
 log_ids = DEFAULT_CSV_IDS
 config = Configuration(
-    log_ids=log_ids, process_name="example",
+    log_ids=log_ids, process_name="qbp-example",
     max_alpha=50.0, training_partition_ratio=0.5,
     num_iterations=200, simulation_engine=SimulationEngine.QBP
 )

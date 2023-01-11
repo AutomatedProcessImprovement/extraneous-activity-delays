@@ -1,4 +1,5 @@
 import copy
+import datetime
 import json
 from pathlib import Path
 from statistics import mean
@@ -8,7 +9,8 @@ import pandas as pd
 from hyperopt import fmin, hp, tpe, STATUS_OK
 from hyperopt.fmin import generate_trials_to_calculate
 
-from extraneous_activity_delays.config import Configuration, SimulationOutput, SimulationModel, SimulationEngine
+from estimate_start_times.config import EventLogIDs
+from extraneous_activity_delays.config import Configuration, SimulationOutput, SimulationModel, SimulationEngine, OptimizationMetric
 from extraneous_activity_delays.delay_discoverer import compute_extraneous_activity_delays
 from extraneous_activity_delays.prosimos.simulation_model_enhancer import \
     add_timers_to_simulation_model as add_timers_to_simulation_model_prosimos
@@ -22,6 +24,8 @@ from extraneous_activity_delays.qbp.simulator import simulate as simulate_qbp
 from extraneous_activity_delays.utils.distributions import scale_distribution
 from extraneous_activity_delays.utils.file_manager import delete_folder, create_new_tmp_folder
 from extraneous_activity_delays.utils.log_split import split_log_training_validation_event_wise
+from log_similarity_metrics.absolute_timestamps import absolute_timestamps_emd
+from log_similarity_metrics.circadian_timestamps import circadian_timestamps_emd
 from log_similarity_metrics.cycle_times import cycle_time_emd
 
 
@@ -154,8 +158,8 @@ class HyperOptEnhancer:
             set_start_datetime_to_simulate(simulation_model.bpmn_document, simulation_starting_time)
             simulation_model.bpmn_document.write(bpmn_model_path, pretty_print=True)
         # Initialize list to store EMDs
-        cycle_time_emds, metrics_report = [], []
-        bin_size = max(  # Bin size for the cycle time EMD
+        performance_metrics, metrics_report = [], []
+        bin_size = max(  # Bin size for the performance metric (only cycle time EMD)
             [events[self.log_ids.end_time].max() - events[self.log_ids.start_time].min()
              for case, events in self.validation_log.groupby(self.log_ids.case)]
         ) / 1000
@@ -182,15 +186,15 @@ class HyperOptEnhancer:
                 simulated_event_log[sim_log_ids.start_time] = pd.to_datetime(simulated_event_log[sim_log_ids.start_time], utc=True)
                 simulated_event_log[sim_log_ids.end_time] = pd.to_datetime(simulated_event_log[sim_log_ids.end_time], utc=True)
                 # Measure log distance
-                cycle_time_emd_value = cycle_time_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids, bin_size)
-                cycle_time_emds += [cycle_time_emd_value]
-                metrics_report += ["\tCycle time EMD {}: {}\n".format(i, cycle_time_emd_value)]
+                performance_value = self._compute_performance_metric(simulated_event_log, sim_log_ids, bin_size)
+                performance_metrics += [performance_value]
+                metrics_report += ["\tPerformance metric {}: {}\n".format(i, performance_value)]
         # Get average
-        if len(cycle_time_emds) > 0:
-            mean_cycle_time_emd = mean(cycle_time_emds)
+        if len(performance_metrics) > 0:
+            mean_performance_metric = mean(performance_metrics)
         else:
             # All simulations ended in error, set default value
-            mean_cycle_time_emd = 1000000  # TODO replace by MAX_FLOAT?
+            mean_performance_metric = 1000000  # TODO replace by MAX_FLOAT?
         # Write metrics to file
         with open(output_folder.joinpath("metrics.txt"), 'a') as file:
             file.write("Iteration params: {}\n".format(params))
@@ -200,9 +204,25 @@ class HyperOptEnhancer:
             file.write("\nMetrics:\n")
             for line in metrics_report:
                 file.write(line)
-            file.write("\nMean cycle time EMD: {}\n".format(mean_cycle_time_emd))
+            file.write("\nMean performance metric: {}\n".format(mean_performance_metric))
         # Return metric
-        return mean_cycle_time_emd
+        return mean_performance_metric
+
+    def _compute_performance_metric(
+            self,
+            simulated_event_log: pd.DataFrame,
+            sim_log_ids: EventLogIDs,
+            bin_size: datetime.timedelta = datetime.timedelta(hours=1)
+    ) -> float:
+        if self.configuration.optimization_metric is OptimizationMetric.CYCLE_TIME:
+            return cycle_time_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids, bin_size)
+        elif self.configuration.optimization_metric is OptimizationMetric.CIRCADIAN_EMD:
+            return circadian_timestamps_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids)
+        elif self.configuration.optimization_metric is OptimizationMetric.ABSOLUTE_EMD:
+            return absolute_timestamps_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids)
+        else:
+            print("WARNING: Unknown optimization metric! Optimizing for cycle time!")
+            return cycle_time_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids, bin_size)
 
     def _get_scaled_timers(self, alphas: dict):
         scaled_timers = {}

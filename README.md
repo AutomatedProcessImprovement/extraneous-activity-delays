@@ -65,8 +65,10 @@ simulation_model = SimulationModel(bpmn_model, simulation_parameters)
 # Enhance with hyper-parametrized activity delays with hold-out
 enhancer = HyperOptEnhancer(event_log, simulation_model, config)
 enhanced_simulation_model = enhancer.enhance_simulation_model_with_delays()
-# Write enhanced BPS model
-enhanced_simulation_model.bpmn_document.write("path_of_enhanced_bps_model.bpmn", pretty_print=True)
+# Write enhanced BPS model (BPMN and parameters)
+enhanced_simulation_model.bpmn_document.bpmn_document.write("path_of_enhanced_bps_model.bpmn", pretty_print=True)
+with open("path_to_enhanced_bps_parameters.json") as json_file:
+    json.dump(enhanced_simulation_model.simulation_parameters, json_file)
 ```
 
 ### Using QBP as simulation engine

@@ -29,6 +29,12 @@ class SimulationOutput(enum.Enum):
     ERROR = 2
 
 
+class OptimizationMetric(enum.Enum):
+    CYCLE_TIME = 1
+    ABSOLUTE_EMD = 2
+    CIRCADIAN_EMD = 3
+
+
 def _should_consider_timer(delays: list) -> bool:
     """
     Default function to consider adding a timer when the percentage of delays observed for an activity being higher than 0s is more than
@@ -65,6 +71,7 @@ class Configuration:
         instant_activities          Set of instantaneous activities, in order to set their estimated start time as their end time.
         debug                       Boolean denoting whether to print debug information or not.
         simulation_engine           Simulation engine to use during the optimization process (e.g. Prosimos).
+        optimization_metric         Metric to optimize during the optimization process.
     """
     log_ids: EventLogIDs = DEFAULT_CSV_IDS
     num_iterations: int = 100
@@ -78,6 +85,7 @@ class Configuration:
     instant_activities: set = field(default_factory=set)
     debug: bool = False
     simulation_engine: SimulationEngine = SimulationEngine.PROSIMOS
+    optimization_metric: OptimizationMetric = OptimizationMetric.CYCLE_TIME
 
     PATH_PROJECT = get_project_dir()
     PATH_INPUTS = PATH_PROJECT.joinpath("inputs")

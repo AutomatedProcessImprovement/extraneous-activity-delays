@@ -42,9 +42,13 @@ class NaiveEnhancer:
     def enhance_simulation_model_with_delays(self) -> SimulationModel:
         # Enhance process model
         if self.configuration.simulation_engine == SimulationEngine.PROSIMOS:
-            enhanced_simulation_model = add_timers_to_simulation_model_prosimos(self.simulation_model, self.timers)
+            enhanced_simulation_model = add_timers_to_simulation_model_prosimos(
+                self.simulation_model, self.timers, self.configuration.timer_placement
+            )
         else:
-            enhanced_simulation_model = add_timers_to_simulation_model_qbp(self.simulation_model, self.timers)
+            enhanced_simulation_model = add_timers_to_simulation_model_qbp(
+                self.simulation_model, self.timers, self.configuration.timer_placement
+            )
         # Return enhanced document
         return enhanced_simulation_model
 
@@ -108,9 +112,13 @@ class HyperOptEnhancer:
             self.best_timers = scaled_timers
             # Enhance process model
             if self.configuration.simulation_engine == SimulationEngine.PROSIMOS:
-                enhanced_simulation_model = add_timers_to_simulation_model_prosimos(self.simulation_model, scaled_timers)
+                enhanced_simulation_model = add_timers_to_simulation_model_prosimos(
+                    self.simulation_model, scaled_timers, self.configuration.timer_placement
+                )
             else:
-                enhanced_simulation_model = add_timers_to_simulation_model_qbp(self.simulation_model, scaled_timers)
+                enhanced_simulation_model = add_timers_to_simulation_model_qbp(
+                    self.simulation_model, scaled_timers, self.configuration.timer_placement
+                )
         else:
             # No timers discovered, make a copy of current simulation model
             enhanced_simulation_model = self.simulation_model
@@ -131,9 +139,13 @@ class HyperOptEnhancer:
         scaled_timers = self._get_scaled_timers(alphas)
         # Enhance process model
         if self.configuration.simulation_engine == SimulationEngine.PROSIMOS:
-            enhanced_simulation_model = add_timers_to_simulation_model_prosimos(self.simulation_model, scaled_timers)
+            enhanced_simulation_model = add_timers_to_simulation_model_prosimos(
+                self.simulation_model, scaled_timers, self.configuration.timer_placement
+            )
         else:
-            enhanced_simulation_model = add_timers_to_simulation_model_qbp(self.simulation_model, scaled_timers)
+            enhanced_simulation_model = add_timers_to_simulation_model_qbp(
+                self.simulation_model, scaled_timers, self.configuration.timer_placement
+            )
         # Evaluate candidate
         distance_value = self._evaluate_iteration(enhanced_simulation_model, output_folder, alphas, scaled_timers)
         self.losses += [distance_value]

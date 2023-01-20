@@ -4,17 +4,25 @@ import datetime
 from lxml import etree
 from lxml.etree import QName, ElementTree
 
-from extraneous_activity_delays.config import SimulationModel
+from extraneous_activity_delays.config import SimulationModel, TimerPlacement
 from extraneous_activity_delays.qbp.parse_distribution import QBPDurationDistribution, parse_duration_distribution
 from extraneous_activity_delays.utils.bpmn_enhancement import add_timer_to_bpmn_model
 
 
-def add_timers_to_simulation_model(simulation_model: SimulationModel, timers: dict) -> SimulationModel:
+def add_timers_to_simulation_model(
+        simulation_model: SimulationModel,
+        timers: dict,
+        timer_placement: TimerPlacement = TimerPlacement.BEFORE
+) -> SimulationModel:
     """
     Enhance the BPMN model received by adding a timer previous to each activity denoted by [timers].
 
     :param simulation_model:    SimulationModel instance with the XML document containing the BPMN model to enhance.
-    :param timers:              dict with the name of each activity as key, and the timer configuration as value.
+    :param timers:              Dict with the name of each activity as key, and the timer configuration as value.
+    :param timer_placement:     Option to consider the placement of the timers either BEFORE (the extraneous delay is considered to be
+                                happening previously to an activity instance) or AFTER (the extraneous delay is considered to be
+                                happening afterward an activity instance) each activity.
+
     :return a copy of [document] enhanced with the timers in [timers].
     """
     # Extract process
@@ -26,7 +34,7 @@ def add_timers_to_simulation_model(simulation_model: SimulationModel, timers: di
         task_name = task.attrib['name']
         if task_name in timers:
             # The activity has a prepared timer -> add it!
-            timer_id = add_timer_to_bpmn_model(task, process, namespace)
+            timer_id = add_timer_to_bpmn_model(task, process, namespace, timer_placement=timer_placement)
             # Add the simulation config for the timer
             duration_distribution = parse_duration_distribution(timers[task_name])
             sim_timer = _get_simulation_timer(timer_id, duration_distribution, namespace)

@@ -3,8 +3,10 @@ import uuid
 from lxml import etree
 from lxml.etree import QName
 
+from extraneous_activity_delays.config import TimerPlacement
 
-def add_timer_to_bpmn_model(task, process, namespace) -> str:
+
+def add_timer_to_bpmn_model(task, process, namespace, timer_placement: TimerPlacement = TimerPlacement.BEFORE) -> str:
     # The activity has a prepared timer -> add it!
     task_id = task.attrib['id']
     # Create a timer to add it preceding to the task

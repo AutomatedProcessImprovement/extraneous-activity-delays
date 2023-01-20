@@ -24,9 +24,10 @@ from extraneous_activity_delays.qbp.simulator import simulate as simulate_qbp
 from extraneous_activity_delays.utils.distributions import scale_distribution
 from extraneous_activity_delays.utils.file_manager import delete_folder, create_new_tmp_folder
 from extraneous_activity_delays.utils.log_split import split_log_training_validation_event_wise
-from log_similarity_metrics.absolute_timestamps import absolute_timestamps_emd
-from log_similarity_metrics.circadian_timestamps import circadian_timestamps_emd
-from log_similarity_metrics.cycle_times import cycle_time_emd
+from log_similarity_metrics.absolute_event_distribution import absolute_event_distribution_distance
+from log_similarity_metrics.circadian_event_distribution import circadian_event_distribution_distance
+from log_similarity_metrics.cycle_time_distribution import cycle_time_distribution_distance
+from log_similarity_metrics.relative_event_distribution import relative_event_distribution_distance
 
 
 class NaiveEnhancer:
@@ -227,14 +228,16 @@ class HyperOptEnhancer:
             bin_size: datetime.timedelta = datetime.timedelta(hours=1)
     ) -> float:
         if self.configuration.optimization_metric is OptimizationMetric.CYCLE_TIME:
-            return cycle_time_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids, bin_size)
+            return cycle_time_distribution_distance(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids, bin_size)
         elif self.configuration.optimization_metric is OptimizationMetric.CIRCADIAN_EMD:
-            return circadian_timestamps_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids)
+            return circadian_event_distribution_distance(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids)
         elif self.configuration.optimization_metric is OptimizationMetric.ABSOLUTE_EMD:
-            return absolute_timestamps_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids)
+            return absolute_event_distribution_distance(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids)
+        elif self.configuration.optimization_metric is OptimizationMetric.RELATIVE_EMD:
+            return relative_event_distribution_distance(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids)
         else:
             print("WARNING: Unknown optimization metric! Optimizing for cycle time!")
-            return cycle_time_emd(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids, bin_size)
+            return cycle_time_distribution_distance(self.validation_log, self.log_ids, simulated_event_log, sim_log_ids, bin_size)
 
     def _get_scaled_timers(self, alphas: dict):
         scaled_timers = {}

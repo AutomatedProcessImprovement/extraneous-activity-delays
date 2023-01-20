@@ -33,6 +33,7 @@ class OptimizationMetric(enum.Enum):
     CYCLE_TIME = 1
     ABSOLUTE_EMD = 2
     CIRCADIAN_EMD = 3
+    RELATIVE_EMD = 4
 
 
 class TimerPlacement(enum.Enum):

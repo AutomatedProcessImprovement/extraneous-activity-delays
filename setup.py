@@ -11,8 +11,6 @@ setup(
         'lxml',
         'numpy',
         'scipy',
-        'hyperopt',
-        'log_similarity_metrics',
-        'estimate_start_times'
+        'hyperopt'
     ]
 )

@@ -6,7 +6,7 @@ from typing import Callable
 
 from lxml.etree import ElementTree
 
-from estimate_start_times.config import EventLogIDs, DEFAULT_CSV_IDS
+from pix_utils.log_ids import EventLogIDs, DEFAULT_CSV_IDS
 
 
 def get_project_dir() -> Path:
@@ -82,7 +82,7 @@ class Configuration:
                                     happening previously to an activity instance) or AFTER (the extraneous delay is considered to be
                                     happening afterward an activity instance) each activity.
     """
-    log_ids: EventLogIDs = DEFAULT_CSV_IDS
+    log_ids: EventLogIDs = field(default_factory=lambda: DEFAULT_CSV_IDS)
     num_iterations: int = 100
     num_evaluation_simulations: int = 10
     should_consider_timer: Callable[[list], bool] = _should_consider_timer

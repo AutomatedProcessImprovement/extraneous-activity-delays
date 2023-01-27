@@ -2,7 +2,7 @@ from lxml import etree
 
 from extraneous_activity_delays.config import SimulationModel, TimerPlacement
 from extraneous_activity_delays.qbp.simulation_model_enhancer import add_timers_to_simulation_model
-from extraneous_activity_delays.utils.distributions import DurationDistribution
+from pix_utils.statistics.distribution import DurationDistribution
 
 
 def test_enhance_bpmn_model_with_delays():
@@ -12,11 +12,11 @@ def test_enhance_bpmn_model_with_delays():
     simulation_model = SimulationModel(document)
     # Enhance
     timers = {
-        'A': DurationDistribution(name="fix", mean=60, var=0, std=0, min=60, max=60),
-        'B': DurationDistribution(name="norm", mean=1200, var=36, std=6, min=1000, max=1400),
-        'C': DurationDistribution(name="expon", mean=3600, var=100, std=10, min=1200, max=7200),
-        'D': DurationDistribution(name="uniform", mean=3600, var=4000000, std=2000, min=0, max=7200),
-        'E': DurationDistribution(name="gamma", mean=1200, var=144, std=12, min=800, max=1400)
+        'A': DurationDistribution(name="fix", mean=60, var=0, std=0, minimum=60, maximum=60),
+        'B': DurationDistribution(name="norm", mean=1200, var=36, std=6, minimum=1000, maximum=1400),
+        'C': DurationDistribution(name="expon", mean=3600, var=100, std=10, minimum=1200, maximum=7200),
+        'D': DurationDistribution(name="uniform", mean=3600, var=4000000, std=2000, minimum=0, maximum=7200),
+        'E': DurationDistribution(name="gamma", mean=1200, var=144, std=12, minimum=800, maximum=1400)
     }
     enhanced_simulation_model = add_timers_to_simulation_model(simulation_model, timers)
     model = enhanced_simulation_model.bpmn_document.getroot()
@@ -73,15 +73,15 @@ def test_enhance_bpmn_model_with_delays():
 def test_enhance_bpmn_model_with_delays_after():
     # Read BPMN model
     parser = etree.XMLParser(remove_blank_text=True)
-    document = etree.parse("./assets/timer-events-test.bpmn", parser)
+    document = etree.parse("./tests/assets/timer-events-test.bpmn", parser)
     simulation_model = SimulationModel(document)
     # Enhance
     timers = {
-        'A': DurationDistribution(name="fix", mean=60, var=0, std=0, min=60, max=60),
-        'B': DurationDistribution(name="norm", mean=1200, var=36, std=6, min=1000, max=1400),
-        'C': DurationDistribution(name="expon", mean=3600, var=100, std=10, min=1200, max=7200),
-        'D': DurationDistribution(name="uniform", mean=3600, var=4000000, std=2000, min=0, max=7200),
-        'E': DurationDistribution(name="gamma", mean=1200, var=144, std=12, min=800, max=1400)
+        'A': DurationDistribution(name="fix", mean=60, var=0, std=0, minimum=60, maximum=60),
+        'B': DurationDistribution(name="norm", mean=1200, var=36, std=6, minimum=1000, maximum=1400),
+        'C': DurationDistribution(name="expon", mean=3600, var=100, std=10, minimum=1200, maximum=7200),
+        'D': DurationDistribution(name="uniform", mean=3600, var=4000000, std=2000, minimum=0, maximum=7200),
+        'E': DurationDistribution(name="gamma", mean=1200, var=144, std=12, minimum=800, maximum=1400)
     }
     enhanced_simulation_model = add_timers_to_simulation_model(simulation_model, timers, TimerPlacement.AFTER)
     model = enhanced_simulation_model.bpmn_document.getroot()

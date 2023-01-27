@@ -6,7 +6,7 @@ from estimate_start_times.config import Configuration as StartTimeConfiguration,
     ResourceAvailabilityType
 from estimate_start_times.estimator import StartTimeEstimator
 from extraneous_activity_delays.config import Configuration
-from extraneous_activity_delays.utils.distributions import get_best_distribution
+from pix_utils.statistics.distribution import get_best_fitting_distribution
 
 
 def compute_extraneous_activity_delays(
@@ -15,7 +15,7 @@ def compute_extraneous_activity_delays(
         should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0
 ) -> dict:
     """
-    Calculate, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed since the
+    Compute, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed since the
     activity is both enabled and its resource available, and the recorded start of the activity.
 
     :param event_log: Event log storing the information of the process.
@@ -33,6 +33,7 @@ def compute_extraneous_activity_delays(
         resource_availability_type=ResourceAvailabilityType.SIMPLE,
         bot_resources=config.bot_resources,
         instant_activities=config.instant_activities,
+        working_schedules=config.working_schedules,
         consider_start_times=True
     )
     enhanced_event_log = StartTimeEstimator(event_log, start_time_config).estimate()
@@ -51,6 +52,6 @@ def compute_extraneous_activity_delays(
         ]
         # If the delay should be considered, add it
         if should_consider_timer(delays):
-            timers[activity] = get_best_distribution(delays)
+            timers[activity] = get_best_fitting_distribution(delays)
     # Return the delays
     return timers

@@ -21,7 +21,6 @@ from extraneous_activity_delays.qbp.simulation_model_enhancer import set_number_
     set_start_datetime_to_simulate
 from extraneous_activity_delays.qbp.simulator import LOG_IDS as QBP_LOG_IDS
 from extraneous_activity_delays.qbp.simulator import simulate as simulate_qbp
-from extraneous_activity_delays.utils.distributions import scale_distribution
 from extraneous_activity_delays.utils.file_manager import delete_folder, create_new_tmp_folder
 from extraneous_activity_delays.utils.log_split import split_log_training_validation_event_wise
 from log_similarity_metrics.absolute_event_distribution import absolute_event_distribution_distance
@@ -245,6 +244,6 @@ class HyperOptEnhancer:
         for activity in self.timers:
             # If the scaling factor is not 0.0 create a timer
             if (activity in alphas) and (alphas[activity] > 0.0):
-                scaled_timers[activity] = scale_distribution(self.timers[activity], alphas[activity])
+                scaled_timers[activity] = self.timers[activity].scale_distribution(alphas[activity])
         # Return timers
         return scaled_timers

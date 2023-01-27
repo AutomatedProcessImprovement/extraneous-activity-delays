@@ -1,1 +1,1 @@
-__all__ = ['delay_discoverer', 'enhance_with_delays']
+__all__ = ['delay_discoverer', 'enhance_with_delays', 'config']

@@ -29,7 +29,7 @@ def optimize_with_prosimos():
     enhancer = HyperOptEnhancer(event_log, simulation_model, config)
     enhanced_simulation_model = enhancer.enhance_simulation_model_with_delays()
     # Write enhanced BPS model
-    # enhanced_simulation_model.bpmn_document.write("../outputs/LoanApp_sequential_9-5_diffres.bpmn", pretty_print=True)
+    enhanced_simulation_model.bpmn_document.write("../outputs/LoanApp_sequential_9-5_diffres.bpmn", pretty_print=True)
 
 
 if __name__ == '__main__':

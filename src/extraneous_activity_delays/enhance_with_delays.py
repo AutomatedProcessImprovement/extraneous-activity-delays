@@ -11,7 +11,7 @@ from hyperopt.fmin import generate_trials_to_calculate
 
 from estimate_start_times.config import EventLogIDs
 from extraneous_activity_delays.config import Configuration, SimulationOutput, SimulationModel, SimulationEngine, OptimizationMetric
-from extraneous_activity_delays.delay_discoverer import compute_extraneous_activity_delays
+from extraneous_activity_delays.delay_discoverer import compute_naive_extraneous_activity_delays
 from extraneous_activity_delays.prosimos.simulation_model_enhancer import \
     add_timers_to_simulation_model as add_timers_to_simulation_model_prosimos
 from extraneous_activity_delays.prosimos.simulator import LOG_IDS as PROSIMOS_LOG_IDS
@@ -37,7 +37,7 @@ class NaiveEnhancer:
         self.configuration = configuration
         self.log_ids = configuration.log_ids
         # Calculate extraneous delay timers
-        self.timers = compute_extraneous_activity_delays(self.event_log, self.configuration, self.configuration.should_consider_timer)
+        self.timers = compute_naive_extraneous_activity_delays(self.event_log, self.configuration, self.configuration.should_consider_timer)
 
     def enhance_simulation_model_with_delays(self) -> SimulationModel:
         # Enhance process model
@@ -71,7 +71,8 @@ class HyperOptEnhancer:
         self.configuration = configuration
         self.log_ids = configuration.log_ids
         # Calculate extraneous delay timers
-        self.timers = compute_extraneous_activity_delays(self.training_log, self.configuration, self.configuration.should_consider_timer)
+        self.timers = compute_naive_extraneous_activity_delays(self.training_log, self.configuration,
+                                                               self.configuration.should_consider_timer)
         # Hyper-optimization search space
         if self.configuration.multi_parametrization:
             self.opt_space = {activity: hp.uniform(activity, 0.0, self.configuration.max_alpha) for activity in self.timers.keys()}

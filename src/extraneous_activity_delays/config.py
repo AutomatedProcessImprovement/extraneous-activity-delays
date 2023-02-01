@@ -84,8 +84,6 @@ class Configuration:
                                     retaining this percentage of events (in full traces) for the training set. For example, if the value is
                                     0.8 it will train with approximately a subset of traces of the event log with the 80% of the total
                                     events, and validate with the remaining traces.
-        multi_parametrization       Boolean indicating whether to launch the optimization with one scale factor per timer, or use the same
-                                    scale factor for all timers at the same time.
 
     Enabled time estimation:
         bot_resources               Set of resource IDs corresponding bots, in order to set the estimated start time of its events as
@@ -110,7 +108,6 @@ class Configuration:
     num_evaluation_simulations: int = 10
     max_alpha: float = 1.0
     training_partition_ratio: float = None
-    multi_parametrization: bool = True
     # Enabled time estimation
     bot_resources: set = field(default_factory=set)
     instant_activities: set = field(default_factory=set)

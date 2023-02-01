@@ -74,12 +74,8 @@ class HyperOptEnhancer:
         self.timers = compute_naive_extraneous_activity_delays(self.training_log, self.configuration,
                                                                self.configuration.should_consider_timer)
         # Hyper-optimization search space
-        if self.configuration.multi_parametrization:
-            self.opt_space = {activity: hp.uniform(activity, 0.0, self.configuration.max_alpha) for activity in self.timers.keys()}
-            baseline_iteration_params = [{activity: 1.0 for activity in self.timers.keys()}]
-        else:
-            self.opt_space = hp.uniform('alpha', 0.0, self.configuration.max_alpha)
-            baseline_iteration_params = [{'alpha': 1.0}]
+        self.opt_space = {activity: hp.uniform(activity, 0.0, self.configuration.max_alpha) for activity in self.timers.keys()}
+        baseline_iteration_params = [{activity: 1.0 for activity in self.timers.keys()}]
         # Variable to store the information of each optimization trial
         self.opt_trials = generate_trials_to_calculate(baseline_iteration_params)  # Force the first trial to be with this values
         # Result attributes
@@ -101,13 +97,8 @@ class HyperOptEnhancer:
             for result in self.opt_trials.results:
                 if result['output_folder'] != self.opt_trials.best_trial['result']['output_folder']:
                     delete_folder(result['output_folder'])
-            # Process best parameters result
-            if self.configuration.multi_parametrization:
-                # One scale factor per timer
-                best_alphas = {activity: round(best_result[activity], 2) for activity in best_result}
-            else:
-                # One scale factor for each timer
-                best_alphas = {activity: round(best_result['alpha'], 2) for activity in self.timers.keys()}
+            # Process the best parameters result
+            best_alphas = {activity: round(best_result[activity], 2) for activity in best_result}
             # Transform timers based on [best_alphas]
             scaled_timers = self._get_scaled_timers(best_alphas)
             self.best_timers = scaled_timers
@@ -128,12 +119,7 @@ class HyperOptEnhancer:
 
     def _enhancement_iteration(self, params: Union[float, dict]) -> dict:
         # Process params
-        if self.configuration.multi_parametrization:
-            # Dictionary with a scale factor for each activity, so let it be
-            alphas = {activity: round(params[activity], 2) for activity in params}
-        else:
-            # Only one scale factor, create dictionary with that factor for each activity
-            alphas = {activity: round(params, 2) for activity in self.timers.keys()}
+        alphas = {activity: round(params[activity], 2) for activity in params}
         # Get iteration folder
         output_folder = create_new_tmp_folder(self.configuration.PATH_OUTPUTS)
         # Transform timers based on [alpha]

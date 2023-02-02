@@ -64,11 +64,11 @@ def real_life_log_stats():
 def experimentation_real_life_run(dataset: str, train_dataset: str, test_dataset: str, metrics_file):
     # Configuration
     config = Configuration(
-        process_name=dataset, max_alpha=50.0,
+        process_name=dataset, max_alpha=50.0, num_evaluation_simulations=10,
         num_iterations=200, simulation_engine=SimulationEngine.QBP
     )
     hold_out_config = Configuration(
-        process_name=dataset, max_alpha=50.0,
+        process_name=dataset, max_alpha=50.0, num_evaluation_simulations=10,
         training_partition_ratio=0.5, num_iterations=200,
         simulation_engine=SimulationEngine.QBP
     )

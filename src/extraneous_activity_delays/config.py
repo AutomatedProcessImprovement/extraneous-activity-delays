@@ -7,6 +7,7 @@ from typing import Callable
 import pandas as pd
 from lxml.etree import ElementTree
 
+from estimate_start_times.config import HeuristicsThresholds
 from pix_utils.log_ids import EventLogIDs, DEFAULT_CSV_IDS
 
 
@@ -89,6 +90,7 @@ class Configuration:
         bot_resources               Set of resource IDs corresponding bots, in order to set the estimated start time of its events as
                                     their end time.
         instant_activities          Set of instantaneous activities, in order to set their estimated start time as their end time.
+        heuristics_thresholds       Thresholds for the heuristics concurrency oracle.
 
     General parameters:
         process_name                Name of the process to use in the output files (BPMN and simulated log files).
@@ -105,12 +107,13 @@ class Configuration:
     time_gap: pd.Timedelta = pd.Timedelta(0)
     # Optimization process parameters
     num_iterations: int = 100
-    num_evaluation_simulations: int = 10
+    num_evaluation_simulations: int = 3
     max_alpha: float = 1.0
     training_partition_ratio: float = None
     # Enabled time estimation
     bot_resources: set = field(default_factory=set)
     instant_activities: set = field(default_factory=set)
+    heuristics_thresholds: HeuristicsThresholds = field(default_factory=lambda: HeuristicsThresholds())
     # General parameters
     process_name: str = "process"
     log_ids: EventLogIDs = field(default_factory=lambda: DEFAULT_CSV_IDS)

@@ -4,9 +4,10 @@ import pandas as pd
 
 from estimate_start_times.config import Configuration as StartTimeConfiguration, ConcurrencyOracleType, ReEstimationMethod, \
     ResourceAvailabilityType
-from pix_utils.calendar.resource_calendar import absolute_unavailability_intervals_within
 from estimate_start_times.estimator import StartTimeEstimator
 from extraneous_activity_delays.config import Configuration
+from pix_utils.calendar.resource_calendar import absolute_unavailability_intervals_within
+from pix_utils.log_ids import EventLogIDs
 from pix_utils.statistics.distribution import get_best_fitting_distribution
 
 
@@ -23,6 +24,7 @@ def compute_naive_extraneous_activity_delays(
     :param config: configuration of the estimation search.
     :param should_consider_timer: lambda function that, given a list of floats representing all the delays registered, returns a boolean
     denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
+
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
     # Calculate estimated start times (with enablement and resource availability)
@@ -30,8 +32,9 @@ def compute_naive_extraneous_activity_delays(
     start_time_config = StartTimeConfiguration(
         log_ids=log_ids,
         concurrency_oracle_type=ConcurrencyOracleType.HEURISTICS,
+        heuristics_thresholds=config.heuristics_thresholds,
         re_estimation_method=ReEstimationMethod.MODE,
-        resource_availability_type=ResourceAvailabilityType.SIMPLE,
+        resource_availability_type=ResourceAvailabilityType.WITH_CALENDAR,
         bot_resources=config.bot_resources,
         instant_activities=config.instant_activities,
         working_schedules=config.working_schedules,
@@ -82,48 +85,14 @@ def compute_complex_extraneous_activity_delays(
         log_ids=log_ids,
         concurrency_oracle_type=ConcurrencyOracleType.HEURISTICS,
         re_estimation_method=ReEstimationMethod.MODE,
-        resource_availability_type=ResourceAvailabilityType.SIMPLE,
+        resource_availability_type=ResourceAvailabilityType.WITH_CALENDAR,
         bot_resources=config.bot_resources,
         instant_activities=config.instant_activities,
         consider_start_times=True
     )
     StartTimeEstimator(event_log, start_time_config).concurrency_oracle.add_enabled_times(event_log)
     # Compute first and last instants where the resource was available
-    event_log.loc['first_available'] = pd.NaT
-    event_log.loc['last_available'] = pd.NaT
-    for resource, events in event_log.groupby(log_ids.resource):
-        calendar = config.working_schedules[resource]
-        indexes, first_available, last_available = [], [], []
-        for index, event in events.iterrows():
-            # Get activity instances of the same resource happening in its waiting time
-            resource_events = events[
-                ((event[log_ids.enabled_time] < events[log_ids.end_time]) & (events[log_ids.end_time] < event[log_ids.start_time])) |
-                ((event[log_ids.enabled_time] < events[log_ids.start_time]) & (events[log_ids.start_time] < event[log_ids.start_time]))
-                ]
-            # Get off-duty intervals from its waiting time
-            resource_off_duty = absolute_unavailability_intervals_within(
-                start=event[log_ids.enabled_time],
-                end=event[log_ids.start_time],
-                schedule=calendar
-            )
-            # Get first and last availability instants
-            indexes += [index]
-            first_instant, last_instant = _get_first_and_last_available(
-                starts=list(resource_events[log_ids.start_time]) + [interval.start for interval in resource_off_duty],
-                ends=list(resource_events[log_ids.end_time]) + [interval.end for interval in resource_off_duty],
-                time_gap=config.time_gap
-            )
-            if first_instant:
-                # Available instants found
-                first_available += [first_instant]
-                last_available += [last_instant]
-            else:
-                # Busy during all the waiting time, set start time as availability
-                first_available += [event[log_ids.start_time]]
-                last_available += [event[log_ids.start_time]]
-        # Set first and last available times for all events of this resource
-        event_log.loc[indexes, 'first_available'] = first_available
-        event_log.loc[indexes, 'last_available'] = last_available
+    _extend_log_with_first_last_available(event_log, log_ids, config)
     # Discover the time distribution of each activity's delay
     delays = {}
     for activity, instances in event_log.groupby(log_ids.activity):
@@ -139,6 +108,56 @@ def compute_complex_extraneous_activity_delays(
         if should_consider_timer(delays):
             delays[activity] = get_best_fitting_distribution(delays)
     return delays
+
+
+def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: EventLogIDs, config: Configuration):
+    """
+    Add, to [event_log], two columns with the first and last timestamps in which the resource that performed that activity was available.
+
+    :param event_log: Event log storing the information of the process.
+    :param log_ids: Mapping for the columns in the event log.
+    :param config:configuration of the estimation search.
+    """
+    # Initiate both first and last available columns to NaT
+    event_log.loc['first_available'] = pd.NaT
+    event_log.loc['last_available'] = pd.NaT
+    for resource, events in event_log.groupby(log_ids.resource):
+        # Initialize resource working calendar if existing
+        calendar = config.working_schedules[resource] if resource in config.working_schedules else None
+        indexes, first_available, last_available = [], [], []
+        for index, event in events.iterrows():
+            # Get activity instances performed by the same resource happening in its waiting time
+            performed_events = events[
+                ((event[log_ids.enabled_time] < events[log_ids.end_time]) & (events[log_ids.end_time] < event[log_ids.start_time])) |
+                ((event[log_ids.enabled_time] < events[log_ids.start_time]) & (events[log_ids.start_time] < event[log_ids.start_time]))
+                ]
+            # If the resource has a calendar associated, get off-duty intervals happening in its waiting time
+            if calendar:
+                resource_off_duty = absolute_unavailability_intervals_within(
+                    start=event[log_ids.enabled_time],
+                    end=event[log_ids.start_time],
+                    schedule=calendar
+                )
+            else:
+                resource_off_duty = []
+            # Get first and last availability instants
+            indexes += [index]
+            first_instant, last_instant = _get_first_and_last_available(
+                starts=list(performed_events[log_ids.start_time]) + [interval.start for interval in resource_off_duty],
+                ends=list(performed_events[log_ids.end_time]) + [interval.end for interval in resource_off_duty],
+                time_gap=config.time_gap
+            )
+            if first_instant:
+                # Available instants found
+                first_available += [first_instant]
+                last_available += [last_instant]
+            else:
+                # Busy during all the waiting time, set start time as availability
+                first_available += [event[log_ids.start_time]]
+                last_available += [event[log_ids.start_time]]
+        # Set first and last available times for all events of this resource
+        event_log.loc[indexes, 'first_available'] = first_available
+        event_log.loc[indexes, 'last_available'] = last_available
 
 
 def _get_first_and_last_available(starts: list, ends: list, time_gap: pd.Timedelta) -> Tuple[pd.Timestamp, pd.Timestamp]:

@@ -34,7 +34,7 @@ def test_compute_naive_extraneous_activity_delays():
     # Compute delays
     delays_no_calendars = compute_naive_extraneous_activity_delays(event_log, config_no_calendars)
     # Assert there are delays if not using calendars
-    assert len(delays_no_calendars) > 0
+    assert len(delays_no_calendars) == 1
 
 
 def test_compute_complex_extraneous_activity_delays():
@@ -64,4 +64,4 @@ def test_compute_complex_extraneous_activity_delays():
     # Compute delays
     delays_no_calendars = compute_complex_extraneous_activity_delays(event_log, config_no_calendars)
     # Assert there are delays if not using calendars
-    assert len(delays_no_calendars) > 0
+    assert len(delays_no_calendars) == 1

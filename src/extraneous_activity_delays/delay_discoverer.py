@@ -94,7 +94,7 @@ def compute_complex_extraneous_activity_delays(
     # Compute first and last instants where the resource was available
     _extend_log_with_first_last_available(event_log, log_ids, config)
     # Discover the time distribution of each activity's delay
-    delays = {}
+    timers = {}
     for activity, instances in event_log.groupby(log_ids.activity):
         # Get the activity instances with enabled time
         filtered_instances = instances[(~pd.isna(instances[log_ids.enabled_time]))]
@@ -106,8 +106,8 @@ def compute_complex_extraneous_activity_delays(
         ]
         # If the delay should be considered, add it
         if should_consider_timer(delays):
-            delays[activity] = get_best_fitting_distribution(delays)
-    return delays
+            timers[activity] = get_best_fitting_distribution(delays)
+    return timers
 
 
 def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: EventLogIDs, config: Configuration):
@@ -209,5 +209,6 @@ def _get_first_and_last_available(starts: list, ends: list, time_gap: pd.Timedel
             ):
                 # Resource available at this point, check time gap until next event
                 last_available = times[i][0]
+            i -= 1
     # Return first available
     return first_available, last_available

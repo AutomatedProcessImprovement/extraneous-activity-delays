@@ -132,8 +132,8 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
         for index, event in events.iterrows():
             # Get activity instances performed by the same resource happening in its waiting time
             performed_events = events[
-                ((event[log_ids.enabled_time] < events[log_ids.end_time]) & (events[log_ids.end_time] < event[log_ids.start_time])) |
-                ((event[log_ids.enabled_time] < events[log_ids.start_time]) & (events[log_ids.start_time] < event[log_ids.start_time]))
+                ((event[log_ids.enabled_time] < events[log_ids.end_time]) & (events[log_ids.end_time] <= event[log_ids.start_time])) |
+                ((event[log_ids.enabled_time] <= events[log_ids.start_time]) & (events[log_ids.start_time] < event[log_ids.start_time]))
                 ]
             # If the resource has a calendar associated, get off-duty intervals happening in its waiting time
             if calendar:
@@ -147,8 +147,12 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
             # Get first and last availability instants
             indexes += [index]
             first_instant, last_instant = _get_first_and_last_available(
-                starts=list(performed_events[log_ids.start_time]) + [interval.start for interval in resource_off_duty],
-                ends=list(performed_events[log_ids.end_time]) + [interval.end for interval in resource_off_duty],
+                starts=(list(performed_events[log_ids.start_time]) +  # Starts of resource contention intervals
+                        [interval.start for interval in resource_off_duty] +  # Starts of off-duty intervals
+                        [event[log_ids.enabled_time], event[log_ids.start_time]]),  # Start and end of the enabled period (control check)
+                ends=(list(performed_events[log_ids.end_time]) +  # Ends of resource contention intervals
+                      [interval.end for interval in resource_off_duty] +  # Ends of off-duty intervals
+                      [event[log_ids.enabled_time], event[log_ids.start_time]]),  # Start and end of the enabled period (control check)
                 time_gap=config.time_gap
             )
             if first_instant:

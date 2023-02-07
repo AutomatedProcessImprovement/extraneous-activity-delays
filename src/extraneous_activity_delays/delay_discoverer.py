@@ -81,16 +81,17 @@ def compute_complex_extraneous_activity_delays(
     """
     # Compute enabled time of each activity instance
     log_ids = config.log_ids
-    start_time_config = StartTimeConfiguration(
-        log_ids=log_ids,
-        concurrency_oracle_type=ConcurrencyOracleType.HEURISTICS,
-        re_estimation_method=ReEstimationMethod.MODE,
-        resource_availability_type=ResourceAvailabilityType.WITH_CALENDAR,
-        bot_resources=config.bot_resources,
-        instant_activities=config.instant_activities,
-        consider_start_times=True
-    )
-    StartTimeEstimator(event_log, start_time_config).concurrency_oracle.add_enabled_times(event_log)
+    if log_ids.enabled_time not in event_log.columns:
+        start_time_config = StartTimeConfiguration(
+            log_ids=log_ids,
+            concurrency_oracle_type=ConcurrencyOracleType.HEURISTICS,
+            re_estimation_method=ReEstimationMethod.MODE,
+            resource_availability_type=ResourceAvailabilityType.WITH_CALENDAR,
+            bot_resources=config.bot_resources,
+            instant_activities=config.instant_activities,
+            consider_start_times=True
+        )
+        StartTimeEstimator(event_log, start_time_config).concurrency_oracle.add_enabled_times(event_log)
     # Compute first and last instants where the resource was available
     _extend_log_with_first_last_available(event_log, log_ids, config)
     # Discover the time distribution of each activity's delay
@@ -107,6 +108,9 @@ def compute_complex_extraneous_activity_delays(
         # If the delay should be considered, add it
         if should_consider_timer(delays):
             timers[activity] = get_best_fitting_distribution(delays)
+    # Remove extra columns
+    event_log.drop(['last_available', 'first_available'], axis=1)
+    # Return discovered delays
     return timers
 
 
@@ -119,8 +123,8 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
     :param config:configuration of the estimation search.
     """
     # Initiate both first and last available columns to NaT
-    event_log.loc['first_available'] = pd.NaT
-    event_log.loc['last_available'] = pd.NaT
+    event_log['first_available'] = pd.NaT
+    event_log['last_available'] = pd.NaT
     for resource, events in event_log.groupby(log_ids.resource):
         # Initialize resource working calendar if existing
         calendar = config.working_schedules[resource] if resource in config.working_schedules else None
@@ -158,6 +162,9 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
         # Set first and last available times for all events of this resource
         event_log.loc[indexes, 'first_available'] = first_available
         event_log.loc[indexes, 'last_available'] = last_available
+    # Convert columns to Timestamp
+    event_log['first_available'] = pd.to_datetime(event_log['first_available'], utc=True)
+    event_log['last_available'] = pd.to_datetime(event_log['last_available'], utc=True)
 
 
 def _get_first_and_last_available(starts: list, ends: list, time_gap: pd.Timedelta) -> Tuple[pd.Timestamp, pd.Timestamp]:

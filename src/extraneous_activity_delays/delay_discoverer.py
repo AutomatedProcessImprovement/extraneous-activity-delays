@@ -209,17 +209,21 @@ def _get_first_and_last_available(starts: list, ends: list, time_gap: pd.Timedel
         # Go over them end->start, until a moment with no active unavailable intervals is reached
         i = len(times) - 1  # Index to go over the timestamps
         active = 0  # Number of active unavailable intervals
-        while not last_available and first_available < times[i][0] and i > 0:
-            # Increase active unavailable intervals if current timestamps is 'end', or decrease otherwise
-            active += 1 if times[i][1] == 'end' else -1
-            # Check if no active unavailable intervals
-            if (
-                    active == 0 and  # No active unavailable intervals at this point, and
-                    (i == 0 or  # either this is the last point in the search, or
-                     times[i][0] - times[i - 1][0] >= time_gap)  # there is an available time gap with enough duration
-            ):
-                # Resource available at this point, check time gap until next event
-                last_available = times[i][0]
+        while not last_available and i > 0:
+            if times[i][0] <= first_available:
+                # If the search reached [first_available], set to it and finish
+                last_available = first_available
+            else:
+                # Increase active unavailable intervals if current timestamps is 'end', or decrease otherwise
+                active += 1 if times[i][1] == 'end' else -1
+                # Check if no active unavailable intervals
+                if (
+                        active == 0 and  # No active unavailable intervals at this point, and
+                        (i == 0 or  # either this is the last point in the search, or
+                         times[i][0] - times[i - 1][0] >= time_gap)  # there is an available time gap with enough duration
+                ):
+                    # Resource available at this point, check time gap until next event
+                    last_available = times[i][0]
             i -= 1
     # Return first available
     return first_available, last_available

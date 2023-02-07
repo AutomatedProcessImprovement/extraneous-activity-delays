@@ -104,7 +104,7 @@ class Configuration:
     # Extraneous delays parameters
     should_consider_timer: Callable[[list], bool] = _should_consider_timer
     working_schedules: dict = field(default_factory=dict)
-    time_gap: pd.Timedelta = pd.Timedelta(0)
+    time_gap: pd.Timedelta = pd.Timedelta(seconds=1)
     # Optimization process parameters
     num_iterations: int = 100
     num_evaluation_simulations: int = 3

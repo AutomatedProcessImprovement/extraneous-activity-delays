@@ -147,12 +147,10 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
             # Get first and last availability instants
             indexes += [index]
             first_instant, last_instant = _get_first_and_last_available(
-                starts=(list(performed_events[log_ids.start_time]) +  # Starts of resource contention intervals
-                        [interval.start for interval in resource_off_duty] +  # Starts of off-duty intervals
-                        [event[log_ids.enabled_time], event[log_ids.start_time]]),  # Start and end of the enabled period (control check)
-                ends=(list(performed_events[log_ids.end_time]) +  # Ends of resource contention intervals
-                      [interval.end for interval in resource_off_duty] +  # Ends of off-duty intervals
-                      [event[log_ids.enabled_time], event[log_ids.start_time]]),  # Start and end of the enabled period (control check)
+                beginning=event[log_ids.enabled_time],
+                end=event[log_ids.start_time],
+                starts=list(performed_events[log_ids.start_time]) + [interval.start for interval in resource_off_duty],
+                ends=list(performed_events[log_ids.end_time]) + [interval.end for interval in resource_off_duty],
                 time_gap=config.time_gap
             )
             if first_instant:
@@ -171,10 +169,16 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
     event_log['last_available'] = pd.to_datetime(event_log['last_available'], utc=True)
 
 
-def _get_first_and_last_available(starts: list, ends: list, time_gap: pd.Timedelta) -> Tuple[pd.Timestamp, pd.Timestamp]:
+def _get_first_and_last_available(
+        beginning: pd.Timestamp, end: pd.Timestamp,
+        starts: list, ends: list,
+        time_gap: pd.Timedelta
+) -> Tuple[pd.Timestamp, pd.Timestamp]:
     """
-    Get the first instant from the period [start]-[end] where the
+    Get the first instant from the period [from]-[to] where the resource was available for a [time_gap] amount of time.
 
+    :param beginning:   Start of the interval where to search.
+    :param end:         End of the interval where to search.
     :param starts:      List of instants where either a non-working period or an activity instance started.
     :param ends:        List of instants where either an activity instance or a non-working period finished.
     :param time_gap:    Minimum time gap required for a non-working period to be considered as such.
@@ -182,6 +186,9 @@ def _get_first_and_last_available(starts: list, ends: list, time_gap: pd.Timedel
     :return: A tuple with the first and last timestamps within all [start] and [end] timestamps where the
     resource was available for a [time_gap] amount of time.
     """
+    # Add beginning and end of interval as artificial instant activities
+    starts += [beginning, end]
+    ends += [beginning, end]
     # Store the start and ends in a list of dicts
     times = pd.DataFrame(
         {'time': starts + ends,

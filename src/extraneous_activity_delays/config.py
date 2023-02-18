@@ -80,7 +80,6 @@ class Configuration:
     Extraneous delays parameters:
         should_consider_timer       Function taking as input a list of seconds for all the delays that activity has registered, and
                                     returning a bool indicating if those delays should be considered as a timer, or discarded as outliers.
-        working_schedules           Dictionary with the resources as key and the working calendars (RCalendar) as value.
         time_gap                    For complex extraneous delays, maximum interval of time allowed from a work item (task of off-duty
                                     interval) to another work item to not consider that the resource was available in that interval. For
                                     example, a resource works in a task from 16.00 to 17.49, but their off-duty period starts at 18.49. If
@@ -97,10 +96,8 @@ class Configuration:
                                     events, and validate with the remaining traces.
 
     Enabled time estimation:
-        bot_resources               Set of resource IDs corresponding bots, in order to set the estimated start time of its events as
-                                    their end time.
-        instant_activities          Set of instantaneous activities, in order to set their estimated start time as their end time.
         heuristics_thresholds       Thresholds for the heuristics concurrency oracle.
+        working_schedules           Dictionary with the resources as key and the working calendars (RCalendar) as value.
 
     General parameters:
         process_name                Name of the process to use in the output files (BPMN and simulated log files).
@@ -114,17 +111,15 @@ class Configuration:
     optimization_metric: OptimizationMetric = OptimizationMetric.RELATIVE_EMD
     # Extraneous delays parameters
     should_consider_timer: Callable[[list], bool] = _should_consider_timer
-    working_schedules: dict = field(default_factory=dict)
     time_gap: pd.Timedelta = pd.Timedelta(seconds=1)
     # Optimization process parameters
     num_iterations: int = 100
     num_evaluation_simulations: int = 3
-    max_alpha: float = 1.0
+    max_alpha: float = 10.0
     training_partition_ratio: float = None
-    # Enabled time estimation
-    bot_resources: set = field(default_factory=set)
-    instant_activities: set = field(default_factory=set)
-    heuristics_thresholds: HeuristicsThresholds = field(default_factory=lambda: HeuristicsThresholds())
+    # Enabled time & resource availability estimations
+    heuristics_thresholds: HeuristicsThresholds = field(default_factory=lambda: HeuristicsThresholds(df=0.75))
+    working_schedules: dict = field(default_factory=dict)
     # General parameters
     process_name: str = "process"
     log_ids: EventLogIDs = field(default_factory=lambda: DEFAULT_CSV_IDS)

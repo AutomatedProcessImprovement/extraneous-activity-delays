@@ -2,10 +2,10 @@ from typing import Callable, Tuple
 
 import pandas as pd
 
-from estimate_start_times.config import Configuration as StartTimeConfiguration, ConcurrencyOracleType, ReEstimationMethod, \
-    ResourceAvailabilityType
-from estimate_start_times.estimator import StartTimeEstimator
-from extraneous_activity_delays.config import Configuration
+from estimate_start_times.concurrency_oracle import OverlappingConcurrencyOracle
+from estimate_start_times.config import Configuration as StartTimeConfiguration
+from estimate_start_times.resource_availability import CalendarResourceAvailability
+from extraneous_activity_delays.config import Configuration, TimerPlacement
 from pix_utils.calendar.resource_calendar import absolute_unavailability_intervals_within
 from pix_utils.log_ids import EventLogIDs
 from pix_utils.statistics.distribution import get_best_fitting_distribution
@@ -27,32 +27,31 @@ def compute_naive_extraneous_activity_delays(
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
-    # Calculate estimated start times (with enablement and resource availability)
     log_ids = config.log_ids
+    # Compute both enablement and resource availability times
     start_time_config = StartTimeConfiguration(
         log_ids=log_ids,
-        concurrency_oracle_type=ConcurrencyOracleType.HEURISTICS,
         heuristics_thresholds=config.heuristics_thresholds,
-        re_estimation_method=ReEstimationMethod.MODE,
-        resource_availability_type=ResourceAvailabilityType.WITH_CALENDAR,
-        bot_resources=config.bot_resources,
-        instant_activities=config.instant_activities,
         working_schedules=config.working_schedules,
-        consider_start_times=True
     )
-    enhanced_event_log = StartTimeEstimator(event_log, start_time_config).estimate()
+    if _should_compute_enabled_times(event_log, config):
+        concurrency_oracle = OverlappingConcurrencyOracle(event_log, start_time_config)
+        concurrency_oracle.add_enabled_times(event_log, set_nat_to_first_event=True, include_enabling_activity=True)
+    if log_ids.available_time not in event_log.columns:
+        resource_availability = CalendarResourceAvailability(event_log, start_time_config)
+        resource_availability.add_resource_availability_times(event_log)
+    # Who to impute the extraneous delay to: the executed activity if the timer goes before, the enabling activity if it goes after
+    impute_to = log_ids.activity if config.timer_placement == TimerPlacement.BEFORE else log_ids.enabling_activity
     # Discover the time distribution of each activity's delay
     timers = {}
-    for activity in enhanced_event_log[log_ids.activity].unique():
-        # Get the activity instances which start was estimated with, at least, the enabled time
-        activity_instances = enhanced_event_log[
-            (enhanced_event_log[log_ids.activity] == activity) &  # An execution of this activity, AND
-            (~pd.isna(enhanced_event_log[log_ids.enabled_time]))  # having an enabled time
-            ]
-        # Transform the delay to seconds
+    for activity, instances in event_log.groupby(impute_to):
+        # Get the activity instances with enabled time
+        filtered_instances = instances[(~pd.isna(instances[log_ids.enabled_time]))]
+        # Compute the extraneous delays in seconds
         delays = [
             delay.total_seconds()
-            for delay in (activity_instances[log_ids.start_time] - activity_instances[log_ids.estimated_start_time])
+            for delay in filtered_instances[log_ids.start_time] -
+                         filtered_instances[[log_ids.enabled_time, log_ids.available_time]].max(axis=1, skipna=True, numeric_only=False)
         ]
         # If the delay should be considered, add it
         if should_consider_timer(delays):
@@ -81,22 +80,21 @@ def compute_complex_extraneous_activity_delays(
     """
     # Compute enabled time of each activity instance
     log_ids = config.log_ids
-    if log_ids.enabled_time not in event_log.columns:
-        start_time_config = StartTimeConfiguration(
-            log_ids=log_ids,
-            concurrency_oracle_type=ConcurrencyOracleType.HEURISTICS,
-            re_estimation_method=ReEstimationMethod.MODE,
-            resource_availability_type=ResourceAvailabilityType.WITH_CALENDAR,
-            bot_resources=config.bot_resources,
-            instant_activities=config.instant_activities,
-            consider_start_times=True
-        )
-        StartTimeEstimator(event_log, start_time_config).concurrency_oracle.add_enabled_times(event_log)
+    start_time_config = StartTimeConfiguration(
+        log_ids=log_ids,
+        heuristics_thresholds=config.heuristics_thresholds,
+        working_schedules=config.working_schedules,
+    )
+    if _should_compute_enabled_times(event_log, config):
+        concurrency_oracle = OverlappingConcurrencyOracle(event_log, start_time_config)
+        concurrency_oracle.add_enabled_times(event_log, set_nat_to_first_event=True, include_enabling_activity=True)
     # Compute first and last instants where the resource was available
     _extend_log_with_first_last_available(event_log, log_ids, config)
+    # Who to impute the extraneous delay to: the executed activity if the timer goes before, the enabling activity if it goes after
+    impute_to = log_ids.activity if config.timer_placement == TimerPlacement.BEFORE else log_ids.enabling_activity
     # Discover the time distribution of each activity's delay
     timers = {}
-    for activity, instances in event_log.groupby(log_ids.activity):
+    for activity, instances in event_log.groupby(impute_to):
         # Get the activity instances with enabled time
         filtered_instances = instances[(~pd.isna(instances[log_ids.enabled_time]))]
         # Transform the delay to seconds
@@ -109,7 +107,7 @@ def compute_complex_extraneous_activity_delays(
         if should_consider_timer(delays):
             timers[activity] = get_best_fitting_distribution(delays)
     # Remove extra columns
-    event_log.drop(['last_available', 'first_available'], axis=1)
+    event_log.drop(['last_available', 'first_available'], axis=1, inplace=True)
     # Return discovered delays
     return timers
 
@@ -234,3 +232,10 @@ def _get_first_and_last_available(
             i -= 1
     # Return first available
     return first_available, last_available
+
+
+def _should_compute_enabled_times(event_log: pd.DataFrame, config: Configuration):
+    return (
+            config.log_ids.enabled_time not in event_log.columns or
+            (config.timer_placement == TimerPlacement.AFTER and config.log_ids.enabling_activity not in event_log.columns)
+    )

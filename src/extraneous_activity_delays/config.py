@@ -21,14 +21,14 @@ class SimulationModel:
     simulation_parameters: dict = None
 
 
-class SimulationEngine(enum.Enum):
-    PROSIMOS = 1
-    QBP = 2
+class DiscoveryMethod(enum.Enum):
+    NAIVE = 1
+    COMPLEX = 2
 
 
-class SimulationOutput(enum.Enum):
-    SUCCESS = 1
-    ERROR = 2
+class TimerPlacement(enum.Enum):
+    BEFORE = 1
+    AFTER = 2
 
 
 class OptimizationMetric(enum.Enum):
@@ -38,9 +38,14 @@ class OptimizationMetric(enum.Enum):
     RELATIVE_EMD = 4
 
 
-class TimerPlacement(enum.Enum):
-    BEFORE = 1
-    AFTER = 2
+class SimulationEngine(enum.Enum):
+    PROSIMOS = 1
+    QBP = 2
+
+
+class SimulationOutput(enum.Enum):
+    SUCCESS = 1
+    ERROR = 2
 
 
 def _should_consider_timer(delays: list) -> bool:
@@ -61,9 +66,14 @@ class Configuration:
     Class storing the configuration parameters for the extraneous activity delay optimizer.
 
     Extraneous delays options:
+        discovery_method            Method to discover the extraneous delays of each activity instance. Naive: the extraneous delay of an
+                                    activity instance corresponds to the interval since the last time the activity was enabled & the
+                                    resource available, and the activity start time. Complex: the extraneous delay of an activity instance
+                                    corresponds to the interval since the first time the activity was enabled & the resource available,
+                                    until the last time this happened.
         timer_placement             Option to consider the placement of the timers either BEFORE (the extraneous delay is considered to be
                                     happening previously to an activity instance) or AFTER (the extraneous delay is considered to be
-                                    happening afterward an activity instance) each activity.
+                                    happening after an activity instance) each activity.
         simulation_engine           Simulation engine to use during the optimization process (e.g. Prosimos).
         optimization_metric         Metric to optimize during the optimization process.
 
@@ -98,6 +108,7 @@ class Configuration:
         debug                       Boolean denoting whether to print debug information or not.
     """
     # Extraneous delays options
+    discovery_method: DiscoveryMethod = DiscoveryMethod.NAIVE
     timer_placement: TimerPlacement = TimerPlacement.BEFORE
     simulation_engine: SimulationEngine = SimulationEngine.PROSIMOS
     optimization_metric: OptimizationMetric = OptimizationMetric.RELATIVE_EMD

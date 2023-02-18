@@ -10,8 +10,9 @@ from hyperopt import fmin, hp, tpe, STATUS_OK
 from hyperopt.fmin import generate_trials_to_calculate
 
 from estimate_start_times.config import EventLogIDs
-from extraneous_activity_delays.config import Configuration, SimulationOutput, SimulationModel, SimulationEngine, OptimizationMetric
-from extraneous_activity_delays.delay_discoverer import compute_naive_extraneous_activity_delays
+from extraneous_activity_delays.config import Configuration, SimulationOutput, SimulationModel, SimulationEngine, OptimizationMetric, \
+    DiscoveryMethod
+from extraneous_activity_delays.delay_discoverer import compute_naive_extraneous_activity_delays, compute_complex_extraneous_activity_delays
 from extraneous_activity_delays.prosimos.simulation_model_enhancer import \
     add_timers_to_simulation_model as add_timers_to_simulation_model_prosimos
 from extraneous_activity_delays.prosimos.simulator import LOG_IDS as PROSIMOS_LOG_IDS
@@ -29,15 +30,22 @@ from log_similarity_metrics.relative_event_distribution import relative_event_di
 from pix_utils.log_split.log_split import split_log_training_validation_event_wise
 
 
-class NaiveEnhancer:
+class DirectEnhancer:
     def __init__(self, event_log: pd.DataFrame, simulation_model: SimulationModel, configuration: Configuration):
         # Save parameters
         self.event_log = event_log
         self.simulation_model = simulation_model
         self.configuration = configuration
         self.log_ids = configuration.log_ids
-        # Calculate extraneous delay timers
-        self.timers = compute_naive_extraneous_activity_delays(self.event_log, self.configuration, self.configuration.should_consider_timer)
+        # Compute extraneous delay timers
+        if self.configuration.discovery_method == DiscoveryMethod.NAIVE:
+            self.timers = compute_naive_extraneous_activity_delays(self.event_log, self.configuration,
+                                                                   self.configuration.should_consider_timer)
+        elif self.configuration.discovery_method == DiscoveryMethod.COMPLEX:
+            self.timers = compute_complex_extraneous_activity_delays(self.event_log, self.configuration,
+                                                                     self.configuration.should_consider_timer)
+        else:
+            raise ValueError("Invalid delay discovery method selected!")
 
     def enhance_simulation_model_with_delays(self) -> SimulationModel:
         # Enhance process model
@@ -70,12 +78,21 @@ class HyperOptEnhancer:
         self.simulation_model = copy.deepcopy(simulation_model)
         self.configuration = configuration
         self.log_ids = configuration.log_ids
-        # Calculate extraneous delay timers
-        self.timers = compute_naive_extraneous_activity_delays(self.training_log, self.configuration,
-                                                               self.configuration.should_consider_timer)
+        # Compute extraneous delay timers
+        if self.configuration.discovery_method == DiscoveryMethod.NAIVE:
+            self.timers = compute_naive_extraneous_activity_delays(self.event_log, self.configuration,
+                                                                   self.configuration.should_consider_timer)
+        elif self.configuration.discovery_method == DiscoveryMethod.COMPLEX:
+            self.timers = compute_complex_extraneous_activity_delays(self.event_log, self.configuration,
+                                                                     self.configuration.should_consider_timer)
+        else:
+            raise ValueError("Invalid delay discovery method selected!")
         # Hyper-optimization search space
         self.opt_space = {activity: hp.uniform(activity, 0.0, self.configuration.max_alpha) for activity in self.timers.keys()}
-        baseline_iteration_params = [{activity: 1.0 for activity in self.timers.keys()}]
+        baseline_iteration_params = [
+            {activity: 0.0 for activity in self.timers.keys()},  # No timers
+            {activity: 1.0 for activity in self.timers.keys()}  # Discovered timers
+        ]
         # Variable to store the information of each optimization trial
         self.opt_trials = generate_trials_to_calculate(baseline_iteration_params)  # Force the first trial to be with this values
         # Result attributes

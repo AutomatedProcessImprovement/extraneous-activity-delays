@@ -5,7 +5,7 @@ from lxml import etree
 
 from estimate_start_times.config import EventLogIDs
 from extraneous_activity_delays.config import Configuration, SimulationModel, SimulationEngine
-from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer, NaiveEnhancer
+from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer, DirectEnhancer
 from extraneous_activity_delays.qbp.simulation_model_enhancer import set_number_instances_to_simulate, set_start_datetime_to_simulate
 from extraneous_activity_delays.qbp.simulator import simulate
 from extraneous_activity_delays.utils.file_manager import create_folder
@@ -39,10 +39,10 @@ def experimentation_synthetic_logs():
     ]
     # Write CSV header
     with open("../outputs/synthetic-evaluation/metrics.csv", 'a') as output_file:
-        output_file.write("dataset,cycle_time_original,cycle_time_no_timers,cycle_time_naive_enhanced,"
+        output_file.write("dataset,cycle_time_original,cycle_time_no_timers,cycle_time_direct_enhanced,"
                           "cycle_time_hyperopt_enhanced,cycle_time_hyperopt_enhanced_vs_train,"
                           "cycle_time_hyperopt_holdout_enhanced,timestamps_original,timestamps_no_timers,"
-                          "timestamps_naive_enhanced,timestamps_hyperopt_enhanced,"
+                          "timestamps_direct_enhanced,timestamps_hyperopt_enhanced,"
                           "timestamps_hyperopt_enhanced_vs_train,timestamps_hyperopt_holdout_enhanced\n")
     # Launch analysis for each dataset
     for log, no_timers_log in datasets:
@@ -89,11 +89,11 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     simulation_model = SimulationModel(no_timers_bpmn_model)
 
     # --- Enhance with full discovered activity delays --- #
-    naive_enhancer = NaiveEnhancer(train_log, simulation_model, config)
-    naive_enhanced_bpmn_model = naive_enhancer.enhance_simulation_model_with_delays().bpmn_document
-    with open(evaluation_folder.joinpath("naive_enhancer_timers.txt"), 'w') as output_file:
-        for activity in naive_enhancer.timers:
-            output_file.write("'{}': {}\n".format(activity, naive_enhancer.timers[activity]))
+    direct_enhancer = DirectEnhancer(train_log, simulation_model, config)
+    direct_enhanced_bpmn_model = direct_enhancer.enhance_simulation_model_with_delays().bpmn_document
+    with open(evaluation_folder.joinpath("direct_enhancer_timers.txt"), 'w') as output_file:
+        for activity in direct_enhancer.timers:
+            output_file.write("'{}': {}\n".format(activity, direct_enhancer.timers[activity]))
 
     # --- Enhance with hyper-parametrized activity delays --- #
     hyperopt_enhancer = HyperOptEnhancer(train_log, simulation_model, config)
@@ -122,11 +122,11 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     set_start_datetime_to_simulate(no_timers_bpmn_model, min(test_log[config.log_ids.start_time]))
     no_timers_bpmn_model_path = evaluation_folder.joinpath("{}_no_timers.bpmn".format(dataset))
     no_timers_bpmn_model.write(no_timers_bpmn_model_path, pretty_print=True)
-    # Enhanced with naive technique (full delays)
-    set_number_instances_to_simulate(naive_enhanced_bpmn_model, len(test_log[config.log_ids.case].unique()))
-    set_start_datetime_to_simulate(naive_enhanced_bpmn_model, min(test_log[config.log_ids.start_time]))
-    naive_enhanced_bpmn_model_path = evaluation_folder.joinpath("{}_naive_enhanced.bpmn".format(dataset))
-    naive_enhanced_bpmn_model.write(naive_enhanced_bpmn_model_path, pretty_print=True)
+    # Enhanced with direct technique (full delays)
+    set_number_instances_to_simulate(direct_enhanced_bpmn_model, len(test_log[config.log_ids.case].unique()))
+    set_start_datetime_to_simulate(direct_enhanced_bpmn_model, min(test_log[config.log_ids.start_time]))
+    direct_enhanced_bpmn_model_path = evaluation_folder.joinpath("{}_direct_enhanced.bpmn".format(dataset))
+    direct_enhanced_bpmn_model.write(direct_enhanced_bpmn_model_path, pretty_print=True)
     # Enhanced with hyper-parametrized delays
     set_number_instances_to_simulate(hyperopt_enhanced_bpmn_model, len(test_log[config.log_ids.case].unique()))
     set_start_datetime_to_simulate(hyperopt_enhanced_bpmn_model, min(test_log[config.log_ids.start_time]))
@@ -146,7 +146,7 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
     # Set lists to store the results of each comparison and get the mean
     original_cycle_emds, original_timestamps_emds = [], []
     no_timers_cycle_emds, no_timers_timestamps_emds = [], []
-    naive_cycle_emds, naive_timestamps_emds = [], []
+    direct_cycle_emds, direct_timestamps_emds = [], []
     hyperopt_cycle_emds, hyperopt_timestamps_emds = [], []
     hyperopt_vs_train_cycle_emds, hyperopt_vs_train_timestamps_emds = [], []
     hyperopt_holdout_cycle_emds, hyperopt_holdout_timestamps_emds = [], []
@@ -172,15 +172,15 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
         no_timers_timestamps_emds += [
             absolute_event_distribution_distance(test_log, config.log_ids, no_timers_simulated_event_log, sim_log_ids)
         ]
-        # Simulate, read, and evaluate naively enhanced model
-        naive_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_naive_enhanced_{}.csv".format(dataset, i)))
-        simulate(naive_enhanced_bpmn_model_path, naive_simulated_log_path, config)
-        naive_simulated_event_log = read_event_log(naive_simulated_log_path, sim_log_ids)
-        naive_cycle_emds += [
-            cycle_time_distribution_distance(test_log, config.log_ids, naive_simulated_event_log, sim_log_ids, bin_size)
+        # Simulate, read, and evaluate directly enhanced model
+        direct_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_direct_enhanced_{}.csv".format(dataset, i)))
+        simulate(direct_enhanced_bpmn_model_path, direct_simulated_log_path, config)
+        direct_simulated_event_log = read_event_log(direct_simulated_log_path, sim_log_ids)
+        direct_cycle_emds += [
+            cycle_time_distribution_distance(test_log, config.log_ids, direct_simulated_event_log, sim_log_ids, bin_size)
         ]
-        naive_timestamps_emds += [
-            absolute_event_distribution_distance(test_log, config.log_ids, naive_simulated_event_log, sim_log_ids)
+        direct_timestamps_emds += [
+            absolute_event_distribution_distance(test_log, config.log_ids, direct_simulated_event_log, sim_log_ids)
         ]
         # Simulate, read, and evaluate hyper-parametrized enhanced model (also against train)
         hyperopt_simulated_log_path = str(evaluation_folder.joinpath("{}_sim_hyperopt_enhanced_{}.csv".format(dataset, i)))
@@ -218,13 +218,13 @@ def experimentation_synthetic_logs_run(dataset: str, no_timers_dataset: str, met
         dataset,
         mean(original_cycle_emds),
         mean(no_timers_cycle_emds),
-        mean(naive_cycle_emds),
+        mean(direct_cycle_emds),
         mean(hyperopt_cycle_emds),
         mean(hyperopt_vs_train_cycle_emds),
         mean(hyperopt_holdout_cycle_emds),
         mean(original_timestamps_emds),
         mean(no_timers_timestamps_emds),
-        mean(naive_timestamps_emds),
+        mean(direct_timestamps_emds),
         mean(hyperopt_timestamps_emds),
         mean(hyperopt_vs_train_timestamps_emds),
         mean(hyperopt_holdout_timestamps_emds)

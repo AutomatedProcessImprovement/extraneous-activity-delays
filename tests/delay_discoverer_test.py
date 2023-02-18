@@ -19,10 +19,7 @@ def test_compute_naive_extraneous_activity_delays():
 
     # Discover extraneous delays (BEFORE) without availability calendars
     event_log = read_csv_log("./tests/assets/event_log_1.csv", DEFAULT_CSV_IDS)
-    config_no_calendars = Configuration(
-        timer_placement=TimerPlacement.BEFORE,
-        log_ids=DEFAULT_CSV_IDS
-    )
+    config_no_calendars = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS)
     delays_no_calendars = compute_naive_extraneous_activity_delays(event_log, config_no_calendars)
     # Assert D has a delay if not using calendars
     assert 'D' in delays_no_calendars
@@ -30,21 +27,15 @@ def test_compute_naive_extraneous_activity_delays():
 
     # Discover extraneous delays (BEFORE) with availability calendars
     event_log = read_csv_log("./tests/assets/event_log_1.csv", DEFAULT_CSV_IDS)
-    config_with_calendars = Configuration(
-        timer_placement=TimerPlacement.BEFORE,
-        log_ids=DEFAULT_CSV_IDS,
-        working_schedules={'DIO': working_calendar}
-    )
+    config_with_calendars = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS,
+                                          working_schedules={'DIO': working_calendar})
     delays_with_calendars = compute_naive_extraneous_activity_delays(event_log, config_with_calendars)
     # Assert there are no delays when using the calendars
     assert len(delays_with_calendars) == 0
 
     # Discover extraneous delays (AFTER) without availability calendars
     event_log = read_csv_log("./tests/assets/event_log_1.csv", DEFAULT_CSV_IDS)
-    config_no_calendars = Configuration(
-        timer_placement=TimerPlacement.AFTER,
-        log_ids=DEFAULT_CSV_IDS
-    )
+    config_no_calendars = Configuration(timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS)
     delays_no_calendars = compute_naive_extraneous_activity_delays(event_log, config_no_calendars)
     # Assert C has a delay if not using calendars
     assert 'C' in delays_no_calendars
@@ -52,11 +43,8 @@ def test_compute_naive_extraneous_activity_delays():
 
     # Discover extraneous delays (BEFORE) with availability calendars
     event_log = read_csv_log("./tests/assets/event_log_1.csv", DEFAULT_CSV_IDS)
-    config_with_calendars = Configuration(
-        timer_placement=TimerPlacement.AFTER,
-        log_ids=DEFAULT_CSV_IDS,
-        working_schedules={'DIO': working_calendar}
-    )
+    config_with_calendars = Configuration(timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS,
+                                          working_schedules={'DIO': working_calendar})
     delays_with_calendars = compute_naive_extraneous_activity_delays(event_log, config_with_calendars)
     # Assert there are no delays when using the calendars
     assert len(delays_with_calendars) == 0
@@ -73,10 +61,7 @@ def test_compute_complex_extraneous_activity_delays():
 
     # Discover extraneous delays (BEFORE) without availability calendars
     event_log = read_csv_log("./tests/assets/event_log_1.csv", DEFAULT_CSV_IDS)
-    config_no_calendars = Configuration(
-        timer_placement=TimerPlacement.BEFORE,
-        log_ids=DEFAULT_CSV_IDS
-    )
+    config_no_calendars = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS)
     delays_no_calendars = compute_complex_extraneous_activity_delays(event_log, config_no_calendars)
     # Assert there are delays if not using calendars
     assert 'D' in delays_no_calendars
@@ -84,21 +69,15 @@ def test_compute_complex_extraneous_activity_delays():
 
     # Discover extraneous delays (BEFORE) with availability calendars
     event_log = read_csv_log("./tests/assets/event_log_1.csv", DEFAULT_CSV_IDS)
-    config_with_calendars = Configuration(
-        timer_placement=TimerPlacement.BEFORE,
-        log_ids=DEFAULT_CSV_IDS,
-        working_schedules={'DIO': working_calendar}
-    )
+    config_with_calendars = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS,
+                                          working_schedules={'DIO': working_calendar})
     delays_with_calendars = compute_complex_extraneous_activity_delays(event_log, config_with_calendars)
     # Assert there are no delays when using the calendars
     assert len(delays_with_calendars) == 0
 
     # Discover extraneous delays (AFTER) without availability calendars
     event_log = read_csv_log("./tests/assets/event_log_1.csv", DEFAULT_CSV_IDS)
-    config_no_calendars = Configuration(
-        timer_placement=TimerPlacement.AFTER,
-        log_ids=DEFAULT_CSV_IDS
-    )
+    config_no_calendars = Configuration(timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS)
     delays_no_calendars = compute_complex_extraneous_activity_delays(event_log, config_no_calendars)
     # Assert there are delays if not using calendars
     assert 'C' in delays_no_calendars
@@ -106,11 +85,8 @@ def test_compute_complex_extraneous_activity_delays():
 
     # Discover extraneous delays (AFTER) with availability calendars
     event_log = read_csv_log("./tests/assets/event_log_1.csv", DEFAULT_CSV_IDS)
-    config_with_calendars = Configuration(
-        timer_placement=TimerPlacement.AFTER,
-        log_ids=DEFAULT_CSV_IDS,
-        working_schedules={'DIO': working_calendar}
-    )
+    config_with_calendars = Configuration(timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS,
+                                          working_schedules={'DIO': working_calendar})
     delays_with_calendars = compute_complex_extraneous_activity_delays(event_log, config_with_calendars)
     # Assert there are no delays when using the calendars
     assert len(delays_with_calendars) == 0
@@ -119,27 +95,21 @@ def test_compute_complex_extraneous_activity_delays():
 def test_compute_naive_extraneous_activity_delays_LoanApp():
     # Discover extraneous delays (BEFORE) without availability calendars
     event_log = read_csv_log("./tests/assets/LoanApp_no_delays.csv", DEFAULT_CSV_IDS)
-    config = Configuration(
-        timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS
-    )
+    config = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS)
     delays = compute_naive_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert len(delays) == 0
 
     # Discover extraneous delays (AFTER) without availability calendars
     event_log = read_csv_log("./tests/assets/LoanApp_no_delays.csv", DEFAULT_CSV_IDS)
-    config = Configuration(
-        timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS
-    )
+    config = Configuration(timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS)
     delays = compute_naive_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert len(delays) == 0
 
     # Discover extraneous delays (BEFORE) without availability calendars
     event_log = read_csv_log("./tests/assets/LoanApp_delays.csv", DEFAULT_CSV_IDS)
-    config = Configuration(
-        timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS
-    )
+    config = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS)
     delays = compute_naive_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert 'Reject application' in delays
@@ -155,9 +125,7 @@ def test_compute_naive_extraneous_activity_delays_LoanApp():
 
     # Discover extraneous delays (AFTER) without availability calendars
     event_log = read_csv_log("./tests/assets/LoanApp_delays.csv", DEFAULT_CSV_IDS)
-    config = Configuration(
-        timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS
-    )
+    config = Configuration(timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS)
     delays = compute_naive_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert 'Assess loan risk' in delays
@@ -172,27 +140,21 @@ def test_compute_naive_extraneous_activity_delays_LoanApp():
 def test_compute_complex_extraneous_activity_delays_LoanApp():
     # Discover extraneous delays (BEFORE) without availability calendars
     event_log = read_csv_log("./tests/assets/LoanApp_no_delays.csv", DEFAULT_CSV_IDS)
-    config = Configuration(
-        timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS
-    )
+    config = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS)
     delays = compute_complex_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert len(delays) == 0
 
     # Discover extraneous delays (AFTER) without availability calendars
     event_log = read_csv_log("./tests/assets/LoanApp_no_delays.csv", DEFAULT_CSV_IDS)
-    config = Configuration(
-        timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS
-    )
+    config = Configuration(timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS)
     delays = compute_complex_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert len(delays) == 0
 
     # Discover extraneous delays (BEFORE) without availability calendars
     event_log = read_csv_log("./tests/assets/LoanApp_delays.csv", DEFAULT_CSV_IDS)
-    config = Configuration(
-        timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS
-    )
+    config = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS)
     delays = compute_complex_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert 'Reject application' in delays
@@ -208,9 +170,7 @@ def test_compute_complex_extraneous_activity_delays_LoanApp():
 
     # Discover extraneous delays (AFTER) without availability calendars
     event_log = read_csv_log("./tests/assets/LoanApp_delays.csv", DEFAULT_CSV_IDS)
-    config = Configuration(
-        timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS
-    )
+    config = Configuration(timer_placement=TimerPlacement.AFTER, log_ids=DEFAULT_CSV_IDS)
     delays = compute_complex_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert 'Assess loan risk' in delays

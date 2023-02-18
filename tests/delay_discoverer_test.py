@@ -182,6 +182,23 @@ def test_compute_complex_extraneous_activity_delays_LoanApp():
     assert len(delays) == 2
 
 
+def test_compute_extraneous_activity_delays_naive_vs_complex():
+    # Discover naive extraneous delays (BEFORE)
+    event_log = read_csv_log("./tests/assets/event_log_2.csv", DEFAULT_CSV_IDS)
+    config = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS)
+    delays = compute_naive_extraneous_activity_delays(event_log, config)
+    # Assert there are no delays if naive technique is used
+    assert len(delays) == 0
+
+    # Discover complex extraneous delays (BEFORE)
+    event_log = read_csv_log("./tests/assets/event_log_2.csv", DEFAULT_CSV_IDS)
+    config = Configuration(timer_placement=TimerPlacement.BEFORE, log_ids=DEFAULT_CSV_IDS)
+    delays = compute_complex_extraneous_activity_delays(event_log, config)
+    # Assert there are delays if complex technique is used
+    assert 'D' in delays
+    assert len(delays) == 1
+
+
 def test__get_first_and_last_available():
     # Assert first and last are the beginning and end when empty
     beginning = pd.Timestamp("2023-01-25T09:00:00+00:00")

@@ -20,10 +20,10 @@ def compute_naive_extraneous_activity_delays(
     Compute, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed since the
     activity is both enabled and its resource available, and the recorded start of the activity.
 
-    :param event_log: Event log storing the information of the process.
-    :param config: configuration of the estimation search.
-    :param should_consider_timer: lambda function that, given a list of floats representing all the delays registered, returns a boolean
-    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
+    :param event_log:               Event log storing the information of the process.
+    :param config:                  Configuration of the estimation search.
+    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered, returns a boolean
+                                    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
@@ -71,10 +71,10 @@ def compute_complex_extraneous_activity_delays(
     into account both the resource contention and availability calendars). The extraneous delay is the interval between these two
     instants, no matter if the resource became unavailable in the middle.
 
-    :param event_log: Event log storing the information of the process.
-    :param config: configuration of the estimation search.
-    :param should_consider_timer: lambda function that, given a list of floats representing all the delays registered, returns a boolean
-    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
+    :param event_log:               Event log storing the information of the process.
+    :param config:                  Configuration of the estimation search.
+    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered, returns a boolean
+                                    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
@@ -116,9 +116,9 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
     """
     Add, to [event_log], two columns with the first and last timestamps in which the resource that performed that activity was available.
 
-    :param event_log: Event log storing the information of the process.
-    :param log_ids: Mapping for the columns in the event log.
-    :param config:configuration of the estimation search.
+    :param event_log:   Event log storing the information of the process.
+    :param log_ids:     Mapping for the columns in the event log.
+    :param config:      Configuration of the estimation search.
     """
     # Initiate both first and last available columns to NaT
     event_log['first_available'] = pd.NaT

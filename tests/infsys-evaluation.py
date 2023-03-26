@@ -13,6 +13,7 @@ from extraneous_activity_delays.prosimos.simulator import simulate
 from extraneous_activity_delays.utils.file_manager import create_folder
 from log_similarity_metrics.absolute_event_distribution import absolute_event_distribution_distance
 from log_similarity_metrics.relative_event_distribution import relative_event_distribution_distance
+from pix_utils.calendar.resource_calendar import RCalendar
 from pix_utils.input import read_csv_log
 from pix_utils.log_ids import DEFAULT_CSV_IDS
 
@@ -198,10 +199,29 @@ def _report_timers(folder: Path, name: str, enhancer: Union[DirectEnhancer, Hype
 
 def _json_schedules_to_rcalendar(simulation_parameters: dict) -> dict:
     """
-    :param simulation_parameters:
-    :return:
+    Transform the calendars specified as part of the simulation parameters to a dict with the ID of the resources as key, and their
+    calendar (RCalendar) as value.
+
+    :param simulation_parameters: dictionary with the parameters for prosimos simulation.
+
+    :return: a dict with the ID of the resources as key and their calendar as value.
     """
-    pass
+    # Read calendars
+    calendars = {}
+    for calendar in simulation_parameters['resource_calendars']:
+        r_calendar = RCalendar(calendar["id"])
+        for slot in calendar["time_periods"]:
+            r_calendar.add_calendar_item(
+                slot["from"], slot["to"], slot["beginTime"], slot["endTime"]
+            )
+        calendars[r_calendar.calendar_id] = r_calendar
+    # Assign calendars to each resource
+    resource_calendars = {}
+    for profile in simulation_parameters['resource_profiles']:
+        for resource in profile['resource_list']:
+            resource_calendars[resource['id']] = calendars[resource['calendar']]
+    # Return resource calendars
+    return resource_calendars
 
 
 if __name__ == '__main__':

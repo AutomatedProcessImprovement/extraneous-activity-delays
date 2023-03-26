@@ -196,7 +196,7 @@ def _report_timers(folder: Path, name: str, enhancer: Union[DirectEnhancer, Hype
     with open(folder.joinpath(name + "_timers.txt"), 'w') as output_file:
         if type(enhancer) is DirectEnhancer:
             # Print timers
-            for activity in enhancer.best_timers:
+            for activity in enhancer.timers:
                 output_file.write("'{}': {}\n".format(activity, enhancer.timers[activity]))
         elif type(enhancer) is HyperOptEnhancer:
             # Print best timers and losses

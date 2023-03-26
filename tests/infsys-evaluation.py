@@ -31,8 +31,16 @@ def inf_sys_evaluation():
     metrics_file_path = "../outputs/real-life-evaluation/metrics.csv"
     with open(metrics_file_path, 'a') as file:
         file.write("dataset,"
-                   "original_relative,naive_direct_relative,naive_hyperopt_relative,complex_direct_relative,complex_hyperopt_relative,"
-                   "original_absolute,naive_direct_absolute,naive_hyperopt_absolute,complex_direct_absolute,complex_hyperopt_absolute"
+                   "original_relative,"
+                   "naive_direct_before_relative,naive_hyperopt_before_relative,"
+                   "complex_direct_before_relative,complex_hyperopt_before_relative,"
+                   "naive_direct_after_relative,naive_hyperopt_after_relative,"
+                   "complex_direct_after_relative,complex_hyperopt_after_relative,"
+                   "original_absolute,"
+                   "naive_direct_before_absolute,naive_hyperopt_before_absolute,"
+                   "complex_direct_before_absolute,complex_hyperopt_before_absolute,"
+                   "naive_direct_after_absolute,naive_hyperopt_after_absolute,"
+                   "complex_direct_after_absolute,complex_hyperopt_after_absolute"
                    "\n")
     # Run
     for process in processes:
@@ -62,7 +70,27 @@ def inf_sys_evaluation():
         working_schedules = _json_schedules_to_rcalendar(simulation_parameters)
 
         # --- Configurations --- #
-        config_naive = Configuration(
+        config_naive_before = Configuration(
+            log_ids=event_log_ids, process_name=process,
+            max_alpha=10.0, num_iterations=100,
+            num_evaluation_simulations=10,
+            discovery_method=DiscoveryMethod.NAIVE,
+            timer_placement=TimerPlacement.BEFORE,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            optimization_metric=OptimizationMetric.RELATIVE_EMD,
+            working_schedules=working_schedules
+        )
+        config_complex_before = Configuration(
+            log_ids=event_log_ids, process_name=process,
+            max_alpha=10.0, num_iterations=100,
+            num_evaluation_simulations=10,
+            discovery_method=DiscoveryMethod.COMPLEX,
+            timer_placement=TimerPlacement.BEFORE,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            optimization_metric=OptimizationMetric.RELATIVE_EMD,
+            working_schedules=working_schedules
+        )
+        config_naive_after = Configuration(
             log_ids=event_log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
             num_evaluation_simulations=10,
@@ -72,7 +100,7 @@ def inf_sys_evaluation():
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules
         )
-        config_complex = Configuration(
+        config_complex_after = Configuration(
             log_ids=event_log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
             num_evaluation_simulations=10,
@@ -84,37 +112,64 @@ def inf_sys_evaluation():
         )
 
         # --- Discover extraneous delays --- #
+        # -- Timer Placement: BEFORE -- #
         # - Naive no hyperopt
-        naive_direct_enhancer = DirectEnhancer(train_log, simulation_model, config_naive)
-        naive_direct_enhanced = naive_direct_enhancer.enhance_simulation_model_with_delays()
-        _report_timers(evaluation_folder, "naive_direct_enhanced", naive_direct_enhancer)
+        naive_direct_before_enhancer = DirectEnhancer(train_log, simulation_model, config_naive_before)
+        naive_direct_before_enhanced = naive_direct_before_enhancer.enhance_simulation_model_with_delays()
+        _report_timers(evaluation_folder, "naive_direct_before_enhanced", naive_direct_before_enhancer)
         # - Naive with hyperopt
-        naive_hyperopt_enhancer = HyperOptEnhancer(train_log, simulation_model, config_naive)
-        naive_hyperopt_enhanced = naive_hyperopt_enhancer.enhance_simulation_model_with_delays()
-        _report_timers(evaluation_folder, "naive_hyperopt_enhancer", naive_hyperopt_enhancer)
+        naive_hyperopt_before_enhancer = HyperOptEnhancer(train_log, simulation_model, config_naive_before)
+        naive_hyperopt_before_enhanced = naive_hyperopt_before_enhancer.enhance_simulation_model_with_delays()
+        _report_timers(evaluation_folder, "naive_hyperopt_before_enhancer", naive_hyperopt_before_enhancer)
         # - Complex no hyperopt
-        complex_direct_enhancer = DirectEnhancer(train_log, simulation_model, config_complex)
-        complex_direct_enhanced = complex_direct_enhancer.enhance_simulation_model_with_delays()
-        _report_timers(evaluation_folder, "complex_direct_enhanced", complex_direct_enhancer)
+        complex_direct_before_enhancer = DirectEnhancer(train_log, simulation_model, config_complex_before)
+        complex_direct_before_enhanced = complex_direct_before_enhancer.enhance_simulation_model_with_delays()
+        _report_timers(evaluation_folder, "complex_direct_before_enhanced", complex_direct_before_enhancer)
         # - Complex with hyperopt
-        complex_hyperopt_enhancer = HyperOptEnhancer(train_log, simulation_model, config_complex)
-        complex_hyperopt_enhanced = complex_hyperopt_enhancer.enhance_simulation_model_with_delays()
-        _report_timers(evaluation_folder, "complex_hyperopt_enhancer", complex_hyperopt_enhancer)
+        complex_hyperopt_before_enhancer = HyperOptEnhancer(train_log, simulation_model, config_complex_before)
+        complex_hyperopt_before_enhanced = complex_hyperopt_before_enhancer.enhance_simulation_model_with_delays()
+        _report_timers(evaluation_folder, "complex_hyperopt_before_enhancer", complex_hyperopt_before_enhancer)
+
+        # -- Timer Placement: AFTER -- #
+        # - Naive no hyperopt
+        naive_direct_after_enhancer = DirectEnhancer(train_log, simulation_model, config_naive_after)
+        naive_direct_after_enhanced = naive_direct_after_enhancer.enhance_simulation_model_with_delays()
+        _report_timers(evaluation_folder, "naive_direct_after_enhanced", naive_direct_after_enhancer)
+        # - Naive with hyperopt
+        naive_hyperopt_after_enhancer = HyperOptEnhancer(train_log, simulation_model, config_naive_after)
+        naive_hyperopt_after_enhanced = naive_hyperopt_after_enhancer.enhance_simulation_model_with_delays()
+        _report_timers(evaluation_folder, "naive_hyperopt_after_enhancer", naive_hyperopt_after_enhancer)
+        # - Complex no hyperopt
+        complex_direct_after_enhancer = DirectEnhancer(train_log, simulation_model, config_complex_after)
+        complex_direct_after_enhanced = complex_direct_after_enhancer.enhance_simulation_model_with_delays()
+        _report_timers(evaluation_folder, "complex_direct_after_enhanced", complex_direct_after_enhancer)
+        # - Complex with hyperopt
+        complex_hyperopt_after_enhancer = HyperOptEnhancer(train_log, simulation_model, config_complex_after)
+        complex_hyperopt_after_enhanced = complex_hyperopt_after_enhancer.enhance_simulation_model_with_delays()
+        _report_timers(evaluation_folder, "complex_hyperopt_after_enhancer", complex_hyperopt_after_enhancer)
 
         # --- Write simulation models to file --- #
         _export_simulation_model(evaluation_folder, "{}_original".format(process), simulation_model)
-        _export_simulation_model(evaluation_folder, "{}_naive_direct_enhanced".format(process), naive_direct_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_naive_hyperopt_enhanced".format(process), naive_hyperopt_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_complex_direct_enhanced".format(process), complex_direct_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_complex_hyperopt_enhanced".format(process), complex_hyperopt_enhanced)
+        _export_simulation_model(evaluation_folder, "{}_naive_direct_before_enhanced".format(process), naive_direct_before_enhanced)
+        _export_simulation_model(evaluation_folder, "{}_naive_hyperopt_before_enhanced".format(process), naive_hyperopt_before_enhanced)
+        _export_simulation_model(evaluation_folder, "{}_complex_direct_before_enhanced".format(process), complex_direct_before_enhanced)
+        _export_simulation_model(evaluation_folder, "{}_complex_hyperopt_before_enhanced".format(process), complex_hyperopt_before_enhanced)
+        _export_simulation_model(evaluation_folder, "{}_naive_direct_after_enhanced".format(process), naive_direct_after_enhanced)
+        _export_simulation_model(evaluation_folder, "{}_naive_hyperopt_after_enhanced".format(process), naive_hyperopt_after_enhanced)
+        _export_simulation_model(evaluation_folder, "{}_complex_direct_after_enhanced".format(process), complex_direct_after_enhanced)
+        _export_simulation_model(evaluation_folder, "{}_complex_hyperopt_after_enhanced".format(process), complex_hyperopt_after_enhanced)
 
         # --- Simulate and Evaluate --- #
         # Set lists to store the results of each comparison and get the mean
         original_relative, original_absolute = [], []
-        naive_direct_relative, naive_direct_absolute = [], []
-        naive_hyperopt_relative, naive_hyperopt_absolute = [], []
-        complex_direct_relative, complex_direct_absolute = [], []
-        complex_hyperopt_relative, complex_hyperopt_absolute = [], []
+        naive_direct_before_relative, naive_direct_before_absolute = [], []
+        naive_hyperopt_before_relative, naive_hyperopt_before_absolute = [], []
+        complex_direct_before_relative, complex_direct_before_absolute = [], []
+        complex_hyperopt_before_relative, complex_hyperopt_before_absolute = [], []
+        naive_direct_after_relative, naive_direct_after_absolute = [], []
+        naive_hyperopt_after_relative, naive_hyperopt_after_absolute = [], []
+        complex_direct_after_relative, complex_direct_after_absolute = [], []
+        complex_hyperopt_after_relative, complex_hyperopt_after_absolute = [], []
         # Simulate many times and compute the mean
         for i in range(10):
             # Original
@@ -123,45 +178,81 @@ def inf_sys_evaluation():
             )
             original_relative += [relative]
             original_absolute += [absolute]
+
+            # -- Timer Placement: BEFORE -- #
             # Naive no hyperopt
             relative, absolute = _simulate_and_evaluate(
-                evaluation_folder, process, "naive_direct_enhanced", i, test_num_instances, test_start_time, test_log
+                evaluation_folder, process, "naive_direct_before_enhanced", i, test_num_instances, test_start_time, test_log
             )
-            naive_direct_relative += [relative]
-            naive_direct_absolute += [absolute]
+            naive_direct_before_relative += [relative]
+            naive_direct_before_absolute += [absolute]
             # Naive with hyperopt
             relative, absolute = _simulate_and_evaluate(
-                evaluation_folder, process, "naive_hyperopt_enhanced", i, test_num_instances, test_start_time, test_log
+                evaluation_folder, process, "naive_hyperopt_before_enhanced", i, test_num_instances, test_start_time, test_log
             )
-            naive_hyperopt_relative += [relative]
-            naive_hyperopt_absolute += [absolute]
+            naive_hyperopt_before_relative += [relative]
+            naive_hyperopt_before_absolute += [absolute]
             # Complex no hyperopt
             relative, absolute = _simulate_and_evaluate(
-                evaluation_folder, process, "complex_direct_enhanced", i, test_num_instances, test_start_time, test_log
+                evaluation_folder, process, "complex_direct_before_enhanced", i, test_num_instances, test_start_time, test_log
             )
-            complex_direct_relative += [relative]
-            complex_direct_absolute += [absolute]
+            complex_direct_before_relative += [relative]
+            complex_direct_before_absolute += [absolute]
             # Complex with hyperopt
             relative, absolute = _simulate_and_evaluate(
-                evaluation_folder, process, "complex_hyperopt_enhanced", i, test_num_instances, test_start_time, test_log
+                evaluation_folder, process, "complex_hyperopt_before_enhanced", i, test_num_instances, test_start_time, test_log
             )
-            complex_hyperopt_relative += [relative]
-            complex_hyperopt_absolute += [absolute]
+            complex_hyperopt_before_relative += [relative]
+            complex_hyperopt_before_absolute += [absolute]
+
+            # -- Timer Placement: AFTER -- #
+            # Naive no hyperopt
+            relative, absolute = _simulate_and_evaluate(
+                evaluation_folder, process, "naive_direct_after_enhanced", i, test_num_instances, test_start_time, test_log
+            )
+            naive_direct_after_relative += [relative]
+            naive_direct_after_absolute += [absolute]
+            # Naive with hyperopt
+            relative, absolute = _simulate_and_evaluate(
+                evaluation_folder, process, "naive_hyperopt_after_enhanced", i, test_num_instances, test_start_time, test_log
+            )
+            naive_hyperopt_after_relative += [relative]
+            naive_hyperopt_after_absolute += [absolute]
+            # Complex no hyperopt
+            relative, absolute = _simulate_and_evaluate(
+                evaluation_folder, process, "complex_direct_after_enhanced", i, test_num_instances, test_start_time, test_log
+            )
+            complex_direct_after_relative += [relative]
+            complex_direct_after_absolute += [absolute]
+            # Complex with hyperopt
+            relative, absolute = _simulate_and_evaluate(
+                evaluation_folder, process, "complex_hyperopt_after_enhanced", i, test_num_instances, test_start_time, test_log
+            )
+            complex_hyperopt_after_relative += [relative]
+            complex_hyperopt_after_absolute += [absolute]
 
         # --- Print results --- #
         with open(metrics_file_path, 'a') as output_file:
-            output_file.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(
+            output_file.write("{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format(
                 process,
                 mean(original_relative),
-                mean(naive_direct_relative),
-                mean(naive_hyperopt_relative),
-                mean(complex_direct_relative),
-                mean(complex_hyperopt_relative),
+                mean(naive_direct_before_relative),
+                mean(naive_hyperopt_before_relative),
+                mean(complex_direct_before_relative),
+                mean(complex_hyperopt_before_relative),
+                mean(naive_direct_after_relative),
+                mean(naive_hyperopt_after_relative),
+                mean(complex_direct_after_relative),
+                mean(complex_hyperopt_after_relative),
                 mean(original_absolute),
-                mean(naive_direct_absolute),
-                mean(naive_hyperopt_absolute),
-                mean(complex_direct_absolute),
-                mean(complex_hyperopt_absolute)
+                mean(naive_direct_before_absolute),
+                mean(naive_hyperopt_before_absolute),
+                mean(complex_direct_before_absolute),
+                mean(complex_hyperopt_before_absolute),
+                mean(naive_direct_after_absolute),
+                mean(naive_hyperopt_after_absolute),
+                mean(complex_direct_after_absolute),
+                mean(complex_hyperopt_after_absolute)
             ))
 
 

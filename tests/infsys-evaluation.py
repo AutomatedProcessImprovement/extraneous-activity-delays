@@ -15,11 +15,19 @@ from log_similarity_metrics.absolute_event_distribution import absolute_event_di
 from log_similarity_metrics.relative_event_distribution import relative_event_distribution_distance
 from pix_utils.calendar.resource_calendar import RCalendar
 from pix_utils.input import read_csv_log
-from pix_utils.log_ids import DEFAULT_CSV_IDS
+from pix_utils.log_ids import EventLogIDs
+
+event_log_ids = EventLogIDs(
+    case="case_id",
+    activity="activity",
+    resource="resource",
+    start_time="start_time",
+    end_time="end_time"
+)
 
 
 def inf_sys_evaluation():
-    processes = ["AcademicCredentials", "BPIC_2012_W", "BPIC_2017_W"]
+    processes = ["AcademicCredentials"]
     metrics_file_path = "../outputs/real-life-evaluation/metrics.csv"
     with open(metrics_file_path, 'a') as file:
         file.write("dataset,"
@@ -40,10 +48,10 @@ def inf_sys_evaluation():
         create_folder(evaluation_folder)
 
         # --- Read event logs --- #
-        train_log = read_csv_log(train_log_path, DEFAULT_CSV_IDS)
-        test_log = read_csv_log(test_log_path, DEFAULT_CSV_IDS)
-        test_num_instances = len(test_log[DEFAULT_CSV_IDS.case].unique())
-        test_start_time = min(test_log[DEFAULT_CSV_IDS.start_time])
+        train_log = read_csv_log(train_log_path, event_log_ids)
+        test_log = read_csv_log(test_log_path, event_log_ids)
+        test_num_instances = len(test_log[event_log_ids.case].unique())
+        test_start_time = min(test_log[event_log_ids.start_time])
 
         # --- Read simulation model --- #
         parser = etree.XMLParser(remove_blank_text=True)
@@ -55,7 +63,7 @@ def inf_sys_evaluation():
 
         # --- Configurations --- #
         config_naive = Configuration(
-            log_ids=DEFAULT_CSV_IDS, process_name=process,
+            log_ids=event_log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
             num_evaluation_simulations=10,
             discovery_method=DiscoveryMethod.NAIVE,
@@ -65,7 +73,7 @@ def inf_sys_evaluation():
             working_schedules=working_schedules
         )
         config_complex = Configuration(
-            log_ids=DEFAULT_CSV_IDS, process_name=process,
+            log_ids=event_log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
             num_evaluation_simulations=10,
             discovery_method=DiscoveryMethod.COMPLEX,
@@ -170,10 +178,10 @@ def _simulate_and_evaluate(
         output_path=simulated_log_path
     )
     # Read simulated log
-    original_simulated_event_log = read_csv_log(simulated_log_path, DEFAULT_CSV_IDS)
+    original_simulated_event_log = read_csv_log(simulated_log_path, event_log_ids)
     # Evaluate simulated log
-    relative = relative_event_distribution_distance(test_log, DEFAULT_CSV_IDS, original_simulated_event_log, DEFAULT_CSV_IDS)
-    absolute = absolute_event_distribution_distance(test_log, DEFAULT_CSV_IDS, original_simulated_event_log, DEFAULT_CSV_IDS)
+    relative = relative_event_distribution_distance(test_log, event_log_ids, original_simulated_event_log, event_log_ids)
+    absolute = absolute_event_distribution_distance(test_log, event_log_ids, original_simulated_event_log, event_log_ids)
     # Return measures
     return relative, absolute
 

@@ -2,9 +2,10 @@ import json
 from pathlib import Path
 from typing import Union, Tuple
 
+import numpy as np
 import pandas as pd
 from lxml import etree
-from numpy import mean
+from scipy.stats import t
 
 from extraneous_activity_delays.config import Configuration, SimulationEngine, OptimizationMetric, SimulationModel, TimerPlacement, \
     DiscoveryMethod
@@ -30,18 +31,7 @@ def inf_sys_evaluation():
     processes = ["AcademicCredentials"]
     metrics_file_path = "../outputs/real-life-evaluation/metrics.csv"
     with open(metrics_file_path, 'a') as file:
-        file.write("dataset,"
-                   "original_relative,"
-                   "naive_direct_before_relative,naive_hyperopt_before_relative,"
-                   "complex_direct_before_relative,complex_hyperopt_before_relative,"
-                   "naive_direct_after_relative,naive_hyperopt_after_relative,"
-                   "complex_direct_after_relative,complex_hyperopt_after_relative,"
-                   "original_absolute,"
-                   "naive_direct_before_absolute,naive_hyperopt_before_absolute,"
-                   "complex_direct_before_absolute,complex_hyperopt_before_absolute,"
-                   "naive_direct_after_absolute,naive_hyperopt_after_absolute,"
-                   "complex_direct_after_absolute,complex_hyperopt_after_absolute"
-                   "\n")
+        file.write("name,relative_mean,relative_cnf,absolute_mean,absolute_cnf\n")
     # Run
     for process in processes:
         # --- Raw paths --- #
@@ -233,27 +223,57 @@ def inf_sys_evaluation():
 
         # --- Print results --- #
         with open(metrics_file_path, 'a') as output_file:
-            output_file.write("{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format(
-                process,
-                mean(original_relative),
-                mean(naive_direct_before_relative),
-                mean(naive_hyperopt_before_relative),
-                mean(complex_direct_before_relative),
-                mean(complex_hyperopt_before_relative),
-                mean(naive_direct_after_relative),
-                mean(naive_hyperopt_after_relative),
-                mean(complex_direct_after_relative),
-                mean(complex_hyperopt_after_relative),
-                mean(original_absolute),
-                mean(naive_direct_before_absolute),
-                mean(naive_hyperopt_before_absolute),
-                mean(complex_direct_before_absolute),
-                mean(complex_hyperopt_before_absolute),
-                mean(naive_direct_after_absolute),
-                mean(naive_hyperopt_after_absolute),
-                mean(complex_direct_after_absolute),
-                mean(complex_hyperopt_after_absolute)
-            ))
+            # Original
+            relative_avg, relative_cnf = compute_mean_conf_interval(original_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(original_absolute)
+            output_file.write("{},{},{},{},{}\n".format("original", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            # Naive Direct Before
+            relative_avg, relative_cnf = compute_mean_conf_interval(naive_direct_before_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_direct_before_absolute)
+            output_file.write("{},{},{},{},{}\n".format("naive_direct_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            # Naive Hyperopt Before
+            relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_before_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_before_absolute)
+            output_file.write("{},{},{},{},{}\n".format("naive_hyperopt_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            # Complex Direct Before
+            relative_avg, relative_cnf = compute_mean_conf_interval(complex_direct_before_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_direct_before_absolute)
+            output_file.write("{},{},{},{},{}\n".format("complex_direct_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            # Complex Hyperopt Before
+            relative_avg, relative_cnf = compute_mean_conf_interval(complex_hyperopt_before_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_hyperopt_before_absolute)
+            output_file.write("{},{},{},{},{}\n".format("complex_hyperopt_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            # Naive Direct After
+            relative_avg, relative_cnf = compute_mean_conf_interval(naive_direct_after_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_direct_after_absolute)
+            output_file.write("{},{},{},{},{}\n".format("naive_direct_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            # Naive Hyperopt After
+            relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_after_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_after_absolute)
+            output_file.write("{},{},{},{},{}\n".format("naive_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            # Complex Direct After
+            relative_avg, relative_cnf = compute_mean_conf_interval(complex_direct_after_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_direct_after_absolute)
+            output_file.write("{},{},{},{},{}\n".format("complex_direct_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            # Complex Hyperopt After
+            relative_avg, relative_cnf = compute_mean_conf_interval(complex_hyperopt_after_relative)
+            absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_hyperopt_after_absolute)
+            output_file.write("{},{},{},{},{}\n".format("complex_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+
+
+def compute_mean_conf_interval(data: list, confidence: float = 0.95) -> Tuple[float, float]:
+    # Compute the sample mean and standard deviation
+    sample_mean = np.mean(data)
+    sample_std = np.std(data, ddof=1)  # ddof=1 calculates the sample standard deviation
+    # Compute the degrees of freedom
+    df = len(data) - 1
+    # Compute the t-value for the confidence level
+    t_value = t.ppf(1 - (1 - confidence) / 2, df)
+    # Compute the standard error of the mean
+    std_error = sample_std / np.sqrt(len(data))
+    conf_interval = t_value * std_error
+    # Compute the confidence interval
+    return sample_mean, conf_interval
 
 
 def _simulate_and_evaluate(

@@ -1,4 +1,5 @@
 import json
+import time
 from pathlib import Path
 from typing import Union, Tuple
 
@@ -28,10 +29,10 @@ event_log_ids = EventLogIDs(
 
 
 def inf_sys_evaluation():
-    processes = ["AcademicCredentials"]
+    processes = ["AcademicCredentials", "BPIC_2012_W", "BPIC_2017_W"]
     metrics_file_path = "../outputs/real-life-evaluation/metrics.csv"
     with open(metrics_file_path, 'a') as file:
-        file.write("name,relative_mean,relative_cnf,absolute_mean,absolute_cnf\n")
+        file.write("name,relative_mean,relative_cnf,absolute_mean,absolute_cnf,runtime\n")
     # Run
     for process in processes:
         # --- Raw paths --- #
@@ -104,38 +105,54 @@ def inf_sys_evaluation():
         # --- Discover extraneous delays --- #
         # -- Timer Placement: BEFORE -- #
         # - Naive no hyperopt
+        runtime_start = time.time()
         naive_direct_before_enhancer = DirectEnhancer(train_log, simulation_model, config_naive_before)
         naive_direct_before_enhanced = naive_direct_before_enhancer.enhance_simulation_model_with_delays()
+        runtime_naive_direct_before = time.time() - runtime_start
         _report_timers(evaluation_folder, "naive_direct_before_enhanced", naive_direct_before_enhancer)
         # - Naive with hyperopt
+        runtime_start = time.time()
         naive_hyperopt_before_enhancer = HyperOptEnhancer(train_log, simulation_model, config_naive_before)
         naive_hyperopt_before_enhanced = naive_hyperopt_before_enhancer.enhance_simulation_model_with_delays()
+        runtime_naive_hyperopt_before = time.time() - runtime_start
         _report_timers(evaluation_folder, "naive_hyperopt_before_enhancer", naive_hyperopt_before_enhancer)
         # - Complex no hyperopt
+        runtime_start = time.time()
         complex_direct_before_enhancer = DirectEnhancer(train_log, simulation_model, config_complex_before)
         complex_direct_before_enhanced = complex_direct_before_enhancer.enhance_simulation_model_with_delays()
+        runtime_complex_direct_before = time.time() - runtime_start
         _report_timers(evaluation_folder, "complex_direct_before_enhanced", complex_direct_before_enhancer)
         # - Complex with hyperopt
+        runtime_start = time.time()
         complex_hyperopt_before_enhancer = HyperOptEnhancer(train_log, simulation_model, config_complex_before)
         complex_hyperopt_before_enhanced = complex_hyperopt_before_enhancer.enhance_simulation_model_with_delays()
+        runtime_complex_hyperopt_before = time.time() - runtime_start
         _report_timers(evaluation_folder, "complex_hyperopt_before_enhancer", complex_hyperopt_before_enhancer)
 
         # -- Timer Placement: AFTER -- #
         # - Naive no hyperopt
+        runtime_start = time.time()
         naive_direct_after_enhancer = DirectEnhancer(train_log, simulation_model, config_naive_after)
         naive_direct_after_enhanced = naive_direct_after_enhancer.enhance_simulation_model_with_delays()
+        runtime_naive_direct_after = time.time() - runtime_start
         _report_timers(evaluation_folder, "naive_direct_after_enhanced", naive_direct_after_enhancer)
         # - Naive with hyperopt
+        runtime_start = time.time()
         naive_hyperopt_after_enhancer = HyperOptEnhancer(train_log, simulation_model, config_naive_after)
         naive_hyperopt_after_enhanced = naive_hyperopt_after_enhancer.enhance_simulation_model_with_delays()
+        runtime_naive_hyperopt_after = time.time() - runtime_start
         _report_timers(evaluation_folder, "naive_hyperopt_after_enhancer", naive_hyperopt_after_enhancer)
         # - Complex no hyperopt
+        runtime_start = time.time()
         complex_direct_after_enhancer = DirectEnhancer(train_log, simulation_model, config_complex_after)
         complex_direct_after_enhanced = complex_direct_after_enhancer.enhance_simulation_model_with_delays()
+        runtime_complex_direct_after = time.time() - runtime_start
         _report_timers(evaluation_folder, "complex_direct_after_enhanced", complex_direct_after_enhancer)
         # - Complex with hyperopt
+        runtime_start = time.time()
         complex_hyperopt_after_enhancer = HyperOptEnhancer(train_log, simulation_model, config_complex_after)
         complex_hyperopt_after_enhanced = complex_hyperopt_after_enhancer.enhance_simulation_model_with_delays()
+        runtime_complex_hyperopt_after = time.time() - runtime_start
         _report_timers(evaluation_folder, "complex_hyperopt_after_enhancer", complex_hyperopt_after_enhancer)
 
         # --- Write simulation models to file --- #
@@ -226,39 +243,57 @@ def inf_sys_evaluation():
             # Original
             relative_avg, relative_cnf = compute_mean_conf_interval(original_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(original_absolute)
-            output_file.write("{},{},{},{},{}\n".format("original", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "original", relative_avg, relative_cnf, absolute_avg, absolute_cnf, 0.0
+            ))
             # Naive Direct Before
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_direct_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_direct_before_absolute)
-            output_file.write("{},{},{},{},{}\n".format("naive_direct_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "naive_direct_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_naive_direct_before
+            ))
             # Naive Hyperopt Before
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_before_absolute)
-            output_file.write("{},{},{},{},{}\n".format("naive_hyperopt_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "naive_hyperopt_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_naive_hyperopt_before
+            ))
             # Complex Direct Before
             relative_avg, relative_cnf = compute_mean_conf_interval(complex_direct_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_direct_before_absolute)
-            output_file.write("{},{},{},{},{}\n".format("complex_direct_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "complex_direct_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_direct_before
+            ))
             # Complex Hyperopt Before
             relative_avg, relative_cnf = compute_mean_conf_interval(complex_hyperopt_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_hyperopt_before_absolute)
-            output_file.write("{},{},{},{},{}\n".format("complex_hyperopt_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "complex_hyperopt_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_hyperopt_before
+            ))
             # Naive Direct After
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_direct_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_direct_after_absolute)
-            output_file.write("{},{},{},{},{}\n".format("naive_direct_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "naive_direct_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_naive_direct_after
+            ))
             # Naive Hyperopt After
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_after_absolute)
-            output_file.write("{},{},{},{},{}\n".format("naive_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "naive_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_naive_hyperopt_after
+            ))
             # Complex Direct After
             relative_avg, relative_cnf = compute_mean_conf_interval(complex_direct_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_direct_after_absolute)
-            output_file.write("{},{},{},{},{}\n".format("complex_direct_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "complex_direct_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_direct_after
+            ))
             # Complex Hyperopt After
             relative_avg, relative_cnf = compute_mean_conf_interval(complex_hyperopt_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_hyperopt_after_absolute)
-            output_file.write("{},{},{},{},{}\n".format("complex_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf))
+            output_file.write("{},{},{},{},{},{}\n".format(
+                "complex_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_hyperopt_after
+            ))
 
 
 def compute_mean_conf_interval(data: list, confidence: float = 0.95) -> Tuple[float, float]:

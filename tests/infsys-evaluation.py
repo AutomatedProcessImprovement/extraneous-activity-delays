@@ -256,61 +256,88 @@ def inf_sys_evaluation():
             relative_avg, relative_cnf = compute_mean_conf_interval(original_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(original_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "original", relative_avg, relative_cnf, absolute_avg, absolute_cnf, 0.0
+                "{}_original".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                0.0
             ))
             # Naive Direct Before
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_direct_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_direct_before_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "naive_direct_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_naive_direct_before
+                "{}_naive_direct_before".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                runtime_naive_direct_before
             ))
             # Naive Hyperopt Before
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_before_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "naive_hyperopt_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_naive_hyperopt_before
+                "{}_naive_hyperopt_before".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                runtime_naive_hyperopt_before
             ))
             # Complex Direct Before
             relative_avg, relative_cnf = compute_mean_conf_interval(complex_direct_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_direct_before_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "complex_direct_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_direct_before
+                "{}_complex_direct_before".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                runtime_complex_direct_before
             ))
             # Complex Hyperopt Before
             relative_avg, relative_cnf = compute_mean_conf_interval(complex_hyperopt_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_hyperopt_before_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "complex_hyperopt_before", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_hyperopt_before
+                "{}_complex_hyperopt_before".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                runtime_complex_hyperopt_before
             ))
             # Naive Direct After
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_direct_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_direct_after_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "naive_direct_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_naive_direct_after
+                "{}_naive_direct_after".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                runtime_naive_direct_after
             ))
             # Naive Hyperopt After
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_after_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "naive_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_naive_hyperopt_after
+                "{}_naive_hyperopt_after".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                runtime_naive_hyperopt_after
             ))
             # Complex Direct After
             relative_avg, relative_cnf = compute_mean_conf_interval(complex_direct_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_direct_after_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "complex_direct_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_direct_after
+                "{}_complex_direct_after".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                runtime_complex_direct_after
             ))
             # Complex Hyperopt After
             relative_avg, relative_cnf = compute_mean_conf_interval(complex_hyperopt_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_hyperopt_after_absolute)
             output_file.write("{},{},{},{},{},{}\n".format(
-                "complex_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_hyperopt_after
+                "{}_complex_hyperopt_after".format(process),
+                relative_avg, relative_cnf,
+                absolute_avg, absolute_cnf,
+                runtime_complex_hyperopt_after
             ))
         with open(metrics_ct_file_path, 'a') as output_file:
             # Test log
             cycle_times = compute_cycle_time_stats(test_log, event_log_ids)
             output_file.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(
-                "test_log",
+                "{}_test_log".format(process),
                 cycle_times['min'], 0.0,
                 cycle_times['q1'], 0.0,
                 cycle_times['mean'], 0.0,
@@ -318,42 +345,42 @@ def inf_sys_evaluation():
                 cycle_times['max'], 0.0,
             ))
             # Original
-            formatted_output = format_output_cycle_times("original", original_cts)
+            formatted_output = format_output_cycle_times(process, "original", original_cts)
             output_file.write(formatted_output)
             # Naive Direct Before
-            formatted_output = format_output_cycle_times("naive_direct_before", naive_direct_before_cts)
+            formatted_output = format_output_cycle_times(process, "naive_direct_before", naive_direct_before_cts)
             output_file.write(formatted_output)
             # Naive Hyperopt Before
-            formatted_output = format_output_cycle_times("naive_hyperopt_before", naive_hyperopt_before_cts)
+            formatted_output = format_output_cycle_times(process, "naive_hyperopt_before", naive_hyperopt_before_cts)
             output_file.write(formatted_output)
             # Complex Direct Before
-            formatted_output = format_output_cycle_times("complex_direct_before", complex_direct_before_cts)
+            formatted_output = format_output_cycle_times(process, "complex_direct_before", complex_direct_before_cts)
             output_file.write(formatted_output)
             # Complex Hyperopt Before
-            formatted_output = format_output_cycle_times("complex_hyperopt_before", complex_hyperopt_before_cts)
+            formatted_output = format_output_cycle_times(process, "complex_hyperopt_before", complex_hyperopt_before_cts)
             output_file.write(formatted_output)
             # Naive Direct After
-            formatted_output = format_output_cycle_times("naive_direct_after", naive_direct_after_cts)
+            formatted_output = format_output_cycle_times(process, "naive_direct_after", naive_direct_after_cts)
             output_file.write(formatted_output)
             # Naive Hyperopt After
-            formatted_output = format_output_cycle_times("naive_hyperopt_after", naive_hyperopt_after_cts)
+            formatted_output = format_output_cycle_times(process, "naive_hyperopt_after", naive_hyperopt_after_cts)
             output_file.write(formatted_output)
             # Complex Direct After
-            formatted_output = format_output_cycle_times("complex_direct_after", complex_direct_after_cts)
+            formatted_output = format_output_cycle_times(process, "complex_direct_after", complex_direct_after_cts)
             output_file.write(formatted_output)
             # Complex Hyperopt After
-            formatted_output = format_output_cycle_times("complex_hyperopt_after", complex_hyperopt_after_cts)
+            formatted_output = format_output_cycle_times(process, "complex_hyperopt_after", complex_hyperopt_after_cts)
             output_file.write(formatted_output)
 
 
-def format_output_cycle_times(method: str, cycle_times: list) -> str:
+def format_output_cycle_times(process: str, method: str, cycle_times: list) -> str:
     min_average, min_cnf = compute_mean_conf_interval([ct['min'] for ct in cycle_times])
     q1_average, q1_cnf = compute_mean_conf_interval([ct['q1'] for ct in cycle_times])
     mean_average, mean_cnf = compute_mean_conf_interval([ct['mean'] for ct in cycle_times])
     q3_average, q3_cnf = compute_mean_conf_interval([ct['q3'] for ct in cycle_times])
     max_average, max_cnf = compute_mean_conf_interval([ct['max'] for ct in cycle_times])
     return "{},{},{},{},{},{},{},{},{},{},{}\n".format(
-        method,
+        "{}_{}".format(process, method),
         min_average, min_cnf,
         q1_average, q1_cnf,
         mean_average, mean_cnf,

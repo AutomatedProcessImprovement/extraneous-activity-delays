@@ -31,8 +31,11 @@ event_log_ids = EventLogIDs(
 def inf_sys_evaluation():
     processes = ["AcademicCredentials", "BPIC_2012_W", "BPIC_2017_W"]
     metrics_file_path = "../outputs/real-life-evaluation/metrics.csv"
+    metrics_ct_file_path = "../outputs/real-life-evaluation/metrics-cycle-time.csv"
     with open(metrics_file_path, 'a') as file:
         file.write("name,relative_mean,relative_cnf,absolute_mean,absolute_cnf,runtime\n")
+    with open(metrics_ct_file_path, 'a') as file:
+        file.write("name,min_mean,min_cnf,q1_mean,q1_cnf,mean_mean,mean_cnf,q3_mean,q3_cnf,max_mean,max_cnf\n")
     # Run
     for process in processes:
         # --- Raw paths --- #
@@ -64,7 +67,7 @@ def inf_sys_evaluation():
         config_naive_before = Configuration(
             log_ids=event_log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
-            num_evaluation_simulations=10,
+            num_evaluation_simulations=5,
             discovery_method=DiscoveryMethod.NAIVE,
             timer_placement=TimerPlacement.BEFORE,
             simulation_engine=SimulationEngine.PROSIMOS,
@@ -74,7 +77,7 @@ def inf_sys_evaluation():
         config_complex_before = Configuration(
             log_ids=event_log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
-            num_evaluation_simulations=10,
+            num_evaluation_simulations=5,
             discovery_method=DiscoveryMethod.COMPLEX,
             timer_placement=TimerPlacement.BEFORE,
             simulation_engine=SimulationEngine.PROSIMOS,
@@ -84,7 +87,7 @@ def inf_sys_evaluation():
         config_naive_after = Configuration(
             log_ids=event_log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
-            num_evaluation_simulations=10,
+            num_evaluation_simulations=5,
             discovery_method=DiscoveryMethod.NAIVE,
             timer_placement=TimerPlacement.AFTER,
             simulation_engine=SimulationEngine.PROSIMOS,
@@ -94,7 +97,7 @@ def inf_sys_evaluation():
         config_complex_after = Configuration(
             log_ids=event_log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
-            num_evaluation_simulations=10,
+            num_evaluation_simulations=5,
             discovery_method=DiscoveryMethod.COMPLEX,
             timer_placement=TimerPlacement.AFTER,
             simulation_engine=SimulationEngine.PROSIMOS,
@@ -168,75 +171,84 @@ def inf_sys_evaluation():
 
         # --- Simulate and Evaluate --- #
         # Set lists to store the results of each comparison and get the mean
-        original_relative, original_absolute = [], []
-        naive_direct_before_relative, naive_direct_before_absolute = [], []
-        naive_hyperopt_before_relative, naive_hyperopt_before_absolute = [], []
-        complex_direct_before_relative, complex_direct_before_absolute = [], []
-        complex_hyperopt_before_relative, complex_hyperopt_before_absolute = [], []
-        naive_direct_after_relative, naive_direct_after_absolute = [], []
-        naive_hyperopt_after_relative, naive_hyperopt_after_absolute = [], []
-        complex_direct_after_relative, complex_direct_after_absolute = [], []
-        complex_hyperopt_after_relative, complex_hyperopt_after_absolute = [], []
+        original_relative, original_absolute, original_cts = [], [], []
+        naive_direct_before_relative, naive_direct_before_absolute, naive_direct_before_cts = [], [], []
+        naive_hyperopt_before_relative, naive_hyperopt_before_absolute, naive_hyperopt_before_cts = [], [], []
+        complex_direct_before_relative, complex_direct_before_absolute, complex_direct_before_cts = [], [], []
+        complex_hyperopt_before_relative, complex_hyperopt_before_absolute, complex_hyperopt_before_cts = [], [], []
+        naive_direct_after_relative, naive_direct_after_absolute, naive_direct_after_cts = [], [], []
+        naive_hyperopt_after_relative, naive_hyperopt_after_absolute, naive_hyperopt_after_cts = [], [], []
+        complex_direct_after_relative, complex_direct_after_absolute, complex_direct_after_cts = [], [], []
+        complex_hyperopt_after_relative, complex_hyperopt_after_absolute, complex_hyperopt_after_cts = [], [], []
         # Simulate many times and compute the mean
         for i in range(10):
             # Original
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "original", i, test_num_instances, test_start_time, test_log
             )
             original_relative += [relative]
             original_absolute += [absolute]
+            original_cts += [cycle_times]
 
             # -- Timer Placement: BEFORE -- #
             # Naive no hyperopt
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "naive_direct_before_enhanced", i, test_num_instances, test_start_time, test_log
             )
             naive_direct_before_relative += [relative]
             naive_direct_before_absolute += [absolute]
+            naive_direct_before_cts += [cycle_times]
             # Naive with hyperopt
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "naive_hyperopt_before_enhanced", i, test_num_instances, test_start_time, test_log
             )
             naive_hyperopt_before_relative += [relative]
             naive_hyperopt_before_absolute += [absolute]
+            naive_hyperopt_before_cts += [cycle_times]
             # Complex no hyperopt
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "complex_direct_before_enhanced", i, test_num_instances, test_start_time, test_log
             )
             complex_direct_before_relative += [relative]
             complex_direct_before_absolute += [absolute]
+            complex_direct_before_cts += [cycle_times]
             # Complex with hyperopt
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "complex_hyperopt_before_enhanced", i, test_num_instances, test_start_time, test_log
             )
             complex_hyperopt_before_relative += [relative]
             complex_hyperopt_before_absolute += [absolute]
+            complex_hyperopt_before_cts += [cycle_times]
 
             # -- Timer Placement: AFTER -- #
             # Naive no hyperopt
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "naive_direct_after_enhanced", i, test_num_instances, test_start_time, test_log
             )
             naive_direct_after_relative += [relative]
             naive_direct_after_absolute += [absolute]
+            naive_direct_after_cts += [cycle_times]
             # Naive with hyperopt
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "naive_hyperopt_after_enhanced", i, test_num_instances, test_start_time, test_log
             )
             naive_hyperopt_after_relative += [relative]
             naive_hyperopt_after_absolute += [absolute]
+            naive_hyperopt_after_cts += [cycle_times]
             # Complex no hyperopt
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "complex_direct_after_enhanced", i, test_num_instances, test_start_time, test_log
             )
             complex_direct_after_relative += [relative]
             complex_direct_after_absolute += [absolute]
+            complex_direct_after_cts += [cycle_times]
             # Complex with hyperopt
-            relative, absolute = _simulate_and_evaluate(
+            relative, absolute, cycle_times = _simulate_and_evaluate(
                 evaluation_folder, process, "complex_hyperopt_after_enhanced", i, test_num_instances, test_start_time, test_log
             )
             complex_hyperopt_after_relative += [relative]
             complex_hyperopt_after_absolute += [absolute]
+            complex_hyperopt_after_cts += [cycle_times]
 
         # --- Print results --- #
         with open(metrics_file_path, 'a') as output_file:
@@ -294,6 +306,60 @@ def inf_sys_evaluation():
             output_file.write("{},{},{},{},{},{}\n".format(
                 "complex_hyperopt_after", relative_avg, relative_cnf, absolute_avg, absolute_cnf, runtime_complex_hyperopt_after
             ))
+        with open(metrics_ct_file_path, 'a') as output_file:
+            # Test log
+            cycle_times = compute_cycle_time_stats(test_log, event_log_ids)
+            output_file.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(
+                "test_log",
+                cycle_times['min'], 0.0,
+                cycle_times['q1'], 0.0,
+                cycle_times['mean'], 0.0,
+                cycle_times['q3'], 0.0,
+                cycle_times['max'], 0.0,
+            ))
+            # Original
+            formatted_output = format_output_cycle_times("original", original_cts)
+            output_file.write(formatted_output)
+            # Naive Direct Before
+            formatted_output = format_output_cycle_times("naive_direct_before", naive_direct_before_cts)
+            output_file.write(formatted_output)
+            # Naive Hyperopt Before
+            formatted_output = format_output_cycle_times("naive_hyperopt_before", naive_hyperopt_before_cts)
+            output_file.write(formatted_output)
+            # Complex Direct Before
+            formatted_output = format_output_cycle_times("complex_direct_before", complex_direct_before_cts)
+            output_file.write(formatted_output)
+            # Complex Hyperopt Before
+            formatted_output = format_output_cycle_times("complex_hyperopt_before", complex_hyperopt_before_cts)
+            output_file.write(formatted_output)
+            # Naive Direct After
+            formatted_output = format_output_cycle_times("naive_direct_after", naive_direct_after_cts)
+            output_file.write(formatted_output)
+            # Naive Hyperopt After
+            formatted_output = format_output_cycle_times("naive_hyperopt_after", naive_hyperopt_after_cts)
+            output_file.write(formatted_output)
+            # Complex Direct After
+            formatted_output = format_output_cycle_times("complex_direct_after", complex_direct_after_cts)
+            output_file.write(formatted_output)
+            # Complex Hyperopt After
+            formatted_output = format_output_cycle_times("complex_hyperopt_after", complex_hyperopt_after_cts)
+            output_file.write(formatted_output)
+
+
+def format_output_cycle_times(method: str, cycle_times: list) -> str:
+    min_average, min_cnf = compute_mean_conf_interval([ct['min'] for ct in cycle_times])
+    q1_average, q1_cnf = compute_mean_conf_interval([ct['q1'] for ct in cycle_times])
+    mean_average, mean_cnf = compute_mean_conf_interval([ct['mean'] for ct in cycle_times])
+    q3_average, q3_cnf = compute_mean_conf_interval([ct['q3'] for ct in cycle_times])
+    max_average, max_cnf = compute_mean_conf_interval([ct['max'] for ct in cycle_times])
+    return "{},{},{},{},{},{},{},{},{},{},{}\n".format(
+        method,
+        min_average, min_cnf,
+        q1_average, q1_cnf,
+        mean_average, mean_cnf,
+        q3_average, q3_cnf,
+        max_average, max_cnf
+    )
 
 
 def compute_mean_conf_interval(data: list, confidence: float = 0.95) -> Tuple[float, float]:
@@ -311,9 +377,22 @@ def compute_mean_conf_interval(data: list, confidence: float = 0.95) -> Tuple[fl
     return sample_mean, conf_interval
 
 
+def compute_cycle_time_stats(event_log: pd.DataFrame, log_ids: EventLogIDs):
+    cycle_times = []
+    for case, events in event_log.groupby(log_ids.case):
+        cycle_times += [(events[log_ids.end_time].max() - events[log_ids.start_time].min()).total_seconds()]
+    return {
+        'min': np.min(cycle_times),
+        'q1': np.quantile(cycle_times, 0.25),
+        'mean': np.mean(cycle_times),
+        'q3': np.quantile(cycle_times, 0.75),
+        'max': np.max(cycle_times)
+    }
+
+
 def _simulate_and_evaluate(
         folder: Path, process: str, method: str, i: int, num_cases: int, start_timestamp: pd.Timestamp, test_log: pd.DataFrame
-) -> Tuple[float, float]:
+) -> Tuple[float, float, dict]:
     # Simulate
     simulated_log_path = str(folder.joinpath("{}_sim_{}_{}.csv".format(process, method, i)))
     simulate(
@@ -324,12 +403,13 @@ def _simulate_and_evaluate(
         output_path=simulated_log_path
     )
     # Read simulated log
-    original_simulated_event_log = read_csv_log(simulated_log_path, event_log_ids)
+    simulated_log = read_csv_log(simulated_log_path, event_log_ids)
     # Evaluate simulated log
-    relative = relative_event_distribution_distance(test_log, event_log_ids, original_simulated_event_log, event_log_ids)
-    absolute = absolute_event_distribution_distance(test_log, event_log_ids, original_simulated_event_log, event_log_ids)
+    relative = relative_event_distribution_distance(test_log, event_log_ids, simulated_log, event_log_ids)
+    absolute = absolute_event_distribution_distance(test_log, event_log_ids, simulated_log, event_log_ids)
+    cycle_time_stats = compute_cycle_time_stats(simulated_log, event_log_ids)
     # Return measures
-    return relative, absolute
+    return relative, absolute, cycle_time_stats
 
 
 def _export_simulation_model(folder: Path, name: str, simulation_model: SimulationModel):

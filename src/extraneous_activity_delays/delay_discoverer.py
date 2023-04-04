@@ -1,4 +1,4 @@
-from typing import Callable, Tuple
+from typing import Callable, Tuple, Union
 
 import pandas as pd
 
@@ -14,8 +14,9 @@ from pix_utils.statistics.distribution import get_best_fitting_distribution
 def compute_naive_extraneous_activity_delays(
         event_log: pd.DataFrame,
         config: Configuration,
-        should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0
-) -> dict:
+        should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0,
+        experimentation: bool = False
+) -> Union[dict, pd.DataFrame]:
     """
     Compute, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed since the
     activity is both enabled and its resource available, and the recorded start of the activity.
@@ -24,6 +25,8 @@ def compute_naive_extraneous_activity_delays(
     :param config:                  Configuration of the estimation search.
     :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered, returns a boolean
                                     denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
+    :param experimentation:         Experimentation option, if true, returns the event log enhanced with the detected extraneous delay for
+                                    each activity instance.
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
@@ -43,28 +46,39 @@ def compute_naive_extraneous_activity_delays(
     # Who to impute the extraneous delay to: the executed activity if the timer goes before, the enabling activity if it goes after
     impute_to = log_ids.activity if config.timer_placement == TimerPlacement.BEFORE else log_ids.enabling_activity
     # Discover the time distribution of each activity's delay
-    timers = {}
-    for activity, instances in event_log.groupby(impute_to):
-        # Get the activity instances with enabled time
-        filtered_instances = instances[(~pd.isna(instances[log_ids.enabled_time]))]
-        # Compute the extraneous delays in seconds
-        delays = [
-            delay.total_seconds()
-            for delay in filtered_instances[log_ids.start_time] -
-                         filtered_instances[[log_ids.enabled_time, log_ids.available_time]].max(axis=1, skipna=True, numeric_only=False)
-        ]
-        # If the delay should be considered, add it
-        if should_consider_timer(delays):
-            timers[activity] = get_best_fitting_distribution(delays)
-    # Return the delays
-    return timers
+    if experimentation:
+        enhanced_event_log = event_log.copy(deep=True)
+        enhanced_event_log['estimated_extraneous_delay'] = 0.0
+        indexes, delays = [], []
+        for index, event in enhanced_event_log[(~pd.isna(enhanced_event_log[log_ids.enabled_time]))].iterrows():
+            indexes += [index]
+            delays += [(event[log_ids.start_time] - max(event[log_ids.enabled_time], event[log_ids.available_time])).total_seconds()]
+        enhanced_event_log.loc[indexes, 'estimated_extraneous_delay'] = delays
+        return enhanced_event_log
+    else:
+        timers = {}
+        for activity, instances in event_log.groupby(impute_to):
+            # Get the activity instances with enabled time
+            filtered_instances = instances[(~pd.isna(instances[log_ids.enabled_time]))]
+            # Compute the extraneous delays in seconds
+            delays = [
+                delay.total_seconds()
+                for delay in filtered_instances[log_ids.start_time] -
+                             filtered_instances[[log_ids.enabled_time, log_ids.available_time]].max(axis=1, skipna=True, numeric_only=False)
+            ]
+            # If the delay should be considered, add it
+            if should_consider_timer(delays):
+                timers[activity] = get_best_fitting_distribution(delays)
+        # Return the delays
+        return timers
 
 
 def compute_complex_extraneous_activity_delays(
         event_log: pd.DataFrame,
         config: Configuration,
-        should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0
-) -> dict:
+        should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0,
+        experimentation: bool = False
+) -> Union[dict, pd.DataFrame]:
     """
     Compute, for each activity, the distribution of its extraneous delays. To compute the extraneous delay of an activity instance,
     detect the first and lasts instants in time in which the activity was enabled and the resource available for processing it (taking
@@ -75,6 +89,8 @@ def compute_complex_extraneous_activity_delays(
     :param config:                  Configuration of the estimation search.
     :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered, returns a boolean
                                     denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
+    :param experimentation:         Experimentation option, if true, returns the event log enhanced with the detected extraneous delay for
+                                    each activity instance.
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
@@ -93,23 +109,33 @@ def compute_complex_extraneous_activity_delays(
     # Who to impute the extraneous delay to: the executed activity if the timer goes before, the enabling activity if it goes after
     impute_to = log_ids.activity if config.timer_placement == TimerPlacement.BEFORE else log_ids.enabling_activity
     # Discover the time distribution of each activity's delay
-    timers = {}
-    for activity, instances in event_log.groupby(impute_to):
-        # Get the activity instances with enabled time
-        filtered_instances = instances[(~pd.isna(instances[log_ids.enabled_time]))]
-        # Transform the delay to seconds
-        delays = [
-            delay.total_seconds()
-            for delay in (filtered_instances['last_available'] - filtered_instances['first_available'])
-            if not pd.isna(delay)
-        ]
-        # If the delay should be considered, add it
-        if should_consider_timer(delays):
-            timers[activity] = get_best_fitting_distribution(delays)
-    # Remove extra columns
-    event_log.drop(['last_available', 'first_available'], axis=1, inplace=True)
-    # Return discovered delays
-    return timers
+    if experimentation:
+        enhanced_event_log = event_log.copy(deep=True)
+        enhanced_event_log['estimated_extraneous_delay'] = 0.0
+        indexes, delays = [], []
+        for index, event in enhanced_event_log[(~pd.isna(enhanced_event_log[log_ids.enabled_time]))].iterrows():
+            indexes += [index]
+            delays += [(event['last_available'] - event['first_available']).total_seconds()]
+        enhanced_event_log.loc[indexes, 'estimated_extraneous_delay'] = delays
+        return enhanced_event_log
+    else:
+        timers = {}
+        for activity, instances in event_log.groupby(impute_to):
+            # Get the activity instances with enabled time
+            filtered_instances = instances[(~pd.isna(instances[log_ids.enabled_time]))]
+            # Transform the delay to seconds
+            delays = [
+                delay.total_seconds()
+                for delay in (filtered_instances['last_available'] - filtered_instances['first_available'])
+                if not pd.isna(delay)
+            ]
+            # If the delay should be considered, add it
+            if should_consider_timer(delays):
+                timers[activity] = get_best_fitting_distribution(delays)
+        # Remove extra columns
+        event_log.drop(['last_available', 'first_available'], axis=1, inplace=True)
+        # Return discovered delays
+        return timers
 
 
 def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: EventLogIDs, config: Configuration):

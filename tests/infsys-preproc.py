@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 
 from extraneous_activity_delays.prosimos.simulator import simulate
@@ -62,6 +64,7 @@ def transform_delays_into_wt():
         event_log = event_log[~event_log[log_ids.activity].isin(list(events.keys()))]
         # Write to file
         event_log.to_csv(preprocessed_path, index=False)
+        os.remove(output_path)
 
 
 def _remove_microsecond_start(row):

@@ -19,7 +19,8 @@ def simulate(
         parameters_path: str,
         num_cases: int,
         starting_timestamp: datetime.datetime,
-        output_path: str
+        output_path: str,
+        record_events: bool = False
 ) -> SimulationOutput:
     """
     Simulate the BPS model in [model_path] with the simulation parameters in [parameters_path] using PROSIMOS. The simulated log
@@ -30,6 +31,7 @@ def simulate(
     :param num_cases:           number of cases to simulate.
     :param starting_timestamp:  timestamp with the point in time to start the simulation.
     :param output_path:         path to write the simulated log.
+    :param record_events:       if True, the simulated log will include the events (e.g., timer events).
 
     :return: the state of the simulation, either error or success.
     """
@@ -45,7 +47,7 @@ def simulate(
                 starting_timestamp.strftime("%z")[:-2] + ":" +
                 starting_timestamp.strftime("%z")[-2:]
         ),
-        is_event_added_to_log=False  # Don't add Events (start/end/timers) to output log
+        is_event_added_to_log=record_events  # Don't add Events (start/end/timers) to output log
     )
     # Return status of the simulation
     if os.path.isfile(output_path):

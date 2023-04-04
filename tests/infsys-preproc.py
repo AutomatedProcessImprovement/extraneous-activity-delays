@@ -8,9 +8,11 @@ from pix_utils.log_ids import EventLogIDs
 
 def transform_delays_into_wt():
     logs = [
-        "Insurance_Claims", "Insurance_Claims_1_timer", "Insurance_Claims_3_timers", "Insurance_Claims_5_timers", "Loan_Application",
-        "Loan_Application_1_timer", "Loan_Application_3_timers", "Loan_Application_5_timers", "Pharmacy_1_timer", "Pharmacy_3_timers",
-        "Pharmacy_5_timers", "Pharmacy", "Procure_to_Pay", "Procure_to_Pay_1_timer", "Procure_to_Pay_3_timers", "Procure_to_Pay_5_timers"]
+        "Insurance_Claims", "Insurance_Claims_1_timer", "Insurance_Claims_3_timers", "Insurance_Claims_5_timers",
+        "Loan_Application", "Loan_Application_1_timer", "Loan_Application_3_timers", "Loan_Application_5_timers",
+        "Pharmacy", "Pharmacy_1_timer", "Pharmacy_3_timers", "Pharmacy_5_timers",
+        "Procure_to_Pay", "Procure_to_Pay_1_timer", "Procure_to_Pay_3_timers", "Procure_to_Pay_5_timers"
+    ]
     log_ids = EventLogIDs(case="case_id", enabled_time="enable_time", start_time="start_time", end_time="end_time")
     events = {
         "Event_0uhfx88": "Analyze Purchase Requisition",

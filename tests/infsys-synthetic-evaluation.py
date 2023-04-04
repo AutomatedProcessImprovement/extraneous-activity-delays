@@ -4,44 +4,49 @@ import pandas as pd
 
 from extraneous_activity_delays.config import Configuration, TimerPlacement
 from extraneous_activity_delays.delay_discoverer import compute_naive_extraneous_activity_delays, compute_complex_extraneous_activity_delays
+from extraneous_activity_delays.utils.file_manager import create_folder
 from pix_utils.calendar.resource_calendar import RCalendar
 from pix_utils.input import read_csv_log
 from pix_utils.log_ids import EventLogIDs
 
-event_log_ids = EventLogIDs(
+log_ids = EventLogIDs(
     case="case_id",
     activity="activity",
     resource="resource",
     start_time="start_time",
     end_time="end_time"
 )
+processes = [
+    "Insurance_Claims", "Insurance_Claims_1_timer", "Insurance_Claims_3_timers", "Insurance_Claims_5_timers",
+    "Loan_Application", "Loan_Application_1_timer", "Loan_Application_3_timers", "Loan_Application_5_timers",
+    "Pharmacy", "Pharmacy_1_timer", "Pharmacy_3_timers", "Pharmacy_5_timers",
+    "Procure_to_Pay", "Procure_to_Pay_1_timer", "Procure_to_Pay_3_timers", "Procure_to_Pay_5_timers"
+]
 
 
 def inf_sys_evaluation():
-    processes = [
-        "Insurance_Claims", "Insurance_Claims_1_timer", "Insurance_Claims_3_timers", "Insurance_Claims_5_timers",
-        "Loan_Application", "Loan_Application_1_timer", "Loan_Application_3_timers", "Loan_Application_5_timers",
-        "Pharmacy", "Pharmacy_1_timer", "Pharmacy_3_timers", "Pharmacy_5_timers",
-        "Procure_to_Pay", "Procure_to_Pay_1_timer", "Procure_to_Pay_3_timers", "Procure_to_Pay_5_timers"
-    ]
-    # Run
-    smape_file_path = "../outputs/synthetic-evaluation/smape.csv"
+    # --- Evaluation folder --- #
+    evaluation_folder = Configuration().PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath("individual")
+    create_folder(evaluation_folder)
+    smape_file_path = evaluation_folder.joinpath("smape.csv")
     with open(smape_file_path, 'a') as file:
-        file.write("dataset,smape_naive,smape_complex,mape_naive,mape_complex\n")
+        file.write("dataset,naive_sMAPE,complex_sMAPE,naive_MAPE,complex_MAPE\n")
     for process in processes:
         # --- Paths --- #
         synthetic_input_path = Configuration().PATH_INPUTS.joinpath("synthetic")
         simulation_params_path = str(synthetic_input_path.joinpath(process + ".json"))
-        log_path = str(synthetic_input_path.joinpath(process + ".csv"))
+        log_path = str(synthetic_input_path.joinpath(process + ".csv.gz"))
+        naive_log_path = str(evaluation_folder.joinpath(process + "_naive_enhanced.csv.gz"))
+        complex_log_path = str(evaluation_folder.joinpath(process + "_complex_enhanced.csv.gz"))
         # --- Read event log --- #
-        event_log = read_csv_log(log_path, event_log_ids)
+        event_log = read_csv_log(log_path, log_ids)
         # --- Read simulation model --- #
         with open(simulation_params_path) as json_file:
             simulation_parameters = json.load(json_file)
         working_schedules = _json_schedules_to_rcalendar(simulation_parameters)
         # --- Configurations --- #
         configuration = Configuration(
-            log_ids=event_log_ids, process_name=process,
+            log_ids=log_ids, process_name=process,
             timer_placement=TimerPlacement.BEFORE,
             working_schedules=working_schedules
         )
@@ -49,19 +54,21 @@ def inf_sys_evaluation():
         naive_enhanced_event_log = compute_naive_extraneous_activity_delays(
             event_log, configuration, configuration.should_consider_timer, experimentation=True
         )
+        naive_enhanced_event_log.to_csv(naive_log_path, index=False)
         complex_enhanced_event_log = compute_complex_extraneous_activity_delays(
             event_log, configuration, configuration.should_consider_timer, experimentation=True
         )
+        complex_enhanced_event_log.to_csv(complex_log_path, index=False)
         # --- Measure error --- #
-        smape_naive = _compute_smape(naive_enhanced_event_log, event_log_ids)
-        smape_complex = _compute_smape(complex_enhanced_event_log, event_log_ids)
-        mape_naive = _compute_mape(naive_enhanced_event_log, event_log_ids)
-        mape_complex = _compute_mape(complex_enhanced_event_log, event_log_ids)
+        smape_naive = _compute_smape(naive_enhanced_event_log)
+        smape_complex = _compute_smape(complex_enhanced_event_log)
+        mape_naive = _compute_mape(naive_enhanced_event_log)
+        mape_complex = _compute_mape(complex_enhanced_event_log)
         with open(smape_file_path, 'a') as file:
             file.write("{},{},{},{},{}\n".format(process, smape_naive, smape_complex, mape_naive, mape_complex))
 
 
-def _compute_smape(event_log: pd.DataFrame, log_ids: EventLogIDs) -> float:
+def _compute_smape(event_log: pd.DataFrame) -> float:
     # Get activity instances with either estimated delay or actual delay
     estimated = event_log[(event_log['estimated_extraneous_delay'] > 0.0) | (event_log['extraneous_delay'] > 0.0)]
     # Compute smape
@@ -79,7 +86,7 @@ def _compute_smape(event_log: pd.DataFrame, log_ids: EventLogIDs) -> float:
     return smape
 
 
-def _compute_mape(event_log: pd.DataFrame, log_ids: EventLogIDs) -> float:
+def _compute_mape(event_log: pd.DataFrame) -> float:
     # Get activity instances with either estimated delay or actual delay
     estimated = event_log[(event_log['estimated_extraneous_delay'] > 0.0) | (event_log['extraneous_delay'] > 0.0)]
     # Compute mape

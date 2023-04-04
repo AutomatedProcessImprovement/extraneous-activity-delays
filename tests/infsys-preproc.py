@@ -42,7 +42,7 @@ def transform_delays_into_wt():
         output_path = "../inputs/synthetic/{}_raw.csv".format(process_name)
         preprocessed_path = "../inputs/synthetic/{}.csv".format(process_name)
         # Simulate with prosimos
-        simulate(model_path, parameters_path, 1000, pd.Timestamp("01/02/2023 09:00:00+00:00"), output_path)
+        simulate(model_path, parameters_path, 1000, pd.Timestamp("01/02/2023 09:00:00+00:00"), output_path, True)
         # Read simulated log
         event_log = pd.read_csv(output_path)
         event_log[log_ids.start_time] = pd.to_datetime(event_log[log_ids.start_time])

@@ -480,7 +480,11 @@ def _json_schedules_to_rcalendar(simulation_parameters: dict) -> dict:
     resource_calendars = {}
     for profile in simulation_parameters['resource_profiles']:
         for resource in profile['resource_list']:
-            resource_calendars[resource['id']] = calendars[resource['calendar']]
+            if int(resource['amount']) > 1:
+                for i in range(int(resource['amount'])):
+                    resource_calendars["{}_{}".format(resource['name'], i)] = calendars[resource['calendar']]
+            else:
+                resource_calendars[resource['name']] = calendars[resource['calendar']]
     # Return resource calendars
     return resource_calendars
 

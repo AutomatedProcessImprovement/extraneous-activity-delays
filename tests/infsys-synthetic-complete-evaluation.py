@@ -59,7 +59,7 @@ def inf_sys_evaluation():
         log_path = str(real_input_path.joinpath(process + ".csv.gz"))
 
         # --- Evaluation folder --- #
-        evaluation_folder = Configuration().PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath(process)
+        evaluation_folder = Configuration().PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath("complete").joinpath(process)
         create_folder(evaluation_folder)
 
         # --- Read event logs --- #

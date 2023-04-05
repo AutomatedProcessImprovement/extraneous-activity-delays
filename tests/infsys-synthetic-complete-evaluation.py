@@ -77,7 +77,7 @@ def inf_sys_evaluation():
         config_naive = Configuration(
             log_ids=log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
-            num_evaluation_simulations=5,
+            num_evaluation_simulations=10,
             discovery_method=DiscoveryMethod.NAIVE,
             timer_placement=TimerPlacement.BEFORE,
             simulation_engine=SimulationEngine.PROSIMOS,
@@ -87,7 +87,7 @@ def inf_sys_evaluation():
         config_complex = Configuration(
             log_ids=log_ids, process_name=process,
             max_alpha=10.0, num_iterations=100,
-            num_evaluation_simulations=5,
+            num_evaluation_simulations=10,
             discovery_method=DiscoveryMethod.COMPLEX,
             timer_placement=TimerPlacement.BEFORE,
             simulation_engine=SimulationEngine.PROSIMOS,
@@ -206,8 +206,11 @@ def _json_schedules_to_rcalendar(simulation_parameters: dict) -> dict:
     resource_calendars = {}
     for profile in simulation_parameters['resource_profiles']:
         for resource in profile['resource_list']:
-            for i in range(int(resource['amount'])):
-                resource_calendars["{}_{}".format(resource['name'], i)] = calendars[resource['calendar']]
+            if int(resource['amount']) > 1:
+                for i in range(int(resource['amount'])):
+                    resource_calendars["{}_{}".format(resource['name'], i)] = calendars[resource['calendar']]
+            else:
+                resource_calendars[resource['name']] = calendars[resource['calendar']]
     # Return resource calendars
     return resource_calendars
 

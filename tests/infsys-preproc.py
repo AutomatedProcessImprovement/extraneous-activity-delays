@@ -69,6 +69,30 @@ def transform_delays_into_wt():
         os.remove(output_path)
 
 
+def generate_single_logs():
+    logs = [
+        # "Confidential",
+        "Insurance_Claims_5_timers", "Loan_Application_5_timers",
+        "Pharmacy_5_timers", "Procure_to_Pay_5_timers"
+    ]
+    log_ids = EventLogIDs(case="case_id", enabled_time="enable_time", start_time="start_time", end_time="end_time")
+    for process_name in logs:
+        # model_path = "../inputs/synthetic/{}.bpmn".format(process_name)
+        model_path = "../inputs/synthetic/{}_after.bpmn".format(process_name)
+        parameters_path = "../inputs/synthetic/{}.json".format(process_name)
+        # output_path = "../inputs/synthetic/{}.csv".format(process_name)
+        output_path = "../inputs/synthetic/{}_after.csv".format(process_name)
+        # Simulate with prosimos
+        simulate(model_path, parameters_path, 1000, pd.Timestamp("01/02/2023 09:00:00+00:00"), output_path, False)
+        # Read simulated log
+        event_log = pd.read_csv(output_path)
+        event_log[log_ids.start_time] = pd.to_datetime(event_log[log_ids.start_time])
+        event_log[log_ids.end_time] = pd.to_datetime(event_log[log_ids.end_time])
+        event_log.drop(log_ids.enabled_time, axis=1, inplace=True)
+        os.remove(output_path)
+        event_log.to_csv(output_path, index=False)
+
+
 def _remove_microsecond_start(row):
     return row['start_time'].round('10L')
 

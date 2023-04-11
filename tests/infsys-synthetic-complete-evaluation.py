@@ -47,8 +47,10 @@ def inf_sys_evaluation():
         file.write("dataset,"
                    "naive_direct_precision,naive_direct_recall,naive_direct_sMAPE,"
                    "naive_hyperopt_precision,naive_hyperopt_recall,naive_hyperopt_sMAPE,"
+                   "naive_hyperopt_holdout_precision,naive_hyperopt_holdout_recall,naive_hyperopt_holdout_sMAPE,"
                    "complex_direct_precision,complex_direct_recall,complex_direct_sMAPE,"
-                   "complex_hyperopt_precision,complex_hyperopt_recall,complex_hyperopt_sMAPE"
+                   "complex_hyperopt_precision,complex_hyperopt_recall,complex_hyperopt_sMAPE,"
+                   "complex_hyperopt_holdout_precision,complex_hyperopt_holdout_recall,complex_hyperopt_holdout_sMAPE"
                    "\n")
     # Run
     for no_timers_process, process in processes:
@@ -59,8 +61,8 @@ def inf_sys_evaluation():
         log_path = str(real_input_path.joinpath(process + ".csv.gz"))
 
         # --- Evaluation folder --- #
-        evaluation_folder = Configuration().PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath("complete").joinpath(process)
-        create_folder(evaluation_folder)
+        eval_folder = Configuration().PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath("complete").joinpath(process)
+        create_folder(eval_folder)
 
         # --- Read event logs --- #
         event_log = read_csv_log(log_path, log_ids)
@@ -74,10 +76,13 @@ def inf_sys_evaluation():
         working_schedules = _json_schedules_to_rcalendar(simulation_parameters)
 
         # --- Configurations --- #
+        max_alpha = 10.0
+        num_iterations = 100
+        num_evaluation_simulations = 5
         config_naive = Configuration(
             log_ids=log_ids, process_name=process,
-            max_alpha=10.0, num_iterations=100,
-            num_evaluation_simulations=10,
+            max_alpha=max_alpha, num_iterations=num_iterations,
+            num_evaluation_simulations=num_evaluation_simulations,
             discovery_method=DiscoveryMethod.NAIVE,
             timer_placement=TimerPlacement.BEFORE,
             simulation_engine=SimulationEngine.PROSIMOS,
@@ -86,8 +91,30 @@ def inf_sys_evaluation():
         )
         config_complex = Configuration(
             log_ids=log_ids, process_name=process,
-            max_alpha=10.0, num_iterations=100,
-            num_evaluation_simulations=10,
+            max_alpha=max_alpha, num_iterations=num_iterations,
+            num_evaluation_simulations=num_evaluation_simulations,
+            discovery_method=DiscoveryMethod.COMPLEX,
+            timer_placement=TimerPlacement.BEFORE,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            optimization_metric=OptimizationMetric.RELATIVE_EMD,
+            working_schedules=working_schedules
+        )
+        config_naive_holdout = Configuration(
+            log_ids=log_ids, process_name=process,
+            max_alpha=max_alpha, num_iterations=num_iterations,
+            num_evaluation_simulations=num_evaluation_simulations,
+            training_partition_ratio=0.5,
+            discovery_method=DiscoveryMethod.NAIVE,
+            timer_placement=TimerPlacement.BEFORE,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            optimization_metric=OptimizationMetric.RELATIVE_EMD,
+            working_schedules=working_schedules
+        )
+        config_complex_holdout = Configuration(
+            log_ids=log_ids, process_name=process,
+            max_alpha=max_alpha, num_iterations=num_iterations,
+            num_evaluation_simulations=num_evaluation_simulations,
+            training_partition_ratio=0.5,
             discovery_method=DiscoveryMethod.COMPLEX,
             timer_placement=TimerPlacement.BEFORE,
             simulation_engine=SimulationEngine.PROSIMOS,
@@ -102,18 +129,26 @@ def inf_sys_evaluation():
         # - Naive with hyperopt
         naive_hyperopt_enhancer = HyperOptEnhancer(event_log, simulation_model, config_naive)
         naive_hyperopt_enhanced = naive_hyperopt_enhancer.enhance_simulation_model_with_delays()
+        # - Naive with hyperopt and holdout
+        naive_hyperopt_holdout_enhancer = HyperOptEnhancer(event_log, simulation_model, config_naive_holdout)
+        naive_hyperopt_holdout_enhanced = naive_hyperopt_holdout_enhancer.enhance_simulation_model_with_delays()
         # - Complex no hyperopt
         complex_direct_enhancer = DirectEnhancer(event_log, simulation_model, config_complex)
         complex_direct_enhanced = complex_direct_enhancer.enhance_simulation_model_with_delays()
         # - Complex with hyperopt
         complex_hyperopt_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex)
         complex_hyperopt_enhanced = complex_hyperopt_enhancer.enhance_simulation_model_with_delays()
+        # - Complex with hyperopt and holdout
+        complex_hyperopt_holdout_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex_holdout)
+        complex_hyperopt_holdout_enhanced = complex_hyperopt_holdout_enhancer.enhance_simulation_model_with_delays()
 
         # --- Write simulation models to file --- #
-        _export_simulation_model(evaluation_folder, "{}_naive_direct_enhanced".format(process), naive_direct_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_naive_hyperopt_enhanced".format(process), naive_hyperopt_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_complex_direct_enhanced".format(process), complex_direct_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_complex_hyperopt_enhanced".format(process), complex_hyperopt_enhanced)
+        _export_simulation_model(eval_folder, "{}_naive_direct_enhanced".format(process), naive_direct_enhanced)
+        _export_simulation_model(eval_folder, "{}_naive_hyperopt_enhanced".format(process), naive_hyperopt_enhanced)
+        _export_simulation_model(eval_folder, "{}_naive_hyperopt_holdout_enhanced".format(process), naive_hyperopt_holdout_enhanced)
+        _export_simulation_model(eval_folder, "{}_complex_direct_enhanced".format(process), complex_direct_enhanced)
+        _export_simulation_model(eval_folder, "{}_complex_hyperopt_enhanced".format(process), complex_hyperopt_enhanced)
+        _export_simulation_model(eval_folder, "{}_complex_hyperopt_holdout_enhanced".format(process), complex_hyperopt_holdout_enhanced)
 
         # --- Compute and report timer metrics --- #
         real_delays = {
@@ -127,9 +162,13 @@ def inf_sys_evaluation():
             file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, naive_hyperopt_enhancer.timers)
             file.write("{},{},{},".format(precision, recall, smape))
+            precision, recall, smape = _compute_statistics(real_delays, naive_hyperopt_holdout_enhancer.timers)
+            file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, complex_direct_enhancer.timers)
             file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, complex_hyperopt_enhancer.timers)
+            file.write("{},{},{},".format(precision, recall, smape))
+            precision, recall, smape = _compute_statistics(real_delays, complex_hyperopt_holdout_enhancer.timers)
             file.write("{},{},{}\n".format(precision, recall, smape))
 
 

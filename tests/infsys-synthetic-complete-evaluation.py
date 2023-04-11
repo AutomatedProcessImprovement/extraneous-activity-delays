@@ -42,7 +42,7 @@ processes = [
 
 
 def inf_sys_evaluation():
-    metrics_file_path = "../outputs/synthetic-evaluation/metrics.csv"
+    metrics_file_path = "../outputs/synthetic-evaluation/complete/metrics.csv"
     with open(metrics_file_path, 'a') as file:
         file.write("dataset,"
                    "naive_direct_precision,naive_direct_recall,naive_direct_sMAPE,"

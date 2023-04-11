@@ -118,7 +118,7 @@ class Configuration:
     max_alpha: float = 10.0
     training_partition_ratio: float = None
     # Enabled time & resource availability estimations
-    heuristics_thresholds: HeuristicsThresholds = field(default_factory=lambda: HeuristicsThresholds(df=0.75))
+    heuristics_thresholds: HeuristicsThresholds = field(default_factory=lambda: HeuristicsThresholds(df=0.5))
     working_schedules: dict = field(default_factory=dict)
     # General parameters
     process_name: str = "process"

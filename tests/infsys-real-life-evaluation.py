@@ -35,7 +35,7 @@ def inf_sys_evaluation():
     with open(metrics_file_path, 'a') as file:
         file.write("name,relative_mean,relative_cnf,absolute_mean,absolute_cnf,runtime\n")
     with open(metrics_ct_file_path, 'a') as file:
-        file.write("name,min_mean,min_cnf,q1_mean,q1_cnf,median_mean,median_cnf,q3_mean,q3_cnf,max_mean,max_cnf\n")
+        file.write("name,min_mean,min_cnf,q1_mean,q1_cnf,median_mean,median_cnf,mean_mean,mean_cnf,q3_mean,q3_cnf,max_mean,max_cnf\n")
     # Run
     for process in processes:
         # --- Raw paths --- #
@@ -479,21 +479,23 @@ def inf_sys_evaluation():
         with open(metrics_ct_file_path, 'a') as output_file:
             # Train log
             cycle_times = compute_cycle_time_stats(train_log, event_log_ids)
-            output_file.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(
+            output_file.write("{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format(
                 "{}_train_log".format(process),
                 cycle_times['min'], 0.0,
                 cycle_times['q1'], 0.0,
                 cycle_times['median'], 0.0,
+                cycle_times['mean'], 0.0,
                 cycle_times['q3'], 0.0,
                 cycle_times['max'], 0.0,
             ))
             # Test log
             cycle_times = compute_cycle_time_stats(test_log, event_log_ids)
-            output_file.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(
+            output_file.write("{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format(
                 "{}_test_log".format(process),
                 cycle_times['min'], 0.0,
                 cycle_times['q1'], 0.0,
                 cycle_times['median'], 0.0,
+                cycle_times['mean'], 0.0,
                 cycle_times['q3'], 0.0,
                 cycle_times['max'], 0.0,
             ))
@@ -542,13 +544,15 @@ def format_output_cycle_times(process: str, method: str, cycle_times: list) -> s
     min_average, min_cnf = compute_mean_conf_interval([ct['min'] for ct in cycle_times])
     q1_average, q1_cnf = compute_mean_conf_interval([ct['q1'] for ct in cycle_times])
     median_average, median_cnf = compute_mean_conf_interval([ct['median'] for ct in cycle_times])
+    mean_average, mean_cnf = compute_mean_conf_interval([ct['mean'] for ct in cycle_times])
     q3_average, q3_cnf = compute_mean_conf_interval([ct['q3'] for ct in cycle_times])
     max_average, max_cnf = compute_mean_conf_interval([ct['max'] for ct in cycle_times])
-    return "{},{},{},{},{},{},{},{},{},{},{}\n".format(
+    return "{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format(
         "{}_{}".format(process, method),
         min_average, min_cnf,
         q1_average, q1_cnf,
         median_average, median_cnf,
+        mean_average, mean_cnf,
         q3_average, q3_cnf,
         max_average, max_cnf
     )
@@ -577,6 +581,7 @@ def compute_cycle_time_stats(event_log: pd.DataFrame, log_ids: EventLogIDs):
         'min': np.min(cycle_times),
         'q1': np.quantile(cycle_times, 0.25),
         'median': np.median(cycle_times),
+        'mean': np.mean(cycle_times),
         'q3': np.quantile(cycle_times, 0.75),
         'max': np.max(cycle_times)
     }

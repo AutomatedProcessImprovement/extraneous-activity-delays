@@ -1,0 +1,924 @@
+{
+  "task_resource_distribution": [
+    {
+      "task_id": "Task_1mwrpiw",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1xhajjz",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 300
+            },
+            {
+              "value": 30
+            },
+            {
+              "value": 300
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1f0rzqa",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 480
+            },
+            {
+              "value": 48
+            },
+            {
+              "value": 480
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0pf3qxv",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 360
+            },
+            {
+              "value": 36
+            },
+            {
+              "value": 360
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1yczilm",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 900
+            },
+            {
+              "value": 90
+            },
+            {
+              "value": 900
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1u4gdar",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0dfp9e9",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 120
+            },
+            {
+              "value": 12
+            },
+            {
+              "value": 120
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_00cy468",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 7200
+            },
+            {
+              "value": 400
+            },
+            {
+              "value": 7200
+            },
+            {
+              "value": 14400
+            }
+          ],
+          "resource_id": "sid-821e7b9b-607f-47d7-a633-3b8cacfb8c8d_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0iex542",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-821e7b9b-607f-47d7-a633-3b8cacfb8c8d_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_02gig04",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-821e7b9b-607f-47d7-a633-3b8cacfb8c8d_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1abbjnw",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-64a787f0-8b53-40a4-9a13-0dbc6e4e752e_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0oq0sec",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 7200
+            },
+            {
+              "value": 400
+            },
+            {
+              "value": 7200
+            },
+            {
+              "value": 14400
+            }
+          ],
+          "resource_id": "sid-64a787f0-8b53-40a4-9a13-0dbc6e4e752e_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0qw0y7l",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-64a787f0-8b53-40a4-9a13-0dbc6e4e752e_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1n1wfe0",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-865f93ae-6d6a-4478-b220-f989428772e2_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_06c1top",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-865f93ae-6d6a-4478-b220-f989428772e2_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0t0yzbp",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 7200
+            },
+            {
+              "value": 400
+            },
+            {
+              "value": 7200
+            },
+            {
+              "value": 14400
+            }
+          ],
+          "resource_id": "sid-865f93ae-6d6a-4478-b220-f989428772e2_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1pzwok3",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-eaf87c8f-a6d6-4ff5-a06b-294530b527b1_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0t6ryvv",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 7200
+            },
+            {
+              "value": 400
+            },
+            {
+              "value": 7200
+            },
+            {
+              "value": 14400
+            }
+          ],
+          "resource_id": "sid-eaf87c8f-a6d6-4ff5-a06b-294530b527b1_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1e72t9f",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-eaf87c8f-a6d6-4ff5-a06b-294530b527b1_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1w88vmv",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0jnkm8s",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1k76one",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1l1hbv6",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_0tkh9qf",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_1eucwiz",
+      "resources": [
+        {
+          "distribution_name": "fix",
+          "distribution_params": [
+            {
+              "value": 60
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 60
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_17qz3y7",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Task_19qrdf3",
+      "resources": [
+        {
+          "distribution_name": "fix",
+          "distribution_params": [
+            {
+              "value": 2
+            },
+            {
+              "value": 2
+            },
+            {
+              "value": 2
+            }
+          ],
+          "resource_id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1"
+        }
+      ]
+    }
+  ],
+  "resource_calendars": [
+    {
+      "id": "sid-9b7066b1-bbe8-4bd0-9c00-9637dddec062",
+      "name": "24-7",
+      "time_periods": [
+        {
+          "from": "MONDAY",
+          "to": "SUNDAY",
+          "beginTime": "00:00:00.000",
+          "endTime": "23:59:00.000"
+        }
+      ]
+    }
+  ],
+  "gateway_branching_probabilities": [
+    {
+      "gateway_id": "ExclusiveGateway_1y0vsnp",
+      "probabilities": [
+        {
+          "path_id": "SequenceFlow_0zpx1rv",
+          "value": "0.5"
+        },
+        {
+          "path_id": "SequenceFlow_0pjopx5",
+          "value": "0.5"
+        }
+      ]
+    },
+    {
+      "gateway_id": "ExclusiveGateway_12u7msb",
+      "probabilities": [
+        {
+          "path_id": "Flow_1r6yhf5",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "ExclusiveGateway_1s0hrdm",
+      "probabilities": [
+        {
+          "path_id": "SequenceFlow_045m90o",
+          "value": "0.25"
+        },
+        {
+          "path_id": "SequenceFlow_14uokpb",
+          "value": "0.25"
+        },
+        {
+          "path_id": "SequenceFlow_1tgazof",
+          "value": "0.25"
+        },
+        {
+          "path_id": "SequenceFlow_0dhcl13",
+          "value": "0.25"
+        }
+      ]
+    },
+    {
+      "gateway_id": "ExclusiveGateway_06uaq2k",
+      "probabilities": [
+        {
+          "path_id": "SequenceFlow_13hc1eu",
+          "value": "1"
+        }
+      ]
+    }
+  ],
+  "arrival_time_distribution": {
+    "distribution_name": "expon",
+    "distribution_params": [
+      {
+        "value": 3600
+      },
+      {
+        "value": 360
+      },
+      {
+        "value": 3600
+      },
+      {
+        "value": 7200
+      }
+    ]
+  },
+  "arrival_time_calendar": [
+    {
+      "from": "MONDAY",
+      "to": "FRIDAY",
+      "beginTime": "09:00:00.196",
+      "endTime": "17:00:00.726"
+    }
+  ],
+  "resource_profiles": [
+    {
+      "id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8",
+      "name": "ABC",
+      "resource_list": [
+        {
+          "id": "sid-993318aa-c92b-4d4c-b7c6-b0149647c3e8_1",
+          "name": "ABC",
+          "cost_per_hour": 0,
+          "amount": 1,
+          "calendar": "sid-9b7066b1-bbe8-4bd0-9c00-9637dddec062"
+        }
+      ]
+    },
+    {
+      "id": "sid-821e7b9b-607f-47d7-a633-3b8cacfb8c8d",
+      "name": "DEF",
+      "resource_list": [
+        {
+          "id": "sid-821e7b9b-607f-47d7-a633-3b8cacfb8c8d_1",
+          "name": "DEF",
+          "cost_per_hour": 0,
+          "amount": "3",
+          "calendar": "sid-9b7066b1-bbe8-4bd0-9c00-9637dddec062"
+        }
+      ]
+    },
+    {
+      "id": "sid-64a787f0-8b53-40a4-9a13-0dbc6e4e752e",
+      "name": "GHI",
+      "resource_list": [
+        {
+          "id": "sid-64a787f0-8b53-40a4-9a13-0dbc6e4e752e_1",
+          "name": "GHI",
+          "cost_per_hour": 0,
+          "amount": "3",
+          "calendar": "sid-9b7066b1-bbe8-4bd0-9c00-9637dddec062"
+        }
+      ]
+    },
+    {
+      "id": "sid-865f93ae-6d6a-4478-b220-f989428772e2",
+      "name": "JKL",
+      "resource_list": [
+        {
+          "id": "sid-865f93ae-6d6a-4478-b220-f989428772e2_1",
+          "name": "JKL",
+          "cost_per_hour": 0,
+          "amount": "3",
+          "calendar": "sid-9b7066b1-bbe8-4bd0-9c00-9637dddec062"
+        }
+      ]
+    },
+    {
+      "id": "sid-eaf87c8f-a6d6-4ff5-a06b-294530b527b1",
+      "name": "MNO",
+      "resource_list": [
+        {
+          "id": "sid-eaf87c8f-a6d6-4ff5-a06b-294530b527b1_1",
+          "name": "MNO",
+          "cost_per_hour": 0,
+          "amount": "3",
+          "calendar": "sid-9b7066b1-bbe8-4bd0-9c00-9637dddec062",
+          "assignedTasks": []
+        }
+      ]
+    }
+  ],
+  "event_distribution": [
+    {
+      "event_id": "IntermediateThrowEvent_1gb8co9",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 1200
+        },
+        {
+          "value": 120
+        },
+        {
+          "value": 1200
+        },
+        {
+          "value": 3600
+        }
+      ]
+    },
+    {
+      "event_id": "IntermediateThrowEvent_0pu20yi",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 1200
+        },
+        {
+          "value": 120
+        },
+        {
+          "value": 1200
+        },
+        {
+          "value": 3600
+        }
+      ]
+    },
+    {
+      "event_id": "IntermediateThrowEvent_0cay679",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 1200
+        },
+        {
+          "value": 120
+        },
+        {
+          "value": 1200
+        },
+        {
+          "value": 3600
+        }
+      ]
+    },
+    {
+      "event_id": "IntermediateThrowEvent_1aabg48",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 1200
+        },
+        {
+          "value": 120
+        },
+        {
+          "value": 1200
+        },
+        {
+          "value": 3600
+        }
+      ]
+    },
+    {
+      "event_id": "IntermediateThrowEvent_1xvve62",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 1200
+        },
+        {
+          "value": 120
+        },
+        {
+          "value": 1200
+        },
+        {
+          "value": 3600
+        }
+      ]
+    },
+    {
+      "event_id": "IntermediateThrowEvent_0tnpf9f",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 1200
+        },
+        {
+          "value": 120
+        },
+        {
+          "value": 1200
+        },
+        {
+          "value": 3600
+        }
+      ]
+    },
+    {
+      "event_id": "Event_0ve84qy",
+      "distribution_name": "norm",
+      "distribution_params": [
+        {
+          "value": 480
+        },
+        {
+          "value": 120
+        },
+        {
+          "value": 0
+        },
+        {
+          "value": 960
+        }
+      ]
+    },
+    {
+      "event_id": "Event_1u5qaus",
+      "distribution_name": "fix",
+      "distribution_params": [
+        {
+          "value": 300
+        },
+        {
+          "value": 300
+        },
+        {
+          "value": 300
+        }
+      ]
+    }
+  ],
+  "batch_processing": []
+}

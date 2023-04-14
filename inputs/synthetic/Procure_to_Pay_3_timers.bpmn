@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qbp="http://www.qbp-simulator.com/Schema201212"
+             xmlns:ap="http://apromore.org" xmlns:apm="https://www.apromore.org" targetNamespace="http://www.omg.org/bpmn20"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <collaboration id="Collaboration_0a2i9mg">
+        <participant id="Participant_1x0dkaf" name="Procure to Pay" processRef="proc_1519989784">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+            </extensionElements>
+        </participant>
+    </collaboration>
+    <process id="proc_1519989784">
+        <laneSet id="LaneSet_1d76c0h">
+            <lane id="Lane_1gyvd0y" name="Requester">
+                <extensionElements>
+                    <apm:attachments/>
+                </extensionElements>
+                <flowNodeRef>node-c99af23d-a18c-48d3-972b-faa4b0f2cc9d</flowNodeRef>
+                <flowNodeRef>node-bc6cf7be-585d-43c8-b863-e42f0d17d8c1</flowNodeRef>
+                <flowNodeRef>node-4a424cff-c84d-4937-8eb7-ded2502c39a7</flowNodeRef>
+                <flowNodeRef>node-3ca84d0b-0cd9-424b-aab4-26b14f15caa8</flowNodeRef>
+                <flowNodeRef>node-f8267d2c-e994-4b8a-8fb6-ae76eb878778</flowNodeRef>
+                <flowNodeRef>node-abd7298e-9173-4243-9bfc-2f5cc2159198</flowNodeRef>
+                <flowNodeRef>node-5bd85090-affc-4b7e-92c7-561f61ff60df</flowNodeRef>
+                <flowNodeRef>node-20dac9b8-662e-44fb-b53b-064ae61d0e9a</flowNodeRef>
+                <flowNodeRef>node-8886261b-3695-40e4-945d-06058aa9739d</flowNodeRef>
+                <flowNodeRef>node-c60dca0b-00a6-46a1-9f62-4381a5327f5e</flowNodeRef>
+                <flowNodeRef>node-f4d6ba36-a423-49cc-b38b-a567e00435f9</flowNodeRef>
+                <flowNodeRef>node-f43ea5cd-3e62-43f6-bdaf-46611a4bfb23</flowNodeRef>
+                <flowNodeRef>node-2d36ead6-ec00-4ac9-8c70-95c9bececf0d</flowNodeRef>
+                <flowNodeRef>node-620dcb69-b7fe-4d7e-8de0-0f90953beccb</flowNodeRef>
+                <flowNodeRef>node-62a0c401-7510-4f79-ba6f-75f5e933d612</flowNodeRef>
+            </lane>
+            <lane id="Lane_0kdm4uj" name="Purchasing Agent">
+                <flowNodeRef>node-f7bb1ff1-33f4-4781-b67d-40c423d277c7</flowNodeRef>
+                <flowNodeRef>node-8df5eb6d-553f-42e1-9b67-5449856fa7cd</flowNodeRef>
+                <flowNodeRef>node-02fb3a51-4014-40fa-a07f-ee2abc399aa4</flowNodeRef>
+                <flowNodeRef>node-758aaafc-a5dc-4db2-903c-b922013d1116</flowNodeRef>
+                <flowNodeRef>node-d9fa9138-e735-4534-964a-ed231b7ab3ad</flowNodeRef>
+                <flowNodeRef>node-dd4df7f8-1bd3-44b6-bfb5-c97302db4403</flowNodeRef>
+                <flowNodeRef>node-1a57b610-936a-4705-867c-f8849de8d313</flowNodeRef>
+            </lane>
+            <lane id="Lane_1trx6p0" name="Requisition Manager">
+                <flowNodeRef>node-ea8767a5-ef1e-42d8-ab3c-ac2f5cf0848a</flowNodeRef>
+                <flowNodeRef>node-bf423058-287a-4953-a1a2-155e0fcf6a7c</flowNodeRef>
+                <flowNodeRef>node-08b7717b-e7e1-4fc6-bc21-8b8ecd9a48d6</flowNodeRef>
+                <flowNodeRef>Event_0uhfx88</flowNodeRef>
+            </lane>
+            <lane id="Lane_1waimit" name="Supplier">
+                <extensionElements>
+                    <apm:attachments/>
+                </extensionElements>
+                <flowNodeRef>node-b5bad5f7-9546-4cd0-9ae1-f97192846932</flowNodeRef>
+                <flowNodeRef>Event_0sk0f7u</flowNodeRef>
+                <flowNodeRef>node-c72cba38-2b92-4da5-bb76-15490b7e488e</flowNodeRef>
+                <flowNodeRef>node-d9645826-1b0b-4319-bf15-31300b8f6528</flowNodeRef>
+                <flowNodeRef>Event_1lcb2pb</flowNodeRef>
+            </lane>
+            <lane id="Lane_0sxtb55" name="Financial Manager">
+                <extensionElements>
+                    <ap:img src=""/>
+                    <ap:icon elIconName=""/>
+                    <ap:icons/>
+                </extensionElements>
+                <flowNodeRef>node-c78dc31b-2aa2-4457-b14d-12b33b972e18</flowNodeRef>
+                <flowNodeRef>node-51dc818f-aa53-4f51-b77a-bd438f8cc4d0</flowNodeRef>
+                <flowNodeRef>node-befed27f-8926-43a5-9748-00766f4ba02a</flowNodeRef>
+                <flowNodeRef>node-0e30435e-705e-41e3-8a73-83d9d2d8c91f</flowNodeRef>
+                <flowNodeRef>node-0618e2b1-948b-44cd-86a5-b6bfbc2d75bf</flowNodeRef>
+            </lane>
+        </laneSet>
+        <task id="node-c99af23d-a18c-48d3-972b-faa4b0f2cc9d" ap:aux-migrated="true" name="Create Request for Quotation Requester">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <exclusiveGateway id="node-bc6cf7be-585d-43c8-b863-e42f0d17d8c1" name="" gatewayDirection="Converging">
+            <incoming>edge-1edf8038-7d92-4ff4-bdfa-87a192494236</incoming>
+            <incoming>edge-37b4b3ba-91ff-47b5-bd46-19a6e559d01a</incoming>
+            <outgoing>edge-360904bb-fc5c-47de-8aa2-a7680c2a5f41</outgoing>
+        </exclusiveGateway>
+        <startEvent id="node-4a424cff-c84d-4937-8eb7-ded2502c39a7" ap:aux-migrated="true" name="">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </startEvent>
+        <task id="node-3ca84d0b-0cd9-424b-aab4-26b14f15caa8" ap:aux-migrated="true" name="Create Purchase Requisition">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <exclusiveGateway id="node-f8267d2c-e994-4b8a-8fb6-ae76eb878778" name="Analyze Purchase Requisition" gatewayDirection="Diverging">
+            <incoming>edge-2512bac4-a083-43bb-8ebf-3679e8ceca05</incoming>
+            <outgoing>edge-ed0b8b3b-3a39-490a-bd7e-5220202d867e</outgoing>
+            <outgoing>edge-37b4b3ba-91ff-47b5-bd46-19a6e559d01a</outgoing>
+        </exclusiveGateway>
+        <task id="node-ea8767a5-ef1e-42d8-ab3c-ac2f5cf0848a" ap:aux-migrated="true" name="Create Request for Quotation Requester Manager">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <exclusiveGateway id="node-abd7298e-9173-4243-9bfc-2f5cc2159198" name="Purchase Requisition Correct" gatewayDirection="Diverging">
+            <incoming>edge-97d9bc9d-f018-46d0-acf9-e0953d3a02ad</incoming>
+            <outgoing>edge-9c091243-e296-470a-8a66-ee2b33e3f34f</outgoing>
+            <outgoing>edge-2ba11217-846a-45d3-a712-c88d5c9b5152</outgoing>
+            <outgoing>Flow_0sfnoku</outgoing>
+        </exclusiveGateway>
+        <task id="node-5bd85090-affc-4b7e-92c7-561f61ff60df" ap:aux-migrated="true" name="Amend Purchase Requisition">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <exclusiveGateway id="node-20dac9b8-662e-44fb-b53b-064ae61d0e9a" ap:aux-migrated="true" name="" gatewayDirection="Converging">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+            <incoming>edge-808eca0c-28d6-4222-b503-0657df862448</incoming>
+            <incoming>edge-ab70d755-89ac-4bc8-b5e2-9e429fa2c53e</incoming>
+            <incoming>edge-c67fdf43-79da-4ed2-9187-4e6c6484bcf0</incoming>
+            <incoming>edge-e1d2d1c6-69ec-4669-a9be-64589d8c8e5a</incoming>
+            <outgoing>edge-e1b41c44-2de7-4884-a6ef-415ce35afb87</outgoing>
+        </exclusiveGateway>
+        <exclusiveGateway id="node-8886261b-3695-40e4-945d-06058aa9739d" name="" gatewayDirection="Diverging">
+            <incoming>edge-30713fa8-2fe1-4fee-acfa-4050108f90d4</incoming>
+            <outgoing>edge-91939c2b-b38b-4337-bcee-e53e6767dfad</outgoing>
+            <outgoing>edge-80975988-41c1-479e-abff-16d1aebc333f</outgoing>
+            <outgoing>edge-a5f4f108-d283-4fc3-9eaa-177167480e45</outgoing>
+            <outgoing>Flow_0wgezu3</outgoing>
+        </exclusiveGateway>
+        <task id="node-bf423058-287a-4953-a1a2-155e0fcf6a7c" ap:aux-migrated="true" name="Amend Request for Quotation Requester Manager">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-f7bb1ff1-33f4-4781-b67d-40c423d277c7" ap:aux-migrated="true" name="Send Request for Quotation to Supplier">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-8df5eb6d-553f-42e1-9b67-5449856fa7cd" ap:aux-migrated="true" name="Create Quotation comparison Map">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-c60dca0b-00a6-46a1-9f62-4381a5327f5e" ap:aux-migrated="true" name="Analyze Quotation comparison Map">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+            <incoming>edge-fcd0b920-c52a-48b8-a2a7-2aa7d4019947</incoming>
+        </task>
+        <task id="node-f4d6ba36-a423-49cc-b38b-a567e00435f9" ap:aux-migrated="true" name="Choose best option">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-02fb3a51-4014-40fa-a07f-ee2abc399aa4" ap:aux-migrated="true" name="Settle conditions with supplier">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-758aaafc-a5dc-4db2-903c-b922013d1116" ap:aux-migrated="true" name="Create Purchase Order">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <exclusiveGateway id="node-f43ea5cd-3e62-43f6-bdaf-46611a4bfb23" name="" gatewayDirection="Converging">
+            <incoming>edge-8cfdbc14-ce5a-453c-bf03-eabac3ce79c7</incoming>
+            <incoming>edge-afa15c90-f3f8-45e5-b2a1-4661f0665c9b</incoming>
+            <outgoing>edge-a861d2e7-76fe-431a-b535-ea0a706f43f8</outgoing>
+        </exclusiveGateway>
+        <task id="node-2d36ead6-ec00-4ac9-8c70-95c9bececf0d" ap:aux-migrated="true" name="Release Purchase Order">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-d9fa9138-e735-4534-964a-ed231b7ab3ad" ap:aux-migrated="true" name="Settle dispute with supplier Purchasing Agent">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-dd4df7f8-1bd3-44b6-bfb5-c97302db4403" ap:aux-migrated="true" name="Approve Purchase Order for payment">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-b5bad5f7-9546-4cd0-9ae1-f97192846932" ap:aux-migrated="true" name="Send invoice">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+            <incoming>Flow_0i73nky</incoming>
+        </task>
+        <task id="node-c78dc31b-2aa2-4457-b14d-12b33b972e18" ap:aux-migrated="true" name="Release Supplier&#39;s Invoice">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <endEvent id="node-51dc818f-aa53-4f51-b77a-bd438f8cc4d0" name="">
+            <incoming>Flow_0sfnoku</incoming>
+            <incoming>Flow_0wgezu3</incoming>
+        </endEvent>
+        <exclusiveGateway id="node-620dcb69-b7fe-4d7e-8de0-0f90953beccb" name="" gatewayDirection="Diverging">
+            <incoming>edge-c0325920-8449-498d-aa67-77c131ffd72e</incoming>
+            <outgoing>edge-5c62e72a-546f-4632-94a2-e66e3cb27c1b</outgoing>
+            <outgoing>edge-aaabd494-0051-4fcf-8646-1293bca78790</outgoing>
+        </exclusiveGateway>
+        <task id="node-62a0c401-7510-4f79-ba6f-75f5e933d612" ap:aux-migrated="true" name="Amend Request for Quotation Requester">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <sequenceFlow id="edge-e1b41c44-2de7-4884-a6ef-415ce35afb87" name="" sourceRef="node-20dac9b8-662e-44fb-b53b-064ae61d0e9a"
+                      targetRef="node-1a57b610-936a-4705-867c-f8849de8d313">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+            </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow id="edge-e1d2d1c6-69ec-4669-a9be-64589d8c8e5a" name="" sourceRef="node-bf423058-287a-4953-a1a2-155e0fcf6a7c"
+                      targetRef="node-20dac9b8-662e-44fb-b53b-064ae61d0e9a"/>
+        <sequenceFlow id="edge-808eca0c-28d6-4222-b503-0657df862448" name="" sourceRef="node-62a0c401-7510-4f79-ba6f-75f5e933d612"
+                      targetRef="node-20dac9b8-662e-44fb-b53b-064ae61d0e9a"/>
+        <sequenceFlow id="edge-ab70d755-89ac-4bc8-b5e2-9e429fa2c53e" name="" sourceRef="node-ea8767a5-ef1e-42d8-ab3c-ac2f5cf0848a"
+                      targetRef="node-20dac9b8-662e-44fb-b53b-064ae61d0e9a"/>
+        <sequenceFlow id="edge-c67fdf43-79da-4ed2-9187-4e6c6484bcf0" name="" sourceRef="node-c99af23d-a18c-48d3-972b-faa4b0f2cc9d"
+                      targetRef="node-20dac9b8-662e-44fb-b53b-064ae61d0e9a"/>
+        <sequenceFlow id="edge-30713fa8-2fe1-4fee-acfa-4050108f90d4" name="" sourceRef="node-1a57b610-936a-4705-867c-f8849de8d313"
+                      targetRef="node-8886261b-3695-40e4-945d-06058aa9739d"/>
+        <sequenceFlow id="edge-80975988-41c1-479e-abff-16d1aebc333f" name="" sourceRef="node-8886261b-3695-40e4-945d-06058aa9739d"
+                      targetRef="node-f7bb1ff1-33f4-4781-b67d-40c423d277c7"/>
+        <sequenceFlow id="edge-91939c2b-b38b-4337-bcee-e53e6767dfad" name="" sourceRef="node-8886261b-3695-40e4-945d-06058aa9739d"
+                      targetRef="node-62a0c401-7510-4f79-ba6f-75f5e933d612"/>
+        <sequenceFlow id="edge-a5f4f108-d283-4fc3-9eaa-177167480e45" name="" sourceRef="node-8886261b-3695-40e4-945d-06058aa9739d"
+                      targetRef="node-bf423058-287a-4953-a1a2-155e0fcf6a7c"/>
+        <sequenceFlow id="edge-a861d2e7-76fe-431a-b535-ea0a706f43f8" name="" sourceRef="node-f43ea5cd-3e62-43f6-bdaf-46611a4bfb23"
+                      targetRef="node-2d36ead6-ec00-4ac9-8c70-95c9bececf0d"/>
+        <sequenceFlow id="edge-8cfdbc14-ce5a-453c-bf03-eabac3ce79c7" name="" sourceRef="node-c72cba38-2b92-4da5-bb76-15490b7e488e"
+                      targetRef="node-f43ea5cd-3e62-43f6-bdaf-46611a4bfb23"/>
+        <sequenceFlow id="edge-afa15c90-f3f8-45e5-b2a1-4661f0665c9b" name="" sourceRef="node-d9fa9138-e735-4534-964a-ed231b7ab3ad"
+                      targetRef="node-f43ea5cd-3e62-43f6-bdaf-46611a4bfb23"/>
+        <sequenceFlow id="edge-c0325920-8449-498d-aa67-77c131ffd72e" name="" sourceRef="node-2d36ead6-ec00-4ac9-8c70-95c9bececf0d"
+                      targetRef="node-620dcb69-b7fe-4d7e-8de0-0f90953beccb"/>
+        <sequenceFlow id="edge-5c62e72a-546f-4632-94a2-e66e3cb27c1b" name="" sourceRef="node-620dcb69-b7fe-4d7e-8de0-0f90953beccb"
+                      targetRef="node-dd4df7f8-1bd3-44b6-bfb5-c97302db4403"/>
+        <sequenceFlow id="edge-aaabd494-0051-4fcf-8646-1293bca78790" name="" sourceRef="node-620dcb69-b7fe-4d7e-8de0-0f90953beccb"
+                      targetRef="node-d9fa9138-e735-4534-964a-ed231b7ab3ad"/>
+        <sequenceFlow id="edge-2512bac4-a083-43bb-8ebf-3679e8ceca05" name="" sourceRef="node-3ca84d0b-0cd9-424b-aab4-26b14f15caa8"
+                      targetRef="node-f8267d2c-e994-4b8a-8fb6-ae76eb878778"/>
+        <sequenceFlow id="edge-37b4b3ba-91ff-47b5-bd46-19a6e559d01a" name="Yes" sourceRef="node-f8267d2c-e994-4b8a-8fb6-ae76eb878778"
+                      targetRef="node-bc6cf7be-585d-43c8-b863-e42f0d17d8c1"/>
+        <sequenceFlow id="edge-ed0b8b3b-3a39-490a-bd7e-5220202d867e" name="No" sourceRef="node-f8267d2c-e994-4b8a-8fb6-ae76eb878778"
+                      targetRef="node-c99af23d-a18c-48d3-972b-faa4b0f2cc9d"/>
+        <sequenceFlow id="edge-360904bb-fc5c-47de-8aa2-a7680c2a5f41" name="" sourceRef="node-bc6cf7be-585d-43c8-b863-e42f0d17d8c1"
+                      targetRef="Event_0uhfx88"/>
+        <sequenceFlow id="edge-1edf8038-7d92-4ff4-bdfa-87a192494236" name="" sourceRef="node-5bd85090-affc-4b7e-92c7-561f61ff60df"
+                      targetRef="node-bc6cf7be-585d-43c8-b863-e42f0d17d8c1"/>
+        <sequenceFlow id="edge-97d9bc9d-f018-46d0-acf9-e0953d3a02ad" name="" sourceRef="node-08b7717b-e7e1-4fc6-bc21-8b8ecd9a48d6"
+                      targetRef="node-abd7298e-9173-4243-9bfc-2f5cc2159198"/>
+        <sequenceFlow id="edge-9c091243-e296-470a-8a66-ee2b33e3f34f" name="" sourceRef="node-abd7298e-9173-4243-9bfc-2f5cc2159198"
+                      targetRef="node-5bd85090-affc-4b7e-92c7-561f61ff60df"/>
+        <sequenceFlow id="edge-2ba11217-846a-45d3-a712-c88d5c9b5152" name="Yes" sourceRef="node-abd7298e-9173-4243-9bfc-2f5cc2159198"
+                      targetRef="node-ea8767a5-ef1e-42d8-ab3c-ac2f5cf0848a"/>
+        <sequenceFlow id="edge-594de06f-049a-4a9b-b44c-8144867afa84" name="" sourceRef="node-0618e2b1-948b-44cd-86a5-b6bfbc2d75bf"
+                      targetRef="node-51dc818f-aa53-4f51-b77a-bd438f8cc4d0"/>
+        <sequenceFlow id="edge-1fe6b56d-cbd9-4e27-99d0-90fd44c87008" name="" sourceRef="node-0e30435e-705e-41e3-8a73-83d9d2d8c91f"
+                      targetRef="node-befed27f-8926-43a5-9748-00766f4ba02a"/>
+        <sequenceFlow id="edge-9864595c-a488-43f6-865d-2d802dc324cc" name="" sourceRef="node-dd4df7f8-1bd3-44b6-bfb5-c97302db4403"
+                      targetRef="Event_0sk0f7u"/>
+        <sequenceFlow id="edge-19544f8a-75ab-4de2-bc00-e63de75f3515" name="" sourceRef="node-02fb3a51-4014-40fa-a07f-ee2abc399aa4"
+                      targetRef="node-758aaafc-a5dc-4db2-903c-b922013d1116"/>
+        <sequenceFlow id="edge-fcd0b920-c52a-48b8-a2a7-2aa7d4019947" name="" sourceRef="node-8df5eb6d-553f-42e1-9b67-5449856fa7cd"
+                      targetRef="node-c60dca0b-00a6-46a1-9f62-4381a5327f5e"/>
+        <sequenceFlow id="edge-a51695d8-2e11-4346-ba50-707262793f2b" name="" sourceRef="node-c78dc31b-2aa2-4457-b14d-12b33b972e18"
+                      targetRef="node-0e30435e-705e-41e3-8a73-83d9d2d8c91f"/>
+        <sequenceFlow id="edge-43f90525-24fb-45b6-be38-d0eb5c1657eb" name="" sourceRef="node-befed27f-8926-43a5-9748-00766f4ba02a"
+                      targetRef="node-0618e2b1-948b-44cd-86a5-b6bfbc2d75bf"/>
+        <sequenceFlow id="edge-605ea031-8a38-4056-adfd-f74365823762" name="" sourceRef="node-b5bad5f7-9546-4cd0-9ae1-f97192846932"
+                      targetRef="node-c78dc31b-2aa2-4457-b14d-12b33b972e18"/>
+        <sequenceFlow id="edge-2ac01e4d-e5fe-4fa6-9604-caa953f69ebf" name="" sourceRef="node-f4d6ba36-a423-49cc-b38b-a567e00435f9"
+                      targetRef="node-02fb3a51-4014-40fa-a07f-ee2abc399aa4"/>
+        <sequenceFlow id="edge-d4801da6-9f34-4e40-b526-6ee45e9ec382" name="" sourceRef="node-4a424cff-c84d-4937-8eb7-ded2502c39a7"
+                      targetRef="node-3ca84d0b-0cd9-424b-aab4-26b14f15caa8"/>
+        <sequenceFlow id="edge-26e9d356-4b80-43a4-84e9-c64d4adaa810" name="" sourceRef="node-d9645826-1b0b-4319-bf15-31300b8f6528"
+                      targetRef="node-c72cba38-2b92-4da5-bb76-15490b7e488e"/>
+        <sequenceFlow id="edge-ce277e5d-839c-476e-9dfc-5fa873755e7b" name="" sourceRef="node-758aaafc-a5dc-4db2-903c-b922013d1116"
+                      targetRef="Event_1lcb2pb"/>
+        <sequenceFlow id="edge-f8c2492f-9422-4f56-81ee-bc21bb2633fb" name="" sourceRef="node-f7bb1ff1-33f4-4781-b67d-40c423d277c7"
+                      targetRef="node-8df5eb6d-553f-42e1-9b67-5449856fa7cd"/>
+        <sequenceFlow id="edge-16ec261a-a8b9-4423-bd8e-e8f5d8ff27c3" name="" sourceRef="node-c60dca0b-00a6-46a1-9f62-4381a5327f5e"
+                      targetRef="node-f4d6ba36-a423-49cc-b38b-a567e00435f9"/>
+        <sequenceFlow id="Flow_0sfnoku" name="No" sourceRef="node-abd7298e-9173-4243-9bfc-2f5cc2159198"
+                      targetRef="node-51dc818f-aa53-4f51-b77a-bd438f8cc4d0"/>
+        <sequenceFlow id="Flow_0wgezu3" sourceRef="node-8886261b-3695-40e4-945d-06058aa9739d"
+                      targetRef="node-51dc818f-aa53-4f51-b77a-bd438f8cc4d0"/>
+        <task id="node-1a57b610-936a-4705-867c-f8849de8d313" ap:aux-migrated="true" name="Analyze Request for Quotation">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+            <incoming>edge-e1b41c44-2de7-4884-a6ef-415ce35afb87</incoming>
+        </task>
+        <task id="node-befed27f-8926-43a5-9748-00766f4ba02a" ap:aux-migrated="true" name="Authorize Supplier&#39;s Invoice payment">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-0e30435e-705e-41e3-8a73-83d9d2d8c91f" ap:aux-migrated="true" name="Settle dispute with supplier Financial Manager">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-0618e2b1-948b-44cd-86a5-b6bfbc2d75bf" ap:aux-migrated="true" name="Pay invoice">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment>
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+            <incoming>edge-43f90525-24fb-45b6-be38-d0eb5c1657eb</incoming>
+        </task>
+        <sequenceFlow id="Flow_0i73nky" sourceRef="Event_0sk0f7u" targetRef="node-b5bad5f7-9546-4cd0-9ae1-f97192846932"/>
+        <intermediateCatchEvent id="Event_0sk0f7u">
+            <extensionElements>
+                <apm:attachments/>
+            </extensionElements>
+            <incoming>edge-9864595c-a488-43f6-865d-2d802dc324cc</incoming>
+            <outgoing>Flow_0i73nky</outgoing>
+            <timerEventDefinition id="TimerEventDefinition_0xi3m9k"/>
+        </intermediateCatchEvent>
+        <sequenceFlow id="Flow_0ovjzjj" sourceRef="Event_0uhfx88" targetRef="node-08b7717b-e7e1-4fc6-bc21-8b8ecd9a48d6"/>
+        <task id="node-08b7717b-e7e1-4fc6-bc21-8b8ecd9a48d6" ap:aux-migrated="true" name="Analyze Purchase Requisition">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+            <incoming>Flow_0ovjzjj</incoming>
+        </task>
+        <intermediateCatchEvent id="Event_0uhfx88">
+            <extensionElements>
+                <apm:attachments/>
+            </extensionElements>
+            <incoming>edge-360904bb-fc5c-47de-8aa2-a7680c2a5f41</incoming>
+            <outgoing>Flow_0ovjzjj</outgoing>
+            <timerEventDefinition id="TimerEventDefinition_1fubv0j"/>
+        </intermediateCatchEvent>
+        <task id="node-c72cba38-2b92-4da5-bb76-15490b7e488e" ap:aux-migrated="true" name="Deliver Goods Services">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+        </task>
+        <task id="node-d9645826-1b0b-4319-bf15-31300b8f6528" ap:aux-migrated="true" name="Confirm Purchase Order">
+            <extensionElements>
+                <ap:img src=""/>
+                <ap:icon elIconName=""/>
+                <ap:icons/>
+                <apm:attachments>
+                    <apm:attachment name="New attachment 1">
+                        <apm:img/>
+                        <apm:icons/>
+                    </apm:attachment>
+                </apm:attachments>
+            </extensionElements>
+            <incoming>Flow_0prup15</incoming>
+        </task>
+        <sequenceFlow id="Flow_0prup15" sourceRef="Event_1lcb2pb" targetRef="node-d9645826-1b0b-4319-bf15-31300b8f6528"/>
+        <intermediateCatchEvent id="Event_1lcb2pb">
+            <extensionElements>
+                <apm:attachments/>
+            </extensionElements>
+            <incoming>edge-ce277e5d-839c-476e-9dfc-5fa873755e7b</incoming>
+            <outgoing>Flow_0prup15</outgoing>
+            <timerEventDefinition id="TimerEventDefinition_1qrhvw7"/>
+        </intermediateCatchEvent>
+    </process>
+    <bpmndi:BPMNDiagram id="id_1457661785">
+        <bpmndi:BPMNPlane bpmnElement="Collaboration_0a2i9mg">
+            <bpmndi:BPMNShape id="Participant_1x0dkaf_di" bpmnElement="Participant_1x0dkaf" isHorizontal="true">
+                <dc:Bounds x="1555" y="-300" width="3620" height="730"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Lane_0sxtb55_di" bpmnElement="Lane_0sxtb55" isHorizontal="true">
+                <dc:Bounds x="1585" y="-300" width="3590" height="120"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Lane_1waimit_di" bpmnElement="Lane_1waimit" isHorizontal="true">
+                <dc:Bounds x="1585" y="-180" width="3590" height="120"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Lane_1trx6p0_di" bpmnElement="Lane_1trx6p0" isHorizontal="true">
+                <dc:Bounds x="1585" y="310" width="3590" height="120"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Lane_0kdm4uj_di" bpmnElement="Lane_0kdm4uj" isHorizontal="true">
+                <dc:Bounds x="1585" y="-60" width="3590" height="120"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Lane_1gyvd0y_di" bpmnElement="Lane_1gyvd0y" isHorizontal="true">
+                <dc:Bounds x="1585" y="60" width="3590" height="250"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-c99af23d-a18c-48d3-972b-faa4b0f2cc9d">
+                <dc:Bounds x="1905" y="147" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-bc6cf7be-585d-43c8-b863-e42f0d17d8c1" isMarkerVisible="true">
+                <dc:Bounds x="1943" y="216" width="25" height="25"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-4a424cff-c84d-4937-8eb7-ded2502c39a7">
+                <dc:Bounds x="1631" y="182" width="25" height="25"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-3ca84d0b-0cd9-424b-aab4-26b14f15caa8">
+                <dc:Bounds x="1694" y="175" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-f8267d2c-e994-4b8a-8fb6-ae76eb878778" isMarkerVisible="true">
+                <dc:Bounds x="1830" y="182" width="25" height="25"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="1845" y="202" width="89" height="27"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-ea8767a5-ef1e-42d8-ab3c-ac2f5cf0848a">
+                <dc:Bounds x="2280" y="353" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-abd7298e-9173-4243-9bfc-2f5cc2159198" isMarkerVisible="true">
+                <dc:Bounds x="2205" y="216" width="25" height="25"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-5bd85090-affc-4b7e-92c7-561f61ff60df">
+                <dc:Bounds x="2044" y="208" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-20dac9b8-662e-44fb-b53b-064ae61d0e9a" isMarkerVisible="true">
+                <dc:Bounds x="2430" y="154" width="25" height="25"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-8886261b-3695-40e4-945d-06058aa9739d" isMarkerVisible="true">
+                <dc:Bounds x="2655" y="154" width="25" height="25"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-bf423058-287a-4953-a1a2-155e0fcf6a7c">
+                <dc:Bounds x="2514" y="353" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-f7bb1ff1-33f4-4781-b67d-40c423d277c7">
+                <dc:Bounds x="2714" y="-17" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-8df5eb6d-553f-42e1-9b67-5449856fa7cd">
+                <dc:Bounds x="2864" y="-17" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-c60dca0b-00a6-46a1-9f62-4381a5327f5e">
+                <dc:Bounds x="3030" y="147" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-f4d6ba36-a423-49cc-b38b-a567e00435f9">
+                <dc:Bounds x="3180" y="147" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-02fb3a51-4014-40fa-a07f-ee2abc399aa4">
+                <dc:Bounds x="3330" y="-17" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-758aaafc-a5dc-4db2-903c-b922013d1116">
+                <dc:Bounds x="3480" y="-17" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-f43ea5cd-3e62-43f6-bdaf-46611a4bfb23" isMarkerVisible="true">
+                <dc:Bounds x="3930" y="154" width="25" height="25"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-2d36ead6-ec00-4ac9-8c70-95c9bececf0d">
+                <dc:Bounds x="4005" y="147" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-d9fa9138-e735-4534-964a-ed231b7ab3ad">
+                <dc:Bounds x="3995" y="-17" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-dd4df7f8-1bd3-44b6-bfb5-c97302db4403">
+                <dc:Bounds x="4215" y="-17" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-b5bad5f7-9546-4cd0-9ae1-f97192846932">
+                <dc:Bounds x="4380" y="-140" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-c78dc31b-2aa2-4457-b14d-12b33b972e18">
+                <dc:Bounds x="4530" y="-260" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-51dc818f-aa53-4f51-b77a-bd438f8cc4d0">
+                <dc:Bounds x="5130" y="-253" width="25" height="25"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-620dcb69-b7fe-4d7e-8de0-0f90953beccb" isMarkerVisible="true">
+                <dc:Bounds x="4155" y="155" width="25" height="25"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-62a0c401-7510-4f79-ba6f-75f5e933d612">
+                <dc:Bounds x="2504" y="146" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-1a57b610-936a-4705-867c-f8849de8d313">
+                <dc:Bounds x="2393" y="-17" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-befed27f-8926-43a5-9748-00766f4ba02a">
+                <dc:Bounds x="4790" y="-260" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-0e30435e-705e-41e3-8a73-83d9d2d8c91f">
+                <dc:Bounds x="4660" y="-260" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-0618e2b1-948b-44cd-86a5-b6bfbc2d75bf">
+                <dc:Bounds x="4990" y="-260" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Event_181hgmv_di" bpmnElement="Event_0sk0f7u">
+                <dc:Bounds x="4330" y="-108" width="36" height="36"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-08b7717b-e7e1-4fc6-bc21-8b8ecd9a48d6">
+                <dc:Bounds x="2040" y="353" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Event_1bhmkbw_di" bpmnElement="Event_0uhfx88">
+                <dc:Bounds x="1937" y="355" width="36" height="36"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-c72cba38-2b92-4da5-bb76-15490b7e488e">
+                <dc:Bounds x="3820" y="-140" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="node-d9645826-1b0b-4319-bf15-31300b8f6528">
+                <dc:Bounds x="3680" y="-140" width="100" height="40"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Event_075bmcy_di" bpmnElement="Event_1lcb2pb">
+                <dc:Bounds x="3612" y="-138" width="36" height="36"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="edge-e1b41c44-2de7-4884-a6ef-415ce35afb87">
+                <di:waypoint x="2443" y="155"/>
+                <di:waypoint x="2443" y="23"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-e1d2d1c6-69ec-4669-a9be-64589d8c8e5a">
+                <di:waypoint x="2514" y="371"/>
+                <di:waypoint x="2475" y="370"/>
+                <di:waypoint x="2475" y="200"/>
+                <di:waypoint x="2449" y="173"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-808eca0c-28d6-4222-b503-0657df862448">
+                <di:waypoint x="2504" y="166"/>
+                <di:waypoint x="2455" y="166"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-ab70d755-89ac-4bc8-b5e2-9e429fa2c53e">
+                <di:waypoint x="2380" y="373"/>
+                <di:waypoint x="2415" y="373"/>
+                <di:waypoint x="2415" y="200"/>
+                <di:waypoint x="2437" y="174"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-c67fdf43-79da-4ed2-9187-4e6c6484bcf0">
+                <di:waypoint x="2005" y="167"/>
+                <di:waypoint x="2431" y="167"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-30713fa8-2fe1-4fee-acfa-4050108f90d4">
+                <di:waypoint x="2493" y="3"/>
+                <di:waypoint x="2668" y="3"/>
+                <di:waypoint x="2668" y="155"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-80975988-41c1-479e-abff-16d1aebc333f">
+                <di:waypoint x="2680" y="167"/>
+                <di:waypoint x="2764" y="167"/>
+                <di:waypoint x="2764" y="23"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-91939c2b-b38b-4337-bcee-e53e6767dfad">
+                <di:waypoint x="2656" y="166"/>
+                <di:waypoint x="2604" y="166"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-a5f4f108-d283-4fc3-9eaa-177167480e45">
+                <di:waypoint x="2668" y="179"/>
+                <di:waypoint x="2668" y="373"/>
+                <di:waypoint x="2614" y="373"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-a861d2e7-76fe-431a-b535-ea0a706f43f8">
+                <di:waypoint x="3955" y="167"/>
+                <di:waypoint x="4005" y="167"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-8cfdbc14-ce5a-453c-bf03-eabac3ce79c7">
+                <di:waypoint x="3920" y="-120"/>
+                <di:waypoint x="3943" y="-120"/>
+                <di:waypoint x="3943" y="155"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-afa15c90-f3f8-45e5-b2a1-4661f0665c9b">
+                <di:waypoint x="3995" y="3"/>
+                <di:waypoint x="3943" y="3"/>
+                <di:waypoint x="3943" y="155"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-c0325920-8449-498d-aa67-77c131ffd72e">
+                <di:waypoint x="4105" y="167"/>
+                <di:waypoint x="4156" y="167"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-5c62e72a-546f-4632-94a2-e66e3cb27c1b">
+                <di:waypoint x="4180" y="168"/>
+                <di:waypoint x="4265" y="168"/>
+                <di:waypoint x="4265" y="23"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-aaabd494-0051-4fcf-8646-1293bca78790">
+                <di:waypoint x="4168" y="156"/>
+                <di:waypoint x="4168" y="3"/>
+                <di:waypoint x="4095" y="3"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-2512bac4-a083-43bb-8ebf-3679e8ceca05">
+                <di:waypoint x="1794" y="195"/>
+                <di:waypoint x="1831" y="195"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-37b4b3ba-91ff-47b5-bd46-19a6e559d01a">
+                <di:waypoint x="1843" y="207"/>
+                <di:waypoint x="1843" y="229"/>
+                <di:waypoint x="1944" y="229"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="1849" y="233" width="18" height="14"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-ed0b8b3b-3a39-490a-bd7e-5220202d867e">
+                <di:waypoint x="1843" y="183"/>
+                <di:waypoint x="1843" y="167"/>
+                <di:waypoint x="1905" y="167"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="1851" y="153" width="15" height="14"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-360904bb-fc5c-47de-8aa2-a7680c2a5f41">
+                <di:waypoint x="1956" y="241"/>
+                <di:waypoint x="1956" y="298"/>
+                <di:waypoint x="1955" y="298"/>
+                <di:waypoint x="1955" y="355"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-1edf8038-7d92-4ff4-bdfa-87a192494236">
+                <di:waypoint x="2044" y="228"/>
+                <di:waypoint x="1968" y="228"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-97d9bc9d-f018-46d0-acf9-e0953d3a02ad">
+                <di:waypoint x="2140" y="373"/>
+                <di:waypoint x="2218" y="373"/>
+                <di:waypoint x="2218" y="241"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-9c091243-e296-470a-8a66-ee2b33e3f34f">
+                <di:waypoint x="2206" y="228"/>
+                <di:waypoint x="2144" y="228"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-2ba11217-846a-45d3-a712-c88d5c9b5152">
+                <di:waypoint x="2230" y="229"/>
+                <di:waypoint x="2330" y="229"/>
+                <di:waypoint x="2330" y="353"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="2235" y="211" width="90" height="20"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-594de06f-049a-4a9b-b44c-8144867afa84">
+                <di:waypoint x="5090" y="-240"/>
+                <di:waypoint x="5130" y="-240"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-1fe6b56d-cbd9-4e27-99d0-90fd44c87008">
+                <di:waypoint x="4760" y="-240"/>
+                <di:waypoint x="4790" y="-240"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-9864595c-a488-43f6-865d-2d802dc324cc">
+                <di:waypoint x="4315" y="3"/>
+                <di:waypoint x="4348" y="3"/>
+                <di:waypoint x="4348" y="-72"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-19544f8a-75ab-4de2-bc00-e63de75f3515">
+                <di:waypoint x="3430" y="3"/>
+                <di:waypoint x="3480" y="3"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-fcd0b920-c52a-48b8-a2a7-2aa7d4019947">
+                <di:waypoint x="2964" y="3"/>
+                <di:waypoint x="2997" y="3"/>
+                <di:waypoint x="2997" y="167"/>
+                <di:waypoint x="3030" y="167"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-a51695d8-2e11-4346-ba50-707262793f2b">
+                <di:waypoint x="4630" y="-240"/>
+                <di:waypoint x="4660" y="-240"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-43f90525-24fb-45b6-be38-d0eb5c1657eb">
+                <di:waypoint x="4890" y="-240"/>
+                <di:waypoint x="4990" y="-240"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-605ea031-8a38-4056-adfd-f74365823762">
+                <di:waypoint x="4480" y="-120"/>
+                <di:waypoint x="4505" y="-120"/>
+                <di:waypoint x="4505" y="-240"/>
+                <di:waypoint x="4530" y="-240"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-2ac01e4d-e5fe-4fa6-9604-caa953f69ebf">
+                <di:waypoint x="3280" y="167"/>
+                <di:waypoint x="3305" y="167"/>
+                <di:waypoint x="3305" y="3"/>
+                <di:waypoint x="3330" y="3"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-d4801da6-9f34-4e40-b526-6ee45e9ec382">
+                <di:waypoint x="1656" y="195"/>
+                <di:waypoint x="1694" y="195"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-26e9d356-4b80-43a4-84e9-c64d4adaa810">
+                <di:waypoint x="3780" y="-120"/>
+                <di:waypoint x="3820" y="-120"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-ce277e5d-839c-476e-9dfc-5fa873755e7b">
+                <di:waypoint x="3580" y="3"/>
+                <di:waypoint x="3630" y="3"/>
+                <di:waypoint x="3630" y="-102"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-f8c2492f-9422-4f56-81ee-bc21bb2633fb">
+                <di:waypoint x="2814" y="3"/>
+                <di:waypoint x="2864" y="3"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="edge-16ec261a-a8b9-4423-bd8e-e8f5d8ff27c3">
+                <di:waypoint x="3130" y="167"/>
+                <di:waypoint x="3180" y="167"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0sfnoku_di" bpmnElement="Flow_0sfnoku">
+                <di:waypoint x="2218" y="217"/>
+                <di:waypoint x="2218" y="-290"/>
+                <di:waypoint x="5143" y="-290"/>
+                <di:waypoint x="5143" y="-253"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="3635.5" y="-308" width="90" height="20"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0wgezu3_di" bpmnElement="Flow_0wgezu3">
+                <di:waypoint x="2674" y="173"/>
+                <di:waypoint x="2755" y="250"/>
+                <di:waypoint x="5143" y="250"/>
+                <di:waypoint x="5143" y="-228"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0i73nky_di" bpmnElement="Flow_0i73nky">
+                <di:waypoint x="4348" y="-108"/>
+                <di:waypoint x="4348" y="-160"/>
+                <di:waypoint x="4430" y="-160"/>
+                <di:waypoint x="4430" y="-140"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0ovjzjj_di" bpmnElement="Flow_0ovjzjj">
+                <di:waypoint x="1973" y="373"/>
+                <di:waypoint x="2040" y="373"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0prup15_di" bpmnElement="Flow_0prup15">
+                <di:waypoint x="3648" y="-120"/>
+                <di:waypoint x="3680" y="-120"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>

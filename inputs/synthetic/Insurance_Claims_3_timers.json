@@ -1,0 +1,331 @@
+{
+  "task_resource_distribution": [
+    {
+      "task_id": "sid-EB82118C-91E4-4C06-A21D-8D9A13FD2A0E",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 60
+            },
+            {
+              "value": 3
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-c58f5f83-138d-47a3-b973-d769dd16657f_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-E28FCB0A-894F-4BBF-8237-E318B692A862",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 540
+            },
+            {
+              "value": 5
+            },
+            {
+              "value": 540
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-c58f5f83-138d-47a3-b973-d769dd16657f_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-7C220904-0C28-413E-9749-AE73660FC03C",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 120
+            },
+            {
+              "value": 3
+            },
+            {
+              "value": 120
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-fbf4f2f6-7d40-406e-b9a9-83d557157ea5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-6D0E2778-0628-474E-B069-A671899C51DE",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1200
+            },
+            {
+              "value": 10
+            },
+            {
+              "value": 1200
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-fbf4f2f6-7d40-406e-b9a9-83d557157ea5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-D989644E-017D-443E-8DE6-128FA5D3CEFF",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 120
+            },
+            {
+              "value": 3
+            },
+            {
+              "value": 120
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-fbf4f2f6-7d40-406e-b9a9-83d557157ea5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-1B1B1009-6DDC-45BF-9D09-C7C16C3E354E",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 240
+            },
+            {
+              "value": 4
+            },
+            {
+              "value": 240
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-fbf4f2f6-7d40-406e-b9a9-83d557157ea5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-6C30642C-5796-4159-85E0-DE6AAEA46194",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 60
+            },
+            {
+              "value": 3
+            },
+            {
+              "value": 60
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-fbf4f2f6-7d40-406e-b9a9-83d557157ea5_1"
+        }
+      ]
+    }
+  ],
+  "resource_calendars": [
+    {
+      "id": "sid-fd68a5e0-1222-4d11-b459-8470a13c8339",
+      "name": "Mon-Fri",
+      "time_periods": [
+        {
+          "from": "MONDAY",
+          "to": "FRIDAY",
+          "beginTime": "09:00:00.000",
+          "endTime": "17:00:00.000"
+        }
+      ]
+    }
+  ],
+  "gateway_branching_probabilities": [
+    {
+      "gateway_id": "sid-E5DBA190-4F75-4885-82D7-16C7BD4C9A0D",
+      "probabilities": [
+        {
+          "path_id": "sid-175B8DB8-58B3-4F80-8487-EB5D2446A45A",
+          "value": "0.9"
+        },
+        {
+          "path_id": "sid-FC31469F-40B2-4EBB-9A9B-55AE9FF3E6D6",
+          "value": "0.1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-802CEA55-9C5D-4991-AAE0-AEB9286DB3BE",
+      "probabilities": [
+        {
+          "path_id": "sid-E92FA44C-ADC9-495D-88F8-0E32E8B0912A",
+          "value": "0.15"
+        },
+        {
+          "path_id": "sid-C6FE7351-EA19-4BA3-8102-AF6F6BEEA9BC",
+          "value": "0.85"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-1B3D4C14-7B5C-4A77-A81E-0A473EDB81E2",
+      "probabilities": [
+        {
+          "path_id": "sid-D0D686B5-0846-4FBB-AD18-2B28092AAE62",
+          "value": "0.2"
+        },
+        {
+          "path_id": "sid-01EC887B-304E-404B-A5EF-B0FBE67FC316",
+          "value": "0.8"
+        }
+      ]
+    }
+  ],
+  "arrival_time_distribution": {
+    "distribution_name": "expon",
+    "distribution_params": [
+      {
+        "value": 16
+      },
+      {
+        "value": 1
+      },
+      {
+        "value": 16
+      },
+      {
+        "value": 3600
+      }
+    ]
+  },
+  "arrival_time_calendar": [
+    {
+      "from": "MONDAY",
+      "to": "FRIDAY",
+      "beginTime": "09:00:00.074",
+      "endTime": "17:00:00.851"
+    }
+  ],
+  "resource_profiles": [
+    {
+      "id": "sid-fbf4f2f6-7d40-406e-b9a9-83d557157ea5",
+      "name": "Claims Handler",
+      "resource_list": [
+        {
+          "id": "sid-fbf4f2f6-7d40-406e-b9a9-83d557157ea5_1",
+          "name": "Claims Handler",
+          "cost_per_hour": "50",
+          "amount": "100",
+          "calendar": "sid-fd68a5e0-1222-4d11-b459-8470a13c8339"
+        }
+      ]
+    },
+    {
+      "id": "sid-c58f5f83-138d-47a3-b973-d769dd16657f",
+      "name": "Call Centre Operator",
+      "resource_list": [
+        {
+          "id": "sid-c58f5f83-138d-47a3-b973-d769dd16657f_1",
+          "name": "Call Centre Operator",
+          "cost_per_hour": "30",
+          "amount": "30",
+          "calendar": "sid-fd68a5e0-1222-4d11-b459-8470a13c8339",
+          "assignedTasks": []
+        }
+      ]
+    }
+  ],
+  "event_distribution": [
+    {
+      "event_id": "Event_1p6n52e",
+      "distribution_name": "norm",
+      "distribution_params": [
+        {
+          "value": 600
+        },
+        {
+          "value": 60
+        },
+        {
+          "value": 0
+        },
+        {
+          "value": 3600
+        }
+      ]
+    },
+    {
+      "event_id": "Event_1nj1nea",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 150
+        },
+        {
+          "value": 15
+        },
+        {
+          "value": 150
+        },
+        {
+          "value": 3600
+        }
+      ]
+    },
+    {
+      "event_id": "Event_118uxuk",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 300
+        },
+        {
+          "value": 30
+        },
+        {
+          "value": 300
+        },
+        {
+          "value": 3600
+        }
+      ]
+    }
+  ],
+  "batch_processing": []
+}

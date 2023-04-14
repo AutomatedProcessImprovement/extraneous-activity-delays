@@ -1,0 +1,510 @@
+{
+  "task_resource_distribution": [
+    {
+      "task_id": "sid-2D8F96BD-C99A-4D36-A951-AC29CB4A1B4A",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 120
+            },
+            {
+              "value": 10
+            },
+            {
+              "value": 120
+            },
+            {
+              "value": 240
+            }
+          ],
+          "resource_id": "sid-b80e4419-d0b0-4f4d-9cb4-bdf682e5c53b_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-B286856E-8B50-451B-8646-E5D3C2E08220",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 600
+            },
+            {
+              "value": 30
+            },
+            {
+              "value": 600
+            },
+            {
+              "value": 1200
+            }
+          ],
+          "resource_id": "sid-9c0a61b4-35d5-4b3a-994f-e8701006ef5d_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-18F562AE-0F3A-489F-8660-38E177904BB0",
+      "resources": [
+        {
+          "distribution_name": "norm",
+          "distribution_params": [
+            {
+              "value": 60
+            },
+            {
+              "value": 6
+            },
+            {
+              "value": 0
+            },
+            {
+              "value": 90
+            }
+          ],
+          "resource_id": "sid-b80e4419-d0b0-4f4d-9cb4-bdf682e5c53b_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-B116665C-63B7-4D81-A47A-358CE898E122",
+      "resources": [
+        {
+          "distribution_name": "norm",
+          "distribution_params": [
+            {
+              "value": 90
+            },
+            {
+              "value": 9
+            },
+            {
+              "value": 0
+            },
+            {
+              "value": 180
+            }
+          ],
+          "resource_id": "sid-5e733262-7f8b-4b99-9dc1-fce7a8ee1ef5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-B9F72F21-DC8A-4873-9E04-B19ED7381ADC",
+      "resources": [
+        {
+          "distribution_name": "norm",
+          "distribution_params": [
+            {
+              "value": 150
+            },
+            {
+              "value": 15
+            },
+            {
+              "value": 0
+            },
+            {
+              "value": 300
+            }
+          ],
+          "resource_id": "sid-5e733262-7f8b-4b99-9dc1-fce7a8ee1ef5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-E31F3A7F-28E3-47E5-8BBF-8CF7E1C37E9C",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1200
+            },
+            {
+              "value": 30
+            },
+            {
+              "value": 1200
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-5e733262-7f8b-4b99-9dc1-fce7a8ee1ef5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-A4A84A0D-A58B-4650-A3F2-D1967DB8C146",
+      "resources": [
+        {
+          "distribution_name": "norm",
+          "distribution_params": [
+            {
+              "value": 180
+            },
+            {
+              "value": 18
+            },
+            {
+              "value": 0
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-5e733262-7f8b-4b99-9dc1-fce7a8ee1ef5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-376F3213-4B1D-4DAB-89CC-60F051627586",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 300
+            },
+            {
+              "value": 10
+            },
+            {
+              "value": 300
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-5e733262-7f8b-4b99-9dc1-fce7a8ee1ef5_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-2B439B6B-4DD1-4D40-902D-43B7C4F215AB",
+      "resources": [
+        {
+          "distribution_name": "fix",
+          "distribution_params": [
+            {
+              "value": 1
+            },
+            {
+              "value": 1
+            },
+            {
+              "value": 1
+            }
+          ],
+          "resource_id": "sid-9c0a61b4-35d5-4b3a-994f-e8701006ef5d_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-D859AC4F-3984-4A6B-8366-62B226C4DD53",
+      "resources": [
+        {
+          "distribution_name": "fix",
+          "distribution_params": [
+            {
+              "value": 1
+            },
+            {
+              "value": 1
+            },
+            {
+              "value": 1
+            }
+          ],
+          "resource_id": "sid-9c0a61b4-35d5-4b3a-994f-e8701006ef5d_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-0B0AE587-EE27-414E-A051-D91E1866E1C3",
+      "resources": [
+        {
+          "distribution_name": "fix",
+          "distribution_params": [
+            {
+              "value": 1
+            },
+            {
+              "value": 1
+            },
+            {
+              "value": 1
+            }
+          ],
+          "resource_id": "sid-9c0a61b4-35d5-4b3a-994f-e8701006ef5d_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-6305CEC6-25BA-4B0F-8CF1-2AD6F76D8B9E",
+      "resources": [
+        {
+          "distribution_name": "norm",
+          "distribution_params": [
+            {
+              "value": 150
+            },
+            {
+              "value": 15
+            },
+            {
+              "value": 0
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-5e733262-7f8b-4b99-9dc1-fce7a8ee1ef5_1"
+        }
+      ]
+    }
+  ],
+  "resource_calendars": [
+    {
+      "id": "sid-4cf9e77b-35dc-47c5-ade9-8982be2f8eaa",
+      "name": "Mon-Fri",
+      "time_periods": [
+        {
+          "from": "MONDAY",
+          "to": "FRIDAY",
+          "beginTime": "08:00:00.000",
+          "endTime": "20:00:00.000"
+        }
+      ]
+    }
+  ],
+  "gateway_branching_probabilities": [
+    {
+      "gateway_id": "sid-7BC2AC26-117F-4F44-842E-D70A37254F7C",
+      "probabilities": [
+        {
+          "path_id": "sid-C56D0112-5EB3-4D6B-8B56-28502BD6FB82",
+          "value": "0.95"
+        },
+        {
+          "path_id": "sid-B0617E7B-8279-4A03-A83A-CB445C948139",
+          "value": "0.05"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-0C03CCDA-FA47-4C4A-B92C-B63689DEC5D6",
+      "probabilities": [
+        {
+          "path_id": "sid-2DF9D0B6-6A39-4CEB-AE9B-B6E56D72C723",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-FEC69A74-A114-4118-8057-2CC467F9BC26",
+      "probabilities": [
+        {
+          "path_id": "sid-5557ED54-1A2C-4EC2-8F49-48C111186F71",
+          "value": "0.05"
+        },
+        {
+          "path_id": "sid-61D66A8C-4729-4335-A5B8-F02BD7FEE5E5",
+          "value": "0.95"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-8A1A6486-F59C-461B-AE2C-D0DAFD311A15",
+      "probabilities": [
+        {
+          "path_id": "sid-86CE505E-2FDB-4319-9822-23A5BF8739D2",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-D09E6DDF-C5F4-46B7-8244-989ACC24589D",
+      "probabilities": [
+        {
+          "path_id": "sid-A3AD150B-054B-414E-9AA3-F120CDE3380B",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-DF7ECD36-BB5B-49FE-ABA9-57BADC155DCC",
+      "probabilities": [
+        {
+          "path_id": "sid-29FF0F91-2739-4B3D-AB06-1B4AC47B2A61",
+          "value": "0.07"
+        },
+        {
+          "path_id": "sid-1138993B-6AC7-4AC7-A3A0-1C026F2C7D1F",
+          "value": "0.93"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-0D31F8F8-A930-4F67-8674-73FD4FD29E64",
+      "probabilities": [
+        {
+          "path_id": "sid-A960095B-4484-4ECB-A486-70A64BB4C8D8",
+          "value": "0.99"
+        },
+        {
+          "path_id": "Flow_0yqt7bu",
+          "value": "0.01"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-43BB33DE-0C27-4B78-9FA6-BF79AB7F55A6",
+      "probabilities": [
+        {
+          "path_id": "sid-1CA7F183-E7A7-4D18-ACB9-601580147891",
+          "value": "0.80"
+        },
+        {
+          "path_id": "sid-DF253452-AF1D-4759-ADF4-C3B7A2DE42FC",
+          "value": "0.20"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-E32FFA18-CC49-4268-AC22-9ED65B31EA86",
+      "probabilities": [
+        {
+          "path_id": "sid-1E34ED31-F91E-4996-A0B3-170B8785F7CA",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-6B653B79-8B5B-41F4-80EB-81C4256825AF",
+      "probabilities": [
+        {
+          "path_id": "sid-C8E82B48-B701-4E90-894E-B558123F0E85",
+          "value": "0.94"
+        },
+        {
+          "path_id": "sid-272C1369-84A3-49A4-BEAA-7686618908D6",
+          "value": "0.06"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-7A3D7694-0E4C-4934-BE2A-544A19BEFF23",
+      "probabilities": [
+        {
+          "path_id": "sid-61CFC27B-736D-4C80-A30D-26DB5DFF736B",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-37213186-E64B-45FA-B7D2-57AB25FA1663",
+      "probabilities": [
+        {
+          "path_id": "sid-D5F4D8C7-4318-4D01-A9A5-C0D1FF5F76EE",
+          "value": "0.83"
+        },
+        {
+          "path_id": "sid-27B93723-F18F-483D-AF71-D7629ED0BB60",
+          "value": "0.17"
+        }
+      ]
+    }
+  ],
+  "arrival_time_distribution": {
+    "distribution_name": "fix",
+    "distribution_params": [
+      {
+        "value": 120
+      },
+      {
+        "value": 120
+      },
+      {
+        "value": 120
+      }
+    ]
+  },
+  "arrival_time_calendar": [
+    {
+      "from": "MONDAY",
+      "to": "FRIDAY",
+      "beginTime": "08:00:00.000",
+      "endTime": "20:00:00.000"
+    }
+  ],
+  "resource_profiles": [
+    {
+      "id": "sid-9c0a61b4-35d5-4b3a-994f-e8701006ef5d",
+      "name": "Pharmacy System",
+      "resource_list": [
+        {
+          "id": "sid-9c0a61b4-35d5-4b3a-994f-e8701006ef5d_1",
+          "name": "Pharmacy System",
+          "cost_per_hour": "1",
+          "amount": 1,
+          "calendar": "sid-4cf9e77b-35dc-47c5-ade9-8982be2f8eaa"
+        }
+      ]
+    },
+    {
+      "id": "sid-5e733262-7f8b-4b99-9dc1-fce7a8ee1ef5",
+      "name": "Technician",
+      "resource_list": [
+        {
+          "id": "sid-5e733262-7f8b-4b99-9dc1-fce7a8ee1ef5_1",
+          "name": "Technician",
+          "cost_per_hour": "1",
+          "amount": "8",
+          "calendar": "sid-4cf9e77b-35dc-47c5-ade9-8982be2f8eaa"
+        }
+      ]
+    },
+    {
+      "id": "sid-b80e4419-d0b0-4f4d-9cb4-bdf682e5c53b",
+      "name": "Pharmacist",
+      "resource_list": [
+        {
+          "id": "sid-b80e4419-d0b0-4f4d-9cb4-bdf682e5c53b_1",
+          "name": "Pharmacist",
+          "cost_per_hour": "1",
+          "amount": 1,
+          "calendar": "sid-4cf9e77b-35dc-47c5-ade9-8982be2f8eaa",
+          "assignedTasks": []
+        }
+      ]
+    }
+  ],
+  "event_distribution": [
+    {
+      "event_id": "Event_0jj7p9e",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 300
+        },
+        {
+          "value": 30
+        },
+        {
+          "value": 300
+        },
+        {
+          "value": 3600
+        }
+      ]
+    }
+  ],
+  "batch_processing": [],
+  "case_attributes": [],
+  "prioritisation_rules": []
+}

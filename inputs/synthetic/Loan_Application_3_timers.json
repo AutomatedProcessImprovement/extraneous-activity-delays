@@ -1,0 +1,681 @@
+{
+  "task_resource_distribution": [
+    {
+      "task_id": "sid-9703AD2C-3219-4B4A-9A91-F4A81EF91130",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-B27E434D-3A46-46FE-94DE-184C179BE525",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-8BCCD9BA-2B23-44CA-BB32-4988807D3161",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-543CE27B-717A-4583-8BFE-09BF2267ACFC",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-26575be8-1055-4ac6-b951-d507fd17075b_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-9F775FDB-CD87-40D7-8B8D-DFD50176CE88",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-2ab949ad-74b2-4be4-9025-00575902385a_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-5CEDFABE-7E6F-450C-B84E-11C9917AB563",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-BA8B9C72-48FE-4FF1-A2F9-DE78C836A612",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-26575be8-1055-4ac6-b951-d507fd17075b_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-9726C026-BDE7-4467-B613-EB951D1FE613",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-26575be8-1055-4ac6-b951-d507fd17075b_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-034F28AB-5EBC-4336-82BD-4FE7A525CCE2",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-26575be8-1055-4ac6-b951-d507fd17075b_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-16B45990-F522-4EA9-A01A-70EE8D0C9EC5",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-43A3A3DC-EAE7-42F0-946E-845B3C981850",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-30EFC8A9-15F6-45A1-B0FE-C9B37FC92D36",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505_1"
+        }
+      ]
+    },
+    {
+      "task_id": "sid-AD68767C-968B-4DCD-821E-3F5C5C3D0D04",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-26575be8-1055-4ac6-b951-d507fd17075b_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Activity_065abi2",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-1f26a372-0e4c-4b86-9091-b59fd6163eab_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Activity_1y2vzu0",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-1b3c3bf6-8ccf-4197-a9b9-07039f1afebb_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Activity_0wlatrq",
+      "resources": [
+        {
+          "distribution_name": "expon",
+          "distribution_params": [
+            {
+              "value": 1800
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": 1800
+            },
+            {
+              "value": 3600
+            }
+          ],
+          "resource_id": "sid-1b3c3bf6-8ccf-4197-a9b9-07039f1afebb_1"
+        }
+      ]
+    },
+    {
+      "task_id": "Activity_1w0dur0",
+      "resources": [
+        {
+          "distribution_name": "fix",
+          "distribution_params": [
+            {
+              "value": 86400
+            },
+            {
+              "value": 86400
+            },
+            {
+              "value": 86400
+            }
+          ],
+          "resource_id": "sid-f663e393-6a36-4679-a4a5-6f533e26ef8d_1"
+        }
+      ]
+    }
+  ],
+  "resource_calendars": [
+    {
+      "id": "sid-76034dcf-cf83-47d3-a168-081433e57205",
+      "name": "24-7",
+      "time_periods": [
+        {
+          "from": "MONDAY",
+          "to": "SUNDAY",
+          "beginTime": "00:00:00.000",
+          "endTime": "23:59:00.000"
+        }
+      ]
+    },
+    {
+      "id": "sid-e1e2b301-f5f4-466c-8378-a46da85c3b8e",
+      "name": "Mon-Fri",
+      "time_periods": [
+        {
+          "from": "MONDAY",
+          "to": "FRIDAY",
+          "beginTime": "09:00:00.000",
+          "endTime": "17:00:00.000"
+        }
+      ]
+    }
+  ],
+  "gateway_branching_probabilities": [
+    {
+      "gateway_id": "sid-112BF415-63F3-473C-B4DA-440EBF13D7D8",
+      "probabilities": [
+        {
+          "path_id": "sid-BCF61F61-A6CF-4966-A388-3AE2E521BF21",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-D537CF9E-CB8A-4188-80DE-1CA903F38436",
+      "probabilities": [
+        {
+          "path_id": "sid-92B5B1F2-7B5C-45A9-8C6B-BCC1E0490D99",
+          "value": "0.2"
+        },
+        {
+          "path_id": "sid-F4C85F4E-A227-4D05-AE55-5ACD9A2CF15F",
+          "value": "0.8"
+        }
+      ]
+    },
+    {
+      "gateway_id": "sid-79AFF435-717A-4C1E-87FA-D002372D2251",
+      "probabilities": [
+        {
+          "path_id": "sid-B04F2DE9-EE3E-4AC6-8470-B22F242E48AE",
+          "value": "0.5"
+        },
+        {
+          "path_id": "sid-20A44905-F224-4AC2-8D6E-B25B4416D362",
+          "value": "0.5"
+        }
+      ]
+    },
+    {
+      "gateway_id": "Gateway_1svtmpq",
+      "probabilities": [
+        {
+          "path_id": "Flow_0rrwllu",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "Gateway_0alidkk",
+      "probabilities": [
+        {
+          "path_id": "Flow_1f1wk9v",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "Gateway_0eqakhv",
+      "probabilities": [
+        {
+          "path_id": "Flow_0mpn0oz",
+          "value": "0.2"
+        },
+        {
+          "path_id": "Flow_1ltuf1s",
+          "value": "0.8"
+        }
+      ]
+    },
+    {
+      "gateway_id": "Gateway_0ovqfsq",
+      "probabilities": [
+        {
+          "path_id": "Flow_1e43zqq",
+          "value": "0.45"
+        },
+        {
+          "path_id": "Flow_13axscl",
+          "value": "0.55"
+        }
+      ]
+    },
+    {
+      "gateway_id": "Gateway_1k90s5d",
+      "probabilities": [
+        {
+          "path_id": "Flow_1evxi8a",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "gateway_id": "Gateway_06djhup",
+      "probabilities": [
+        {
+          "path_id": "Flow_1cces2a",
+          "value": "0.5"
+        },
+        {
+          "path_id": "Flow_0wgg1r6",
+          "value": "0.5"
+        }
+      ]
+    }
+  ],
+  "arrival_time_distribution": {
+    "distribution_name": "fix",
+    "distribution_params": [
+      {
+        "value": 900
+      },
+      {
+        "value": 900
+      },
+      {
+        "value": 900
+      }
+    ]
+  },
+  "arrival_time_calendar": [
+    {
+      "from": "MONDAY",
+      "to": "FRIDAY",
+      "beginTime": "09:00:00.646",
+      "endTime": "17:00:00.718"
+    }
+  ],
+  "resource_profiles": [
+    {
+      "id": "sid-f663e393-6a36-4679-a4a5-6f533e26ef8d",
+      "name": "Applicant",
+      "resource_list": [
+        {
+          "id": "sid-f663e393-6a36-4679-a4a5-6f533e26ef8d_1",
+          "name": "Applicant",
+          "cost_per_hour": 0,
+          "amount": "20",
+          "calendar": "sid-76034dcf-cf83-47d3-a168-081433e57205"
+        }
+      ]
+    },
+    {
+      "id": "sid-1b3c3bf6-8ccf-4197-a9b9-07039f1afebb",
+      "name": "Senior Officer",
+      "resource_list": [
+        {
+          "id": "sid-1b3c3bf6-8ccf-4197-a9b9-07039f1afebb_1",
+          "name": "Senior Officer",
+          "cost_per_hour": 0,
+          "amount": "3",
+          "calendar": "sid-e1e2b301-f5f4-466c-8378-a46da85c3b8e"
+        }
+      ]
+    },
+    {
+      "id": "sid-2ab949ad-74b2-4be4-9025-00575902385a",
+      "name": "Appraiser",
+      "resource_list": [
+        {
+          "id": "sid-2ab949ad-74b2-4be4-9025-00575902385a_1",
+          "name": "Appraiser",
+          "cost_per_hour": 0,
+          "amount": "2",
+          "calendar": "sid-e1e2b301-f5f4-466c-8378-a46da85c3b8e"
+        }
+      ]
+    },
+    {
+      "id": "sid-1f26a372-0e4c-4b86-9091-b59fd6163eab",
+      "name": "AML Investigator",
+      "resource_list": [
+        {
+          "id": "sid-1f26a372-0e4c-4b86-9091-b59fd6163eab_1",
+          "name": "AML Investigator",
+          "cost_per_hour": 0,
+          "amount": "4",
+          "calendar": "sid-e1e2b301-f5f4-466c-8378-a46da85c3b8e"
+        }
+      ]
+    },
+    {
+      "id": "sid-26575be8-1055-4ac6-b951-d507fd17075b",
+      "name": "Loan Officer",
+      "resource_list": [
+        {
+          "id": "sid-26575be8-1055-4ac6-b951-d507fd17075b_1",
+          "name": "Loan Officer",
+          "cost_per_hour": 0,
+          "amount": "9",
+          "calendar": "sid-e1e2b301-f5f4-466c-8378-a46da85c3b8e"
+        }
+      ]
+    },
+    {
+      "id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505",
+      "name": "Clerk",
+      "resource_list": [
+        {
+          "id": "sid-94384690-c643-4c8b-b0bc-22ab8a14c505_1",
+          "name": "Clerk",
+          "cost_per_hour": "0",
+          "amount": "9",
+          "calendar": "sid-e1e2b301-f5f4-466c-8378-a46da85c3b8e",
+          "assignedTasks": []
+        }
+      ]
+    }
+  ],
+  "event_distribution": [
+    {
+      "event_id": "Event_1g228xj",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 2700
+        },
+        {
+          "value": 270
+        },
+        {
+          "value": 2700
+        },
+        {
+          "value": 7200
+        }
+      ]
+    },
+    {
+      "event_id": "Event_19s1gwa",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 18000
+        },
+        {
+          "value": 600
+        },
+        {
+          "value": 18000
+        },
+        {
+          "value": 21600
+        }
+      ]
+    },
+    {
+      "event_id": "Event_0ygf1qj",
+      "distribution_name": "expon",
+      "distribution_params": [
+        {
+          "value": 10800
+        },
+        {
+          "value": 500
+        },
+        {
+          "value": 10800
+        },
+        {
+          "value": 18000
+        }
+      ]
+    }
+  ],
+  "batch_processing": []
+}

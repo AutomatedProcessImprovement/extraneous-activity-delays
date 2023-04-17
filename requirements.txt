@@ -1,8 +1,0 @@
-pandas~=1.4.1
-setuptools~=57.0.0
-lxml~=4.8.0
-numpy~=1.22.3
-scipy~=1.8.0
-hyperopt~=0.2.7
-log_similarity_metrics~=0.8.0
-estimate_start_times~=1.4.0

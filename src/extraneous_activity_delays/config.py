@@ -6,9 +6,8 @@ from typing import Callable
 
 import pandas as pd
 from lxml.etree import ElementTree
-
-from estimate_start_times.config import HeuristicsThresholds
 from pix_utils.log_ids import EventLogIDs, DEFAULT_CSV_IDS
+from start_time_estimator.config import HeuristicsThresholds
 
 
 def get_project_dir() -> Path:

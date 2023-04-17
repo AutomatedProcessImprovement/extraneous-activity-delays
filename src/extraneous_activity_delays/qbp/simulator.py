@@ -1,6 +1,7 @@
 import subprocess
 
-from estimate_start_times.config import EventLogIDs
+from start_time_estimator.config import EventLogIDs
+
 from extraneous_activity_delays.config import Configuration, SimulationOutput
 
 LOG_IDS = EventLogIDs(

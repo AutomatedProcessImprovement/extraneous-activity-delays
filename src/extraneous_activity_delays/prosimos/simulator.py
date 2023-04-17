@@ -2,7 +2,8 @@ import datetime
 import os
 
 from bpdfr_simulation_engine.simulation_engine import run_simulation
-from estimate_start_times.config import EventLogIDs
+from start_time_estimator.config import EventLogIDs
+
 from extraneous_activity_delays.config import SimulationOutput
 
 LOG_IDS = EventLogIDs(

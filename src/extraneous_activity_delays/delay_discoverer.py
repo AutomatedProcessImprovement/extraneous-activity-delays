@@ -31,7 +31,7 @@ def compute_naive_extraneous_activity_delays(
     # Compute both enablement and resource availability times
     start_time_config = StartTimeConfiguration(
         log_ids=log_ids,
-        heuristics_thresholds=config.heuristics_thresholds,
+        concurrency_thresholds=config.concurrency_thresholds,
         working_schedules=config.working_schedules,
     )
     if _should_compute_enabled_times(event_log, config):
@@ -82,7 +82,7 @@ def compute_complex_extraneous_activity_delays(
     log_ids = config.log_ids
     start_time_config = StartTimeConfiguration(
         log_ids=log_ids,
-        heuristics_thresholds=config.heuristics_thresholds,
+        concurrency_thresholds=config.concurrency_thresholds,
         working_schedules=config.working_schedules,
     )
     if _should_compute_enabled_times(event_log, config):

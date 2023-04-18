@@ -40,7 +40,7 @@ files = [
 ]
 
 [[package]]
-name = "DiffResBP_Simulator"
+name = "DiffResBP-Simulator"
 version = "0.1.0"
 description = ""
 category = "main"
@@ -619,7 +619,7 @@ files = [
 
 [[package]]
 name = "start-time-estimator"
-version = "1.9.0"
+version = "1.10.0"
 description = "Python package to estimate the enabled time, enabling activity, and resource availability time of each activity instance in an event log."
 category = "main"
 optional = false
@@ -635,7 +635,7 @@ pix-utils = {git = "https://github.com/AutomatedProcessImprovement/pix-utils.git
 type = "git"
 url = "https://github.com/AutomatedProcessImprovement/start-time-estimator.git"
 reference = "HEAD"
-resolved_reference = "b1b0eb2ce3c59a1f9badc5e4d425688d94e21c3a"
+resolved_reference = "20c639a9510c0348958b10307faa54c01bdb5624"
 
 [[package]]
 name = "tomli"

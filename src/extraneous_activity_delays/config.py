@@ -7,7 +7,7 @@ from typing import Callable
 import pandas as pd
 from lxml.etree import ElementTree
 from pix_utils.log_ids import EventLogIDs, DEFAULT_CSV_IDS
-from start_time_estimator.config import HeuristicsThresholds
+from start_time_estimator.config import ConcurrencyThresholds
 
 
 def get_project_dir() -> Path:
@@ -95,7 +95,7 @@ class Configuration:
                                     events, and validate with the remaining traces.
 
     Enabled time estimation:
-        heuristics_thresholds       Thresholds for the heuristics concurrency oracle.
+        concurrency_thresholds      Thresholds for the concurrency oracle (heuristics or overlapping).
         working_schedules           Dictionary with the resources as key and the working calendars (RCalendar) as value.
 
     General parameters:
@@ -117,7 +117,7 @@ class Configuration:
     max_alpha: float = 10.0
     training_partition_ratio: float = None
     # Enabled time & resource availability estimations
-    heuristics_thresholds: HeuristicsThresholds = field(default_factory=lambda: HeuristicsThresholds(df=0.5))
+    concurrency_thresholds: ConcurrencyThresholds = field(default_factory=lambda: ConcurrencyThresholds(df=0.5))
     working_schedules: dict = field(default_factory=dict)
     # General parameters
     process_name: str = "process"

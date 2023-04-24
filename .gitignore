@@ -131,3 +131,4 @@ dmypy.json
 # custom ignores
 /outputs/
 .idea/
+poetry.lock

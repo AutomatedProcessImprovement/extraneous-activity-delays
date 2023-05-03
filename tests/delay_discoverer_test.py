@@ -1,11 +1,12 @@
 import pandas as pd
+from pix_utils.calendar.resource_calendar import RCalendar, Interval
+from pix_utils.input import read_csv_log
+from pix_utils.log_ids import DEFAULT_CSV_IDS
+from pix_utils.statistics.distribution import DistributionType
 
 from extraneous_activity_delays.config import Configuration, TimerPlacement
 from extraneous_activity_delays.delay_discoverer import compute_naive_extraneous_activity_delays, \
     compute_complex_extraneous_activity_delays, _get_first_and_last_available
-from pix_utils.calendar.resource_calendar import RCalendar, Interval
-from pix_utils.input import read_csv_log
-from pix_utils.log_ids import DEFAULT_CSV_IDS
 
 
 def test_compute_naive_extraneous_activity_delays():
@@ -113,13 +114,13 @@ def test_compute_naive_extraneous_activity_delays_LoanApp():
     delays = compute_naive_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert 'Reject application' in delays
-    assert delays['Reject application'].name == "fix"
+    assert delays['Reject application'].type == DistributionType.FIXED
     assert delays['Reject application'].mean == 600
     assert 'Design loan offer' in delays
-    assert delays['Design loan offer'].name == "fix"
+    assert delays['Design loan offer'].type == DistributionType.FIXED
     assert delays['Design loan offer'].mean == 600
     assert 'Approve Loan Offer' in delays
-    assert delays['Approve Loan Offer'].name == "fix"
+    assert delays['Approve Loan Offer'].type == DistributionType.FIXED
     assert delays['Approve Loan Offer'].mean == 1200
     assert len(delays) == 3
 
@@ -129,10 +130,10 @@ def test_compute_naive_extraneous_activity_delays_LoanApp():
     delays = compute_naive_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert 'Assess loan risk' in delays
-    assert delays['Assess loan risk'].name == "fix"
+    assert delays['Assess loan risk'].type == DistributionType.FIXED
     assert delays['Assess loan risk'].mean == 600
     assert 'Design loan offer' in delays
-    assert delays['Design loan offer'].name == "fix"
+    assert delays['Design loan offer'].type == DistributionType.FIXED
     assert delays['Design loan offer'].mean == 1200
     assert len(delays) == 2
 
@@ -158,13 +159,13 @@ def test_compute_complex_extraneous_activity_delays_LoanApp():
     delays = compute_complex_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert 'Reject application' in delays
-    assert delays['Reject application'].name == "fix"
+    assert delays['Reject application'].type == DistributionType.FIXED
     assert delays['Reject application'].mean == 600
     assert 'Design loan offer' in delays
-    assert delays['Design loan offer'].name == "fix"
+    assert delays['Design loan offer'].type == DistributionType.FIXED
     assert delays['Design loan offer'].mean == 600
     assert 'Approve Loan Offer' in delays
-    assert delays['Approve Loan Offer'].name == "fix"
+    assert delays['Approve Loan Offer'].type == DistributionType.FIXED
     assert delays['Approve Loan Offer'].mean == 1200
     assert len(delays) == 3
 
@@ -174,10 +175,10 @@ def test_compute_complex_extraneous_activity_delays_LoanApp():
     delays = compute_complex_extraneous_activity_delays(event_log, config)
     # Assert there are delays if not using calendars
     assert 'Assess loan risk' in delays
-    assert delays['Assess loan risk'].name == "fix"
+    assert delays['Assess loan risk'].type == DistributionType.FIXED
     assert delays['Assess loan risk'].mean == 600
     assert 'Design loan offer' in delays
-    assert delays['Design loan offer'].name == "fix"
+    assert delays['Design loan offer'].type == DistributionType.FIXED
     assert delays['Design loan offer'].mean == 1200
     assert len(delays) == 2
 

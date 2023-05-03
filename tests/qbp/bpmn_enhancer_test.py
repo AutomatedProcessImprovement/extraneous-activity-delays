@@ -1,8 +1,8 @@
 from lxml import etree
+from pix_utils.statistics.distribution import DurationDistribution, DistributionType
 
 from extraneous_activity_delays.config import SimulationModel, TimerPlacement
 from extraneous_activity_delays.qbp.simulation_model_enhancer import add_timers_to_simulation_model
-from pix_utils.statistics.distribution import DurationDistribution
 
 
 def test_enhance_bpmn_model_with_delays():
@@ -41,27 +41,27 @@ def test_enhance_bpmn_model_with_delays():
         duration_distribution = sim_timer.find("qbp:durationDistribution", namespace)
         time_unit = duration_distribution.find("qbp:timeUnit", namespace)
         assert time_unit.text == "seconds"
-        if timers[activity].name == "fix":
+        if timers[activity].type == DistributionType.FIXED:
             assert duration_distribution.attrib['type'] == "FIXED"
             assert duration_distribution.attrib['mean'] == str(timers[activity].mean)
             assert duration_distribution.attrib['arg1'] == "0"
             assert duration_distribution.attrib['arg2'] == "0"
-        elif timers[activity].name == "norm":
+        elif timers[activity].type == DistributionType.NORMAL:
             assert duration_distribution.attrib['type'] == "NORMAL"
             assert duration_distribution.attrib['mean'] == str(timers[activity].mean)
             assert duration_distribution.attrib['arg1'] == str(timers[activity].std)
             assert duration_distribution.attrib['arg2'] == "0"
-        elif timers[activity].name == "expon":
+        elif timers[activity].type == DistributionType.EXPONENTIAL:
             assert duration_distribution.attrib['type'] == "EXPONENTIAL"
             assert duration_distribution.attrib['mean'] == "0"
             assert duration_distribution.attrib['arg1'] == str(timers[activity].mean)
             assert duration_distribution.attrib['arg2'] == "0"
-        elif timers[activity].name == "uniform":
+        elif timers[activity].type == DistributionType.UNIFORM:
             assert duration_distribution.attrib['type'] == "UNIFORM"
             assert duration_distribution.attrib['mean'] == "3600"
             assert duration_distribution.attrib['arg1'] == str(timers[activity].min)
             assert duration_distribution.attrib['arg2'] == str(timers[activity].max)
-        elif timers[activity].name == "gamma":
+        elif timers[activity].type == DistributionType.GAMMA:
             assert duration_distribution.attrib['type'] == "GAMMA"
             assert duration_distribution.attrib['mean'] == str(timers[activity].mean)
             assert duration_distribution.attrib['arg1'] == str(timers[activity].var)
@@ -106,27 +106,27 @@ def test_enhance_bpmn_model_with_delays_after():
         duration_distribution = sim_timer.find("qbp:durationDistribution", namespace)
         time_unit = duration_distribution.find("qbp:timeUnit", namespace)
         assert time_unit.text == "seconds"
-        if timers[activity].name == "fix":
+        if timers[activity].type == DistributionType.FIXED:
             assert duration_distribution.attrib['type'] == "FIXED"
             assert duration_distribution.attrib['mean'] == str(timers[activity].mean)
             assert duration_distribution.attrib['arg1'] == "0"
             assert duration_distribution.attrib['arg2'] == "0"
-        elif timers[activity].name == "norm":
+        elif timers[activity].type == DistributionType.NORMAL:
             assert duration_distribution.attrib['type'] == "NORMAL"
             assert duration_distribution.attrib['mean'] == str(timers[activity].mean)
             assert duration_distribution.attrib['arg1'] == str(timers[activity].std)
             assert duration_distribution.attrib['arg2'] == "0"
-        elif timers[activity].name == "expon":
+        elif timers[activity].type == DistributionType.EXPONENTIAL:
             assert duration_distribution.attrib['type'] == "EXPONENTIAL"
             assert duration_distribution.attrib['mean'] == "0"
             assert duration_distribution.attrib['arg1'] == str(timers[activity].mean)
             assert duration_distribution.attrib['arg2'] == "0"
-        elif timers[activity].name == "uniform":
+        elif timers[activity].type == DistributionType.UNIFORM:
             assert duration_distribution.attrib['type'] == "UNIFORM"
             assert duration_distribution.attrib['mean'] == "3600"
             assert duration_distribution.attrib['arg1'] == str(timers[activity].min)
             assert duration_distribution.attrib['arg2'] == str(timers[activity].max)
-        elif timers[activity].name == "gamma":
+        elif timers[activity].type == DistributionType.GAMMA:
             assert duration_distribution.attrib['type'] == "GAMMA"
             assert duration_distribution.attrib['mean'] == str(timers[activity].mean)
             assert duration_distribution.attrib['arg1'] == str(timers[activity].var)

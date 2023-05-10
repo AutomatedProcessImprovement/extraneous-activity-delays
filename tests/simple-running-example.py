@@ -7,7 +7,7 @@ from extraneous_activity_delays.config import Configuration, SimulationEngine, S
     TimerPlacement
 from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer
 from extraneous_activity_delays.prosimos.simulator import simulate
-from pix_utils.input import read_csv_log
+from pix_framework.input import read_csv_log
 
 
 def optimize_with_prosimos():

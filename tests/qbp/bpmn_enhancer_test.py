@@ -1,5 +1,5 @@
 from lxml import etree
-from pix_utils.statistics.distribution import DurationDistribution, DistributionType
+from pix_framework.statistics.distribution import DurationDistribution, DistributionType
 
 from extraneous_activity_delays.config import SimulationModel, TimerPlacement
 from extraneous_activity_delays.qbp.simulation_model_enhancer import add_timers_to_simulation_model

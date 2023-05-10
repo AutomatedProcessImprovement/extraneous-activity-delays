@@ -1,18 +1,18 @@
 [tool.poetry]
 name = "extraneous-activity-delays"
-version = "2.1.3"
+version = "2.1.4"
 description = ""
 authors = ["David Chapela de la Campa <david.chapela.delacampa@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.12"
-log-distance-measures = { git = "https://github.com/AutomatedProcessImprovement/log-distance-measures.git", branch = "main" }
-pix-utils = { git = "https://github.com/AutomatedProcessImprovement/pix-utils.git", branch = "main" }
-start-time-estimator = { git = "https://github.com/AutomatedProcessImprovement/start-time-estimator.git", branch = "main" }
 DiffResBP-Simulator = { git = "https://github.com/AutomatedProcessImprovement/Prosimos.git", branch = "main" }
 hyperopt = "^0.2.7"
 lxml = "^4.9.2"
+pix-framework = "^0.7.1"
+start-time-estimator = "^1.10.3"
+log-distance-measures = "^1.0.2"
 
 
 [tool.poetry.group.dev.dependencies]

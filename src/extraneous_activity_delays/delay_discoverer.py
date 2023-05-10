@@ -1,9 +1,9 @@
 from typing import Callable, Tuple
 
 import pandas as pd
-from pix_utils.calendar.resource_calendar import absolute_unavailability_intervals_within
-from pix_utils.log_ids import EventLogIDs
-from pix_utils.statistics.distribution import get_best_fitting_distribution
+from pix_framework.calendar.resource_calendar import absolute_unavailability_intervals_within
+from pix_framework.log_ids import EventLogIDs
+from pix_framework.statistics.distribution import get_best_fitting_distribution
 from start_time_estimator.concurrency_oracle import OverlappingConcurrencyOracle
 from start_time_estimator.config import Configuration as StartTimeConfiguration
 from start_time_estimator.resource_availability import CalendarResourceAvailability

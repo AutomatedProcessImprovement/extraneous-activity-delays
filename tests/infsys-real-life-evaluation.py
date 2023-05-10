@@ -15,9 +15,9 @@ from extraneous_activity_delays.prosimos.simulator import simulate
 from extraneous_activity_delays.utils.file_manager import create_folder
 from log_similarity_metrics.absolute_event_distribution import absolute_event_distribution_distance
 from log_similarity_metrics.relative_event_distribution import relative_event_distribution_distance
-from pix_utils.calendar.resource_calendar import RCalendar
-from pix_utils.input import read_csv_log
-from pix_utils.log_ids import EventLogIDs
+from pix_framework.calendar.resource_calendar import RCalendar
+from pix_framework.input import read_csv_log
+from pix_framework.log_ids import EventLogIDs
 
 event_log_ids = EventLogIDs(
     case="case_id",

@@ -6,7 +6,7 @@ from lxml.etree import QName, ElementTree
 
 from extraneous_activity_delays.config import SimulationModel, TimerPlacement
 from extraneous_activity_delays.utils.bpmn_enhancement import add_timer_to_bpmn_model
-from pix_utils.statistics.distribution import QBPDurationDistribution
+from pix_framework.statistics.distribution import QBPDurationDistribution
 
 
 def add_timers_to_simulation_model(

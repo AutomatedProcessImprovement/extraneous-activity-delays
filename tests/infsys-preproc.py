@@ -3,7 +3,7 @@ import os
 import pandas as pd
 
 from extraneous_activity_delays.prosimos.simulator import simulate
-from pix_utils.log_ids import EventLogIDs
+from pix_framework.log_ids import EventLogIDs
 
 
 def transform_delays_into_wt():

@@ -6,7 +6,7 @@ from typing import Callable
 
 import pandas as pd
 from lxml.etree import ElementTree
-from pix_utils.log_ids import EventLogIDs, DEFAULT_CSV_IDS
+from pix_framework.log_ids import EventLogIDs, DEFAULT_CSV_IDS
 from start_time_estimator.config import ConcurrencyThresholds
 
 

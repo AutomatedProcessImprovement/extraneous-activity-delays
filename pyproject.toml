@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "extraneous-activity-delays"
-version = "2.1.5"
+version = "2.1.6"
 description = ""
 authors = ["David Chapela de la Campa <david.chapela.delacampa@gmail.com>"]
 readme = "README.md"
@@ -10,9 +10,8 @@ python = ">=3.9, <3.12"
 prosimos = { git = "https://github.com/AutomatedProcessImprovement/Prosimos.git", branch = "main" }
 hyperopt = "^0.2.7"
 lxml = "^4.9.2"
-pix-framework = "^0.7.1"
-start-time-estimator = "^1.10.3"
 log-distance-measures = "^1.0.2"
+start-time-estimator = "^1"
 
 
 [tool.poetry.group.dev.dependencies]

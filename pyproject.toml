@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "extraneous-activity-delays"
-version = "2.1.4"
+version = "2.1.5"
 description = ""
 authors = ["David Chapela de la Campa <david.chapela.delacampa@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.12"
-DiffResBP-Simulator = { git = "https://github.com/AutomatedProcessImprovement/Prosimos.git", branch = "main" }
+prosimos = { git = "https://github.com/AutomatedProcessImprovement/Prosimos.git", branch = "main" }
 hyperopt = "^0.2.7"
 lxml = "^4.9.2"
 pix-framework = "^0.7.1"

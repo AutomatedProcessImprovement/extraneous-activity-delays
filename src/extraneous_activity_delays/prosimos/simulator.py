@@ -1,7 +1,7 @@
 import datetime
 import os
 
-from bpdfr_simulation_engine.simulation_engine import run_simulation
+from prosimos.simulation_engine import run_simulation
 from start_time_estimator.config import EventLogIDs
 
 from extraneous_activity_delays.config import SimulationOutput

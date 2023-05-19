@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "extraneous-activity-delays"
-version = "2.1.7"
+version = "2.1.8"
 description = ""
 authors = ["David Chapela de la Campa <david.chapela.delacampa@gmail.com>"]
 readme = "README.md"
@@ -12,6 +12,7 @@ hyperopt = "^0.2.7"
 lxml = "^4.9.2"
 log-distance-measures = "^1.0.2"
 start-time-estimator = "^1"
+pix-framework = "^0.8.3"
 
 
 [tool.poetry.group.dev.dependencies]

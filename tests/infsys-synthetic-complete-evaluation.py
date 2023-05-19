@@ -10,7 +10,7 @@ from extraneous_activity_delays.config import Configuration, TimerPlacement, Sim
     OptimizationMetric
 from extraneous_activity_delays.enhance_with_delays import DirectEnhancer, HyperOptEnhancer
 from extraneous_activity_delays.utils.file_manager import create_folder
-from pix_framework.calendar.prosimos_calendar import RCalendar
+from pix_framework.calendar.resource_calendar import RCalendar
 from pix_framework.input import read_csv_log
 from pix_framework.log_ids import EventLogIDs
 

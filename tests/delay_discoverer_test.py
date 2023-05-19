@@ -1,5 +1,5 @@
 import pandas as pd
-from pix_framework.calendar.resource_calendar import RCalendar, Interval
+from pix_framework.calendar.prosimos_calendar import RCalendar, Interval
 from pix_framework.input import read_csv_log
 from pix_framework.log_ids import DEFAULT_CSV_IDS
 from pix_framework.statistics.distribution import DistributionType

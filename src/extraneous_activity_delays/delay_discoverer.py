@@ -1,7 +1,7 @@
 from typing import Callable, Tuple
 
 import pandas as pd
-from pix_framework.calendar.resource_calendar import absolute_unavailability_intervals_within
+from pix_framework.calendar.availability import absolute_unavailability_intervals_within
 from pix_framework.log_ids import EventLogIDs
 from pix_framework.statistics.distribution import get_best_fitting_distribution
 from start_time_estimator.concurrency_oracle import OverlappingConcurrencyOracle

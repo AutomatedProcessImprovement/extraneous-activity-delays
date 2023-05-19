@@ -5,7 +5,7 @@ import pandas as pd
 from extraneous_activity_delays.config import Configuration, TimerPlacement
 from extraneous_activity_delays.delay_discoverer import compute_naive_extraneous_activity_delays, compute_complex_extraneous_activity_delays
 from extraneous_activity_delays.utils.file_manager import create_folder
-from pix_framework.calendar.resource_calendar import RCalendar
+from pix_framework.calendar.prosimos_calendar import RCalendar
 from pix_framework.input import read_csv_log
 from pix_framework.log_ids import EventLogIDs
 

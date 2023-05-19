@@ -6,7 +6,7 @@ from lxml import etree
 from extraneous_activity_delays.config import Configuration, TimerPlacement, SimulationModel, DiscoveryMethod, SimulationEngine
 from extraneous_activity_delays.enhance_with_delays import DirectEnhancer
 from extraneous_activity_delays.utils.file_manager import create_folder
-from pix_framework.calendar.resource_calendar import RCalendar
+from pix_framework.calendar.prosimos_calendar import RCalendar
 from pix_framework.input import read_csv_log
 from pix_framework.log_ids import EventLogIDs
 

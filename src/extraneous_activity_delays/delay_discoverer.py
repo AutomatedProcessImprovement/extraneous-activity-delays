@@ -12,9 +12,9 @@ from extraneous_activity_delays.config import Configuration, TimerPlacement
 
 
 def compute_naive_extraneous_activity_delays(
-        event_log: pd.DataFrame,
-        config: Configuration,
-        should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0
+    event_log: pd.DataFrame,
+    config: Configuration,
+    should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0,
 ) -> dict:
     """
     Compute, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed since the
@@ -50,8 +50,10 @@ def compute_naive_extraneous_activity_delays(
         # Compute the extraneous delays in seconds
         delays = [
             delay.total_seconds()
-            for delay in filtered_instances[log_ids.start_time] -
-                         filtered_instances[[log_ids.enabled_time, log_ids.available_time]].max(axis=1, skipna=True, numeric_only=False)
+            for delay in filtered_instances[log_ids.start_time]
+            - filtered_instances[[log_ids.enabled_time, log_ids.available_time]].max(
+                axis=1, skipna=True, numeric_only=False
+            )
         ]
         # If the delay should be considered, add it
         if should_consider_timer(delays):
@@ -61,9 +63,9 @@ def compute_naive_extraneous_activity_delays(
 
 
 def compute_complex_extraneous_activity_delays(
-        event_log: pd.DataFrame,
-        config: Configuration,
-        should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0
+    event_log: pd.DataFrame,
+    config: Configuration,
+    should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0,
 ) -> dict:
     """
     Compute, for each activity, the distribution of its extraneous delays. To compute the extraneous delay of an activity instance,
@@ -100,14 +102,14 @@ def compute_complex_extraneous_activity_delays(
         # Transform the delay to seconds
         delays = [
             delay.total_seconds()
-            for delay in (filtered_instances['last_available'] - filtered_instances['first_available'])
+            for delay in (filtered_instances["last_available"] - filtered_instances["first_available"])
             if not pd.isna(delay)
         ]
         # If the delay should be considered, add it
         if should_consider_timer(delays):
             timers[activity] = get_best_fitting_distribution(delays)
     # Remove extra columns
-    event_log.drop(['last_available', 'first_available'], axis=1, inplace=True)
+    event_log.drop(["last_available", "first_available"], axis=1, inplace=True)
     # Return discovered delays
     return timers
 
@@ -121,8 +123,8 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
     :param config:      Configuration of the estimation search.
     """
     # Initiate both first and last available columns to NaT
-    event_log['first_available'] = pd.NaT
-    event_log['last_available'] = pd.NaT
+    event_log["first_available"] = pd.NaT
+    event_log["last_available"] = pd.NaT
     for resource, events in event_log.groupby(log_ids.resource):
         # Initialize resource working calendar if existing
         calendar = config.working_schedules[resource] if resource in config.working_schedules else None
@@ -130,15 +132,21 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
         for index, event in events.iterrows():
             # Get activity instances performed by the same resource happening in its waiting time
             performed_events = events[
-                ((event[log_ids.enabled_time] < events[log_ids.end_time]) & (events[log_ids.end_time] <= event[log_ids.start_time])) |
-                ((event[log_ids.enabled_time] <= events[log_ids.start_time]) & (events[log_ids.start_time] < event[log_ids.start_time]))
-                ]
+                (
+                    (event[log_ids.enabled_time] < events[log_ids.end_time])
+                    & (events[log_ids.end_time] <= event[log_ids.start_time])
+                )
+                | (
+                    (event[log_ids.enabled_time] <= events[log_ids.start_time])
+                    & (events[log_ids.start_time] < event[log_ids.start_time])
+                )
+            ]
             # If the resource has a calendar associated, get off-duty intervals happening in its waiting time
             if calendar:
                 resource_off_duty = absolute_unavailability_intervals_within(
                     start=event[log_ids.enabled_time],
                     end=event[log_ids.start_time],
-                    schedule=calendar
+                    schedule=calendar,
                 )
             else:
                 resource_off_duty = []
@@ -149,7 +157,7 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
                 end=event[log_ids.start_time],
                 starts=list(performed_events[log_ids.start_time]) + [interval.start for interval in resource_off_duty],
                 ends=list(performed_events[log_ids.end_time]) + [interval.end for interval in resource_off_duty],
-                time_gap=config.time_gap
+                time_gap=config.time_gap,
             )
             if first_instant:
                 # Available instants found
@@ -160,17 +168,19 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
                 first_available += [event[log_ids.start_time]]
                 last_available += [event[log_ids.start_time]]
         # Set first and last available times for all events of this resource
-        event_log.loc[indexes, 'first_available'] = first_available
-        event_log.loc[indexes, 'last_available'] = last_available
+        event_log.loc[indexes, "first_available"] = first_available
+        event_log.loc[indexes, "last_available"] = last_available
     # Convert columns to Timestamp
-    event_log['first_available'] = pd.to_datetime(event_log['first_available'], utc=True)
-    event_log['last_available'] = pd.to_datetime(event_log['last_available'], utc=True)
+    event_log["first_available"] = pd.to_datetime(event_log["first_available"], utc=True)
+    event_log["last_available"] = pd.to_datetime(event_log["last_available"], utc=True)
 
 
 def _get_first_and_last_available(
-        beginning: pd.Timestamp, end: pd.Timestamp,
-        starts: list, ends: list,
-        time_gap: pd.Timedelta
+    beginning: pd.Timestamp,
+    end: pd.Timestamp,
+    starts: list,
+    ends: list,
+    time_gap: pd.Timedelta,
 ) -> Tuple[pd.Timestamp, pd.Timestamp]:
     """
     Get the first instant from the period [from]-[to] where the resource was available for a [time_gap] amount of time.
@@ -188,10 +198,16 @@ def _get_first_and_last_available(
     starts += [beginning, end]
     ends += [beginning, end]
     # Store the start and ends in a list of dicts
-    times = pd.DataFrame(
-        {'time': starts + ends,
-         'type': ['start'] * len(starts) + ['end'] * len(ends)}
-    ).sort_values(['time', 'type'], ascending=[True, False]).values.tolist()
+    times = (
+        pd.DataFrame(
+            {
+                "time": starts + ends,
+                "type": ["start"] * len(starts) + ["end"] * len(ends),
+            }
+        )
+        .sort_values(["time", "type"], ascending=[True, False])
+        .values.tolist()
+    )
     first_available = None
     last_available = None
     # Go over them start->end, until a moment with no active unavailable intervals is reached
@@ -199,13 +215,11 @@ def _get_first_and_last_available(
     active = 0  # Number of active unavailable intervals
     while not first_available and i < len(times):
         # Increase active unavailable intervals if current timestamps is 'start', or decrease otherwise
-        active += 1 if times[i][1] == 'start' else -1
+        active += 1 if times[i][1] == "start" else -1
         # Check if no active unavailable intervals
-        if (
-                active == 0 and  # No active unavailable intervals at this point, and
-                (i + 1 == len(times) or  # either this is the last point, or
-                 times[i + 1][0] - times[i][0] >= time_gap)  # there is an available time gap with enough duration
-        ):
+        if active == 0 and (  # No active unavailable intervals at this point, and
+            i + 1 == len(times) or times[i + 1][0] - times[i][0] >= time_gap  # either this is the last point, or
+        ):  # there is an available time gap with enough duration
             # Resource available at this point, check time gap until next event
             first_available = times[i][0]
         i += 1
@@ -220,13 +234,12 @@ def _get_first_and_last_available(
                 last_available = first_available
             else:
                 # Increase active unavailable intervals if current timestamps is 'end', or decrease otherwise
-                active += 1 if times[i][1] == 'end' else -1
+                active += 1 if times[i][1] == "end" else -1
                 # Check if no active unavailable intervals
-                if (
-                        active == 0 and  # No active unavailable intervals at this point, and
-                        (i == 0 or  # either this is the last point in the search, or
-                         times[i][0] - times[i - 1][0] >= time_gap)  # there is an available time gap with enough duration
-                ):
+                if active == 0 and (  # No active unavailable intervals at this point, and
+                    i == 0
+                    or times[i][0] - times[i - 1][0] >= time_gap  # either this is the last point in the search, or
+                ):  # there is an available time gap with enough duration
                     # Resource available at this point, check time gap until next event
                     last_available = times[i][0]
             i -= 1
@@ -235,7 +248,6 @@ def _get_first_and_last_available(
 
 
 def _should_compute_enabled_times(event_log: pd.DataFrame, config: Configuration):
-    return (
-            config.log_ids.enabled_time not in event_log.columns or
-            (config.timer_placement == TimerPlacement.AFTER and config.log_ids.enabling_activity not in event_log.columns)
+    return config.log_ids.enabled_time not in event_log.columns or (
+        config.timer_placement == TimerPlacement.AFTER and config.log_ids.enabling_activity not in event_log.columns
     )

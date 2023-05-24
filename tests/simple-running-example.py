@@ -3,8 +3,14 @@ import json
 from lxml import etree
 
 from estimate_start_times.config import DEFAULT_CSV_IDS
-from extraneous_activity_delays.config import Configuration, SimulationEngine, SimulationModel, OptimizationMetric, DiscoveryMethod, \
-    TimerPlacement
+from extraneous_activity_delays.config import (
+    Configuration,
+    SimulationEngine,
+    SimulationModel,
+    OptimizationMetric,
+    DiscoveryMethod,
+    TimerPlacement,
+)
 from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer
 from extraneous_activity_delays.prosimos.simulator import simulate
 from pix_framework.input import read_csv_log
@@ -13,10 +19,12 @@ from pix_framework.input import read_csv_log
 def optimize_with_prosimos():
     # Set up configuration with PROSIMOS
     config = Configuration(
-        log_ids=DEFAULT_CSV_IDS, process_name="prosimos-example",
+        log_ids=DEFAULT_CSV_IDS,
+        process_name="prosimos-example",
         max_alpha=5.0,
-        num_iterations=10, simulation_engine=SimulationEngine.PROSIMOS,
-        optimization_metric=OptimizationMetric.RELATIVE_EMD
+        num_iterations=10,
+        simulation_engine=SimulationEngine.PROSIMOS,
+        optimization_metric=OptimizationMetric.RELATIVE_EMD,
     )
     # Read event log
     event_log = read_csv_log("./assets/prosimos-loan-app/LoanApp_sequential_9-5_diffres.csv.gz", config.log_ids)
@@ -46,20 +54,22 @@ def enhance_and_test():
     simulation_model = SimulationModel(bpmn_model, simulation_parameters)
     # Configurations
     config = Configuration(
-        log_ids=DEFAULT_CSV_IDS, process_name="BPIC17",
-        max_alpha=10.0, num_iterations=100,
+        log_ids=DEFAULT_CSV_IDS,
+        process_name="BPIC17",
+        max_alpha=10.0,
+        num_iterations=100,
         num_evaluation_simulations=5,
         discovery_method=DiscoveryMethod.NAIVE,
         timer_placement=TimerPlacement.AFTER,
         simulation_engine=SimulationEngine.PROSIMOS,
-        optimization_metric=OptimizationMetric.RELATIVE_EMD
+        optimization_metric=OptimizationMetric.RELATIVE_EMD,
     )
     # Discover extraneous delays
     # enhancer = DirectEnhancer(train_log, simulation_model, config)
     enhancer = HyperOptEnhancer(train_log, simulation_model, config)
     enhanced_simulation_model = enhancer.enhance_simulation_model_with_delays()
     enhanced_simulation_model.bpmn_document.write("../outputs/BPI_Challenge_2017_timers.bpmn", pretty_print=True)
-    with open("../outputs/BPI_Challenge_2017_timers.json", 'w') as f:
+    with open("../outputs/BPI_Challenge_2017_timers.json", "w") as f:
         json.dump(enhanced_simulation_model.simulation_parameters, f)
     for i in range(10):
         # Simulate against test
@@ -67,11 +77,11 @@ def enhance_and_test():
         simulate(
             model_path="../outputs/BPI_Challenge_2017_timers.bpmn",
             parameters_path="../outputs/BPI_Challenge_2017_timers.json",
-            num_cases=test_log['case_id'].nunique(),
-            starting_timestamp=test_log['start_time'].min(),
-            output_path=simulated_log_path
+            num_cases=test_log["case_id"].nunique(),
+            starting_timestamp=test_log["start_time"].min(),
+            output_path=simulated_log_path,
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     optimize_with_prosimos()

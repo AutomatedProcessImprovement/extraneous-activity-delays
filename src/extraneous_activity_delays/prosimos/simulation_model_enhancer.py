@@ -7,9 +7,9 @@ from extraneous_activity_delays.utils.bpmn_enhancement import add_timer_to_bpmn_
 
 
 def add_timers_to_simulation_model(
-        simulation_model: SimulationModel,
-        timers: dict,
-        timer_placement: TimerPlacement = TimerPlacement.BEFORE
+    simulation_model: SimulationModel,
+    timers: dict,
+    timer_placement: TimerPlacement = TimerPlacement.BEFORE,
 ) -> SimulationModel:
     """
     Enhance the BPMN model received by adding a timer previous to each activity denoted by [timers].
@@ -28,15 +28,15 @@ def add_timers_to_simulation_model(
     # Add a timer for each task
     json_timers = []
     for task in process.findall("task", namespace):
-        task_name = task.attrib['name']
+        task_name = task.attrib["name"]
         if task_name in timers:
             # The activity has a prepared timer -> add it!
             timer_id = add_timer_to_bpmn_model(task, process, namespace, timer_placement=timer_placement)
             # Add the simulation config for the timer
             duration_distribution = timers[task_name].to_prosimos_distribution()
-            json_timers += [{'event_id': timer_id} | duration_distribution]
+            json_timers += [{"event_id": timer_id} | duration_distribution]
     # Add timers to simulation parameters
-    enhanced_parameters = simulation_model.simulation_parameters | {'event_distribution': json_timers}
+    enhanced_parameters = simulation_model.simulation_parameters | {"event_distribution": json_timers}
     # Return enhanced document
     return SimulationModel(enhanced_document, enhanced_parameters)
 

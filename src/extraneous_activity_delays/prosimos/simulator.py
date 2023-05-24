@@ -11,17 +11,17 @@ LOG_IDS = EventLogIDs(
     activity="activity",
     start_time="start_time",
     end_time="end_time",
-    resource="resource"
+    resource="resource",
 )
 
 
 def simulate(
-        model_path: str,
-        parameters_path: str,
-        num_cases: int,
-        starting_timestamp: datetime.datetime,
-        output_path: str,
-        record_events: bool = False
+    model_path: str,
+    parameters_path: str,
+    num_cases: int,
+    starting_timestamp: datetime.datetime,
+    output_path: str,
+    record_events: bool = False,
 ) -> SimulationOutput:
     """
     Simulate the BPS model in [model_path] with the simulation parameters in [parameters_path] using PROSIMOS. The simulated log
@@ -44,11 +44,12 @@ def simulate(
         stat_out_path=None,  # No statistics
         log_out_path=output_path,
         starting_at=(
-                starting_timestamp.strftime('%Y-%m-%dT%H:%M:%S.%f') +
-                starting_timestamp.strftime("%z")[:-2] + ":" +
-                starting_timestamp.strftime("%z")[-2:]
+            starting_timestamp.strftime("%Y-%m-%dT%H:%M:%S.%f")
+            + starting_timestamp.strftime("%z")[:-2]
+            + ":"
+            + starting_timestamp.strftime("%z")[-2:]
         ),
-        is_event_added_to_log=record_events  # Don't add Events (start/end/timers) to output log
+        is_event_added_to_log=record_events,  # Don't add Events (start/end/timers) to output log
     )
     # Return status of the simulation
     if os.path.isfile(output_path):

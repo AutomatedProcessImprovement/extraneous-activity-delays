@@ -11,9 +11,13 @@ def delete_folder(folder_path: str):
 
 def create_new_tmp_folder(base_path: Path) -> Path:
     # Get non existent folder name
-    output_folder = base_path.joinpath(datetime.datetime.today().strftime('%Y%m%d_') + str(uuid.uuid4()).upper().replace('-', '_'))
+    output_folder = base_path.joinpath(
+        datetime.datetime.today().strftime("%Y%m%d_") + str(uuid.uuid4()).upper().replace("-", "_")
+    )
     while not create_folder(output_folder):
-        output_folder = base_path.joinpath(datetime.datetime.today().strftime('%Y%m%d_') + str(uuid.uuid4()).upper().replace('-', '_'))
+        output_folder = base_path.joinpath(
+            datetime.datetime.today().strftime("%Y%m%d_") + str(uuid.uuid4()).upper().replace("-", "_")
+        )
     # Return P  ath to new folder
     return output_folder
 

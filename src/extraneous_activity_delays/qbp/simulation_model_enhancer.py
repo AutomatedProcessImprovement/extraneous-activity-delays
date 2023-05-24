@@ -10,9 +10,9 @@ from pix_framework.statistics.distribution import QBPDurationDistribution
 
 
 def add_timers_to_simulation_model(
-        simulation_model: SimulationModel,
-        timers: dict,
-        timer_placement: TimerPlacement = TimerPlacement.BEFORE
+    simulation_model: SimulationModel,
+    timers: dict,
+    timer_placement: TimerPlacement = TimerPlacement.BEFORE,
 ) -> SimulationModel:
     """
     Enhance the BPMN model received by adding a timer previous to each activity denoted by [timers].
@@ -31,7 +31,7 @@ def add_timers_to_simulation_model(
     sim_elements = sim_info.find("qbp:elements", namespace)
     # Add a timer for each task
     for task in process.findall("task", namespace):
-        task_name = task.attrib['name']
+        task_name = task.attrib["name"]
         if task_name in timers:
             # The activity has a prepared timer -> add it!
             timer_id = add_timer_to_bpmn_model(task, process, namespace, timer_placement=timer_placement)
@@ -47,16 +47,18 @@ def add_timers_to_simulation_model(
     return SimulationModel(enhanced_document)
 
 
-def _get_simulation_timer(timer_id: str, duration_distribution: QBPDurationDistribution, namespace: dict) -> etree.Element:
-    sim_timer = etree.Element(QName(namespace['qbp'], "element"), {'elementId': timer_id}, namespace)
+def _get_simulation_timer(
+    timer_id: str, duration_distribution: QBPDurationDistribution, namespace: dict
+) -> etree.Element:
+    sim_timer = etree.Element(QName(namespace["qbp"], "element"), {"elementId": timer_id}, namespace)
     duration_params = {
-        'type': duration_distribution.type,
-        'mean': duration_distribution.mean,
-        'arg1': duration_distribution.arg1,
-        'arg2': duration_distribution.arg2
+        "type": duration_distribution.type,
+        "mean": duration_distribution.mean,
+        "arg1": duration_distribution.arg1,
+        "arg2": duration_distribution.arg2,
     }
-    sim_timer_duration = etree.Element(QName(namespace['qbp'], "durationDistribution"), duration_params, namespace)
-    sim_timer_unit = etree.Element(QName(namespace['qbp'], "timeUnit"), {}, namespace)
+    sim_timer_duration = etree.Element(QName(namespace["qbp"], "durationDistribution"), duration_params, namespace)
+    sim_timer_unit = etree.Element(QName(namespace["qbp"], "timeUnit"), {}, namespace)
     sim_timer_unit.text = duration_distribution.unit
     sim_timer_duration.append(sim_timer_unit)
     sim_timer.append(sim_timer_duration)
@@ -66,8 +68,8 @@ def _get_simulation_timer(timer_id: str, duration_distribution: QBPDurationDistr
 def _get_basic_bpmn_elements(document: ElementTree) -> tuple:
     model = document.getroot()
     namespace = model.nsmap
-    if 'qbp' not in namespace:
-        namespace['qbp'] = "http://www.qbp-simulator.com/Schema201212"
+    if "qbp" not in namespace:
+        namespace["qbp"] = "http://www.qbp-simulator.com/Schema201212"
     process = model.find("process", namespace)
     # Extract simulation parameters
     sim_info = process.find("extensionElements/qbp:processSimulationInfo", namespace)
@@ -82,11 +84,13 @@ def set_number_instances_to_simulate(document: ElementTree, num_instances: int):
     # Get basic elements
     _, _, sim_info, _ = _get_basic_bpmn_elements(document)
     # Edit num instances
-    sim_info.attrib['processInstances'] = str(num_instances)
+    sim_info.attrib["processInstances"] = str(num_instances)
 
 
 def set_start_datetime_to_simulate(document: ElementTree, time: datetime.datetime):
     # Get basic elements
     _, _, sim_info, _ = _get_basic_bpmn_elements(document)
     # Edit num instances
-    sim_info.attrib['startDateTime'] = time.strftime('%Y-%m-%dT%H:%M:%S.%f') + time.strftime("%z")[:-2] + ":" + time.strftime("%z")[-2:]
+    sim_info.attrib["startDateTime"] = (
+        time.strftime("%Y-%m-%dT%H:%M:%S.%f") + time.strftime("%z")[:-2] + ":" + time.strftime("%z")[-2:]
+    )

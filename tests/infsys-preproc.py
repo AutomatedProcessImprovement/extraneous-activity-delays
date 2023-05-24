@@ -8,10 +8,22 @@ from pix_framework.log_ids import EventLogIDs
 
 def transform_delays_into_wt():
     logs = [
-        "Insurance_Claims", "Insurance_Claims_1_timer", "Insurance_Claims_3_timers", "Insurance_Claims_5_timers",
-        "Loan_Application", "Loan_Application_1_timer", "Loan_Application_3_timers", "Loan_Application_5_timers",
-        "Pharmacy", "Pharmacy_1_timer", "Pharmacy_3_timers", "Pharmacy_5_timers",
-        "Procure_to_Pay", "Procure_to_Pay_1_timer", "Procure_to_Pay_3_timers", "Procure_to_Pay_5_timers"
+        "Insurance_Claims",
+        "Insurance_Claims_1_timer",
+        "Insurance_Claims_3_timers",
+        "Insurance_Claims_5_timers",
+        "Loan_Application",
+        "Loan_Application_1_timer",
+        "Loan_Application_3_timers",
+        "Loan_Application_5_timers",
+        "Pharmacy",
+        "Pharmacy_1_timer",
+        "Pharmacy_3_timers",
+        "Pharmacy_5_timers",
+        "Procure_to_Pay",
+        "Procure_to_Pay_1_timer",
+        "Procure_to_Pay_3_timers",
+        "Procure_to_Pay_5_timers",
     ]
     log_ids = EventLogIDs(case="case_id", enabled_time="enable_time", start_time="start_time", end_time="end_time")
     events = {
@@ -49,19 +61,23 @@ def transform_delays_into_wt():
         event_log[log_ids.start_time] = event_log.apply(_remove_microsecond_start, axis=1)
         event_log[log_ids.end_time] = pd.to_datetime(event_log[log_ids.end_time])
         event_log[log_ids.end_time] = event_log.apply(_remove_microsecond_end, axis=1)
-        event_log['extraneous_delay'] = 0
+        event_log["extraneous_delay"] = 0
         event_log.drop(log_ids.enabled_time, axis=1, inplace=True)
         # Associate the timer delay as WT to the activity
         indexes, values = [], []
         for index, event in event_log[event_log[log_ids.activity].isin(list(events.keys()))].iterrows():
-            next_event = event_log[
-                (event_log[log_ids.case] == event[log_ids.case]) &
-                (event_log[log_ids.start_time] >= event[log_ids.end_time]) &
-                (event_log[log_ids.activity] == events[event[log_ids.activity]])
-                ].sort_values(log_ids.start_time).iloc[0]
+            next_event = (
+                event_log[
+                    (event_log[log_ids.case] == event[log_ids.case])
+                    & (event_log[log_ids.start_time] >= event[log_ids.end_time])
+                    & (event_log[log_ids.activity] == events[event[log_ids.activity]])
+                ]
+                .sort_values(log_ids.start_time)
+                .iloc[0]
+            )
             indexes += [next_event.name]
             values += [(event[log_ids.end_time] - event[log_ids.start_time]).total_seconds()]
-        event_log.loc[indexes, 'extraneous_delay'] = values
+        event_log.loc[indexes, "extraneous_delay"] = values
         # Retain only activity instances (no events)
         event_log = event_log[~event_log[log_ids.activity].isin(list(events.keys()))]
         # Write to file
@@ -72,8 +88,10 @@ def transform_delays_into_wt():
 def generate_single_logs():
     logs = [
         # "Confidential",
-        "Insurance_Claims_5_timers", "Loan_Application_5_timers",
-        "Pharmacy_5_timers", "Procure_to_Pay_5_timers"
+        "Insurance_Claims_5_timers",
+        "Loan_Application_5_timers",
+        "Pharmacy_5_timers",
+        "Procure_to_Pay_5_timers",
     ]
     log_ids = EventLogIDs(case="case_id", enabled_time="enable_time", start_time="start_time", end_time="end_time")
     for process_name in logs:
@@ -94,12 +112,12 @@ def generate_single_logs():
 
 
 def _remove_microsecond_start(row):
-    return row['start_time'].round('10L')
+    return row["start_time"].round("10L")
 
 
 def _remove_microsecond_end(row):
-    return row['end_time'].round('10L')
+    return row["end_time"].round("10L")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     transform_delays_into_wt()

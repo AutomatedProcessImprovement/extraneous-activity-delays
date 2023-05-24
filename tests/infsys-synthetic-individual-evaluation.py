@@ -3,24 +3,35 @@ import json
 import pandas as pd
 
 from extraneous_activity_delays.config import Configuration, TimerPlacement
-from extraneous_activity_delays.delay_discoverer import compute_naive_extraneous_activity_delays, compute_complex_extraneous_activity_delays
+from extraneous_activity_delays.delay_discoverer import (
+    compute_naive_extraneous_activity_delays,
+    compute_complex_extraneous_activity_delays,
+)
 from extraneous_activity_delays.utils.file_manager import create_folder
 from pix_framework.calendar.resource_calendar import RCalendar
 from pix_framework.input import read_csv_log
 from pix_framework.log_ids import EventLogIDs
 
 log_ids = EventLogIDs(
-    case="case_id",
-    activity="activity",
-    resource="resource",
-    start_time="start_time",
-    end_time="end_time"
+    case="case_id", activity="activity", resource="resource", start_time="start_time", end_time="end_time"
 )
 processes = [
-    "Insurance_Claims", "Insurance_Claims_1_timer", "Insurance_Claims_3_timers", "Insurance_Claims_5_timers",
-    "Loan_Application", "Loan_Application_1_timer", "Loan_Application_3_timers", "Loan_Application_5_timers",
-    "Pharmacy", "Pharmacy_1_timer", "Pharmacy_3_timers", "Pharmacy_5_timers",
-    "Procure_to_Pay", "Procure_to_Pay_1_timer", "Procure_to_Pay_3_timers", "Procure_to_Pay_5_timers"
+    "Insurance_Claims",
+    "Insurance_Claims_1_timer",
+    "Insurance_Claims_3_timers",
+    "Insurance_Claims_5_timers",
+    "Loan_Application",
+    "Loan_Application_1_timer",
+    "Loan_Application_3_timers",
+    "Loan_Application_5_timers",
+    "Pharmacy",
+    "Pharmacy_1_timer",
+    "Pharmacy_3_timers",
+    "Pharmacy_5_timers",
+    "Procure_to_Pay",
+    "Procure_to_Pay_1_timer",
+    "Procure_to_Pay_3_timers",
+    "Procure_to_Pay_5_timers",
 ]
 
 
@@ -29,7 +40,7 @@ def inf_sys_evaluation():
     evaluation_folder = Configuration().PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath("individual")
     create_folder(evaluation_folder)
     smape_file_path = evaluation_folder.joinpath("smape.csv")
-    with open(smape_file_path, 'a') as file:
+    with open(smape_file_path, "a") as file:
         file.write("dataset,naive_sMAPE,complex_sMAPE,naive_MAPE,complex_MAPE\n")
     for process in processes:
         # --- Paths --- #
@@ -46,9 +57,10 @@ def inf_sys_evaluation():
         working_schedules = _json_schedules_to_rcalendar(simulation_parameters)
         # --- Configurations --- #
         configuration = Configuration(
-            log_ids=log_ids, process_name=process,
+            log_ids=log_ids,
+            process_name=process,
             timer_placement=TimerPlacement.BEFORE,
-            working_schedules=working_schedules
+            working_schedules=working_schedules,
         )
         # --- Discover individual extraneous delays --- #
         naive_enhanced_event_log = compute_naive_extraneous_activity_delays(
@@ -64,22 +76,23 @@ def inf_sys_evaluation():
         smape_complex = _compute_smape(complex_enhanced_event_log)
         mape_naive = _compute_mape(naive_enhanced_event_log)
         mape_complex = _compute_mape(complex_enhanced_event_log)
-        with open(smape_file_path, 'a') as file:
+        with open(smape_file_path, "a") as file:
             file.write("{},{},{},{},{}\n".format(process, smape_naive, smape_complex, mape_naive, mape_complex))
 
 
 def _compute_smape(event_log: pd.DataFrame) -> float:
     # Get activity instances with either estimated delay or actual delay
-    estimated = event_log[(event_log['estimated_extraneous_delay'] > 0.0) | (event_log['extraneous_delay'] > 0.0)]
+    estimated = event_log[(event_log["estimated_extraneous_delay"] > 0.0) | (event_log["extraneous_delay"] > 0.0)]
     # Compute smape
     if len(estimated) > 0:
-        smape = sum([
-            2 *
-            abs(delays['estimated_extraneous_delay'] - delays['extraneous_delay']) /
-            (delays['extraneous_delay'] + delays['estimated_extraneous_delay'])
-            for index, delays
-            in estimated[['estimated_extraneous_delay', 'extraneous_delay']].iterrows()
-        ]) / len(estimated)
+        smape = sum(
+            [
+                2
+                * abs(delays["estimated_extraneous_delay"] - delays["extraneous_delay"])
+                / (delays["extraneous_delay"] + delays["estimated_extraneous_delay"])
+                for index, delays in estimated[["estimated_extraneous_delay", "extraneous_delay"]].iterrows()
+            ]
+        ) / len(estimated)
     else:
         smape = 0.0
     # Return value
@@ -88,14 +101,15 @@ def _compute_smape(event_log: pd.DataFrame) -> float:
 
 def _compute_mape(event_log: pd.DataFrame) -> float:
     # Get activity instances with either estimated delay or actual delay
-    estimated = event_log[(event_log['estimated_extraneous_delay'] > 0.0) | (event_log['extraneous_delay'] > 0.0)]
+    estimated = event_log[(event_log["estimated_extraneous_delay"] > 0.0) | (event_log["extraneous_delay"] > 0.0)]
     # Compute mape
     if len(estimated) > 0:
-        mape = sum([
-            abs((delays['extraneous_delay'] - delays['estimated_extraneous_delay']) / delays['extraneous_delay'])
-            for index, delays
-            in estimated[['estimated_extraneous_delay', 'extraneous_delay']].iterrows()
-        ]) / len(estimated)
+        mape = sum(
+            [
+                abs((delays["extraneous_delay"] - delays["estimated_extraneous_delay"]) / delays["extraneous_delay"])
+                for index, delays in estimated[["estimated_extraneous_delay", "extraneous_delay"]].iterrows()
+            ]
+        ) / len(estimated)
     else:
         mape = 0.0
     # Return value
@@ -113,25 +127,23 @@ def _json_schedules_to_rcalendar(simulation_parameters: dict) -> dict:
     """
     # Read calendars
     calendars = {}
-    for calendar in simulation_parameters['resource_calendars']:
+    for calendar in simulation_parameters["resource_calendars"]:
         r_calendar = RCalendar(calendar["id"])
         for slot in calendar["time_periods"]:
-            r_calendar.add_calendar_item(
-                slot["from"], slot["to"], slot["beginTime"], slot["endTime"]
-            )
+            r_calendar.add_calendar_item(slot["from"], slot["to"], slot["beginTime"], slot["endTime"])
         calendars[r_calendar.calendar_id] = r_calendar
     # Assign calendars to each resource
     resource_calendars = {}
-    for profile in simulation_parameters['resource_profiles']:
-        for resource in profile['resource_list']:
-            if int(resource['amount']) > 1:
-                for i in range(int(resource['amount'])):
-                    resource_calendars["{}_{}".format(resource['name'], i)] = calendars[resource['calendar']]
+    for profile in simulation_parameters["resource_profiles"]:
+        for resource in profile["resource_list"]:
+            if int(resource["amount"]) > 1:
+                for i in range(int(resource["amount"])):
+                    resource_calendars["{}_{}".format(resource["name"], i)] = calendars[resource["calendar"]]
             else:
-                resource_calendars[resource['name']] = calendars[resource['calendar']]
+                resource_calendars[resource["name"]] = calendars[resource["calendar"]]
     # Return resource calendars
     return resource_calendars
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     inf_sys_evaluation()

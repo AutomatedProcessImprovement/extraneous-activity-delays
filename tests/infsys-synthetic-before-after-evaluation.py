@@ -3,7 +3,13 @@ from pathlib import Path
 
 from lxml import etree
 
-from extraneous_activity_delays.config import Configuration, TimerPlacement, SimulationModel, DiscoveryMethod, SimulationEngine
+from extraneous_activity_delays.config import (
+    Configuration,
+    TimerPlacement,
+    SimulationModel,
+    DiscoveryMethod,
+    SimulationEngine,
+)
 from extraneous_activity_delays.enhance_with_delays import DirectEnhancer
 from extraneous_activity_delays.utils.file_manager import create_folder
 from pix_framework.calendar.resource_calendar import RCalendar
@@ -11,18 +17,14 @@ from pix_framework.input import read_csv_log
 from pix_framework.log_ids import EventLogIDs
 
 log_ids = EventLogIDs(
-    case="case_id",
-    activity="activity",
-    resource="resource",
-    start_time="start_time",
-    end_time="end_time"
+    case="case_id", activity="activity", resource="resource", start_time="start_time", end_time="end_time"
 )
 processes = [
     ("Confidential_noTimers", "Confidential"),
     ("Insurance_Claims", "Insurance_Claims_5_timers_after"),
     ("Loan_Application", "Loan_Application_5_timers_after"),
     ("Pharmacy", "Pharmacy_5_timers_after"),
-    ("Procure_to_Pay", "Procure_to_Pay_5_timers_after")
+    ("Procure_to_Pay", "Procure_to_Pay_5_timers_after"),
 ]
 
 
@@ -36,7 +38,9 @@ def inf_sys_evaluation():
         log_path = str(real_input_path.joinpath(process + ".csv.gz"))
 
         # --- Evaluation folder --- #
-        evaluation_folder = Configuration().PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath("before-after").joinpath(process)
+        evaluation_folder = (
+            Configuration().PATH_OUTPUTS.joinpath("synthetic-evaluation").joinpath("before-after").joinpath(process)
+        )
         create_folder(evaluation_folder)
 
         # --- Read event logs --- #
@@ -52,24 +56,36 @@ def inf_sys_evaluation():
 
         # --- Configurations --- #
         config_naive_before = Configuration(
-            log_ids=log_ids, process_name=process, discovery_method=DiscoveryMethod.NAIVE,
-            timer_placement=TimerPlacement.BEFORE, simulation_engine=SimulationEngine.PROSIMOS,
-            working_schedules=working_schedules
+            log_ids=log_ids,
+            process_name=process,
+            discovery_method=DiscoveryMethod.NAIVE,
+            timer_placement=TimerPlacement.BEFORE,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            working_schedules=working_schedules,
         )
         config_complex_before = Configuration(
-            log_ids=log_ids, process_name=process, discovery_method=DiscoveryMethod.COMPLEX,
-            timer_placement=TimerPlacement.BEFORE, simulation_engine=SimulationEngine.PROSIMOS,
-            working_schedules=working_schedules
+            log_ids=log_ids,
+            process_name=process,
+            discovery_method=DiscoveryMethod.COMPLEX,
+            timer_placement=TimerPlacement.BEFORE,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            working_schedules=working_schedules,
         )
         config_naive_after = Configuration(
-            log_ids=log_ids, process_name=process, discovery_method=DiscoveryMethod.NAIVE,
-            timer_placement=TimerPlacement.AFTER, simulation_engine=SimulationEngine.PROSIMOS,
-            working_schedules=working_schedules
+            log_ids=log_ids,
+            process_name=process,
+            discovery_method=DiscoveryMethod.NAIVE,
+            timer_placement=TimerPlacement.AFTER,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            working_schedules=working_schedules,
         )
         config_complex_after = Configuration(
-            log_ids=log_ids, process_name=process, discovery_method=DiscoveryMethod.COMPLEX,
-            timer_placement=TimerPlacement.AFTER, simulation_engine=SimulationEngine.PROSIMOS,
-            working_schedules=working_schedules
+            log_ids=log_ids,
+            process_name=process,
+            discovery_method=DiscoveryMethod.COMPLEX,
+            timer_placement=TimerPlacement.AFTER,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            working_schedules=working_schedules,
         )
 
         # --- Discover extraneous delays --- #
@@ -91,20 +107,28 @@ def inf_sys_evaluation():
         _report_timers(evaluation_folder, "complex_direct_after_enhanced", complex_direct_after_enhancer)
 
         # --- Write simulation models to file --- #
-        _export_simulation_model(evaluation_folder, "{}_naive_direct_before_enhanced".format(process), naive_direct_before_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_complex_direct_before_enhanced".format(process), complex_direct_before_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_naive_direct_after_enhanced".format(process), naive_direct_after_enhanced)
-        _export_simulation_model(evaluation_folder, "{}_complex_direct_after_enhanced".format(process), complex_direct_after_enhanced)
+        _export_simulation_model(
+            evaluation_folder, "{}_naive_direct_before_enhanced".format(process), naive_direct_before_enhanced
+        )
+        _export_simulation_model(
+            evaluation_folder, "{}_complex_direct_before_enhanced".format(process), complex_direct_before_enhanced
+        )
+        _export_simulation_model(
+            evaluation_folder, "{}_naive_direct_after_enhanced".format(process), naive_direct_after_enhanced
+        )
+        _export_simulation_model(
+            evaluation_folder, "{}_complex_direct_after_enhanced".format(process), complex_direct_after_enhanced
+        )
 
 
 def _export_simulation_model(folder: Path, name: str, simulation_model: SimulationModel):
     simulation_model.bpmn_document.write(folder.joinpath(name + ".bpmn"), pretty_print=True)
-    with open(folder.joinpath(name + ".json"), 'w') as f:
+    with open(folder.joinpath(name + ".json"), "w") as f:
         json.dump(simulation_model.simulation_parameters, f)
 
 
 def _report_timers(folder: Path, name: str, enhancer: DirectEnhancer):
-    with open(folder.joinpath(name + "_timers.txt"), 'w') as output_file:
+    with open(folder.joinpath(name + "_timers.txt"), "w") as output_file:
         for activity in enhancer.timers:
             output_file.write("'{}': {}\n".format(activity, enhancer.timers[activity]))
 
@@ -120,25 +144,23 @@ def _json_schedules_to_rcalendar(simulation_parameters: dict) -> dict:
     """
     # Read calendars
     calendars = {}
-    for calendar in simulation_parameters['resource_calendars']:
+    for calendar in simulation_parameters["resource_calendars"]:
         r_calendar = RCalendar(calendar["id"])
         for slot in calendar["time_periods"]:
-            r_calendar.add_calendar_item(
-                slot["from"], slot["to"], slot["beginTime"], slot["endTime"]
-            )
+            r_calendar.add_calendar_item(slot["from"], slot["to"], slot["beginTime"], slot["endTime"])
         calendars[r_calendar.calendar_id] = r_calendar
     # Assign calendars to each resource
     resource_calendars = {}
-    for profile in simulation_parameters['resource_profiles']:
-        for resource in profile['resource_list']:
-            if int(resource['amount']) > 1:
-                for i in range(int(resource['amount'])):
-                    resource_calendars["{}_{}".format(resource['name'], i)] = calendars[resource['calendar']]
+    for profile in simulation_parameters["resource_profiles"]:
+        for resource in profile["resource_list"]:
+            if int(resource["amount"]) > 1:
+                for i in range(int(resource["amount"])):
+                    resource_calendars["{}_{}".format(resource["name"], i)] = calendars[resource["calendar"]]
             else:
-                resource_calendars[resource['name']] = calendars[resource['calendar']]
+                resource_calendars[resource["name"]] = calendars[resource["calendar"]]
     # Return resource calendars
     return resource_calendars
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     inf_sys_evaluation()

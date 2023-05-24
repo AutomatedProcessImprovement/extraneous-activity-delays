@@ -103,6 +103,7 @@ class Configuration:
         log_ids                     Identifiers for each key element (e.g. executed activity or resource).
         debug                       Boolean denoting whether to print debug information or not.
     """
+
     # Extraneous delays options
     discovery_method: DiscoveryMethod = DiscoveryMethod.NAIVE
     timer_placement: TimerPlacement = TimerPlacement.BEFORE

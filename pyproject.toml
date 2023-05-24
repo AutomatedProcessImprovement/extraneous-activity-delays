@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.12"
-prosimos = { git = "https://github.com/AutomatedProcessImprovement/Prosimos.git", branch = "main" }
+prosimos = "^1.2.4"
 hyperopt = "^0.2.7"
 lxml = "^4.9.2"
 log-distance-measures = "^1.0.2"

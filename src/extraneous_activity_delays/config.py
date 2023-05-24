@@ -6,7 +6,7 @@ from typing import Callable
 
 import pandas as pd
 from lxml.etree import ElementTree
-from pix_framework.log_ids import EventLogIDs, DEFAULT_CSV_IDS
+from pix_framework.log_ids import DEFAULT_CSV_IDS, EventLogIDs
 from start_time_estimator.config import ConcurrencyThresholds
 
 
@@ -118,7 +118,9 @@ class Configuration:
     max_alpha: float = 10.0
     training_partition_ratio: float = None
     # Enabled time & resource availability estimations
-    concurrency_thresholds: ConcurrencyThresholds = field(default_factory=lambda: ConcurrencyThresholds(df=0.5))
+    concurrency_thresholds: ConcurrencyThresholds = field(
+        default_factory=lambda: ConcurrencyThresholds(df=0.5)
+    )
     working_schedules: dict = field(default_factory=dict)
     # General parameters
     process_name: str = "process"
@@ -129,4 +131,8 @@ class Configuration:
     PATH_INPUTS = PATH_PROJECT.joinpath("inputs")
     PATH_OUTPUTS = PATH_PROJECT.joinpath("outputs")
     PATH_EXTERNAL_TOOLS = PATH_PROJECT.joinpath("external_tools")
-    PATH_QBP = PATH_PROJECT.joinpath("external_tools").joinpath("simulator").joinpath("qbp-simulator-engine.jar")
+    PATH_QBP = (
+        PATH_PROJECT.joinpath("external_tools")
+        .joinpath("simulator")
+        .joinpath("qbp-simulator-engine.jar")
+    )

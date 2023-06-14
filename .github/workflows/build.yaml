@@ -1,4 +1,4 @@
-name: Build & Test
+name: Build, Test, Release
 
 on:
   workflow_dispatch:
@@ -22,6 +22,13 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.9' ]
+    environment:
+      name: PyPI
+      url: https://pypi.org/p/extraneous-activity-delays
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -52,8 +59,8 @@ jobs:
       - name: Build
         run: |
           poetry build
-      
-      - name: Stop pipeline of not main
+
+      - name: Exit if not on main
         if: github.ref != 'refs/heads/main'
         run: exit 0
 
@@ -84,3 +91,6 @@ jobs:
             dist/*
           tag_name: ${{ steps.get_version.outputs.version }}
           body_path: CHANGELOG.md
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

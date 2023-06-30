@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "extraneous-activity-delays"
-version = "2.1.12"
+version = "2.1.13"
 description = ""
 authors = ["David Chapela de la Campa <david.chapela.delacampa@gmail.com>"]
 readme = "README.md"

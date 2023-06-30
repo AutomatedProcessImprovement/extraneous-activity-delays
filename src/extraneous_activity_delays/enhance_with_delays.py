@@ -168,9 +168,10 @@ class HyperOptEnhancer:
                 show_progressbar=False,
             )
             # Remove all folders except best trial one
-            for result in self.opt_trials.results:
-                if result["output_folder"] != self.opt_trials.best_trial["result"]["output_folder"]:
-                    delete_folder(result["output_folder"])
+            if self.configuration.clean_intermediate_files:
+                for result in self.opt_trials.results:
+                    if result["output_folder"] != self.opt_trials.best_trial["result"]["output_folder"]:
+                        delete_folder(result["output_folder"])
             # Process the best parameters result
             best_alphas = {activity: round(best_result[activity], 2) for activity in best_result}
             # Transform timers based on [best_alphas]

@@ -102,6 +102,7 @@ class Configuration:
         process_name                Name of the process to use in the output files (BPMN and simulated log files).
         log_ids                     Identifiers for each key element (e.g. executed activity or resource).
         debug                       Boolean denoting whether to print debug information or not.
+        clean_intermediate_files    Boolean denoting whether to remove the folders of the non-best solutions or not.
     """
 
     # Extraneous delays options
@@ -126,6 +127,7 @@ class Configuration:
     process_name: str = "process"
     log_ids: EventLogIDs = field(default_factory=lambda: DEFAULT_CSV_IDS)
     debug: bool = False
+    clean_intermediate_files: bool = False
     # Paths
     PATH_PROJECT = get_project_dir()
     PATH_INPUTS = PATH_PROJECT.joinpath("inputs")

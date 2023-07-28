@@ -158,6 +158,7 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
                 starts=list(performed_events[log_ids.start_time]) + [interval.start for interval in resource_off_duty],
                 ends=list(performed_events[log_ids.end_time]) + [interval.end for interval in resource_off_duty],
                 time_gap=config.time_gap,
+                extrapolate=config.extrapolate_complex_delays_estimation,
             )
             if first_instant:
                 # Available instants found
@@ -181,6 +182,7 @@ def _get_first_and_last_available(
     starts: list,
     ends: list,
     time_gap: pd.Timedelta,
+    extrapolate: bool = False,
 ) -> Tuple[pd.Timestamp, pd.Timestamp]:
     """
     Get the first instant from the period [from]-[to] where the resource was available for a [time_gap] amount of time.
@@ -190,6 +192,11 @@ def _get_first_and_last_available(
     :param starts:      List of instants where either a non-working period or an activity instance started.
     :param ends:        List of instants where either an activity instance or a non-working period finished.
     :param time_gap:    Minimum time gap required for a non-working period to be considered as such.
+    :param extrapolate: If 'True', instead of getting the first available time as such, move it to half its distance
+                        between itself and the beginning of the interval. For example, if the beginning is at 1, and
+                        the discovered first available time is at 5, the extrapolated one is 3 (the middle point). The
+                        same is done with the last available and the end of the interval. The objective is to reduce
+                        potential mis-estimations as the real first available time is unknown.
 
     :return: A tuple with the first and last timestamps within all [start] and [end] timestamps where the
     resource was available for a [time_gap] amount of time.
@@ -244,6 +251,9 @@ def _get_first_and_last_available(
                     last_available = times[i][0]
             i -= 1
     # Return first available
+    if extrapolate:
+        first_available = first_available - ((first_available - beginning) / 2)
+        last_available = last_available + ((end - last_available) / 2)
     return first_available, last_available
 
 

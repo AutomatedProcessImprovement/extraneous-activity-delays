@@ -83,6 +83,12 @@ class Configuration:
                                     interval) to another work item to not consider that the resource was available in that interval. For
                                     example, a resource works in a task from 16.00 to 17.49, but their off-duty period starts at 18.49. If
                                     time-gap is set to >11 minutes, it won't be counted as an available period.
+        extrapolate                 If 'True', when computing the first and last available times (complex delays), instead of computing
+                                    the first available time as such, move it to half its distance between itself and the enablement of
+                                    the activity instance. For example, if the enablement is at 1, and the discovered first available time
+                                    is at 5, the first available time is corrected to 3 (the middle point). The same is done for the last
+                                    available and the start of the activity instance. The objective is to reduce potential mis-estimations
+                                    as the real first and last available times are unknown, but within those two intervals.
 
     Optimization process parameters:
         num_iterations              Number of iterations of the hyper-optimization search.
@@ -106,13 +112,14 @@ class Configuration:
     """
 
     # Extraneous delays options
-    discovery_method: DiscoveryMethod = DiscoveryMethod.NAIVE
+    discovery_method: DiscoveryMethod = DiscoveryMethod.COMPLEX
     timer_placement: TimerPlacement = TimerPlacement.BEFORE
     simulation_engine: SimulationEngine = SimulationEngine.PROSIMOS
     optimization_metric: OptimizationMetric = OptimizationMetric.RELATIVE_EMD
     # Extraneous delays parameters
     should_consider_timer: Callable[[list], bool] = _should_consider_timer
     time_gap: pd.Timedelta = pd.Timedelta(seconds=1)
+    extrapolate_complex_delays_estimation: bool = False
     # Optimization process parameters
     num_iterations: int = 100
     num_evaluation_simulations: int = 3

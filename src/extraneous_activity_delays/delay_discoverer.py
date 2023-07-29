@@ -252,13 +252,14 @@ def _get_first_and_last_available(
         active += 1 if times[i][1] == "start" else -1
         # Check if no active unavailable intervals
         if active == 0 and (  # No active unavailable intervals at this point, and
-            i + 1 == len(times) or times[i + 1][0] - times[i][0] >= time_gap  # either this is the last point, or
-        ):  # there is an available time gap with enough duration
+            i + 1 == len(times) or  # either this is the last point, or
+            times[i + 1][0] - times[i][0] >= time_gap  # there is an available time gap with enough duration
+        ):
             # Resource available at this point, check time gap until next event
             first_available = times[i][0]
         i += 1
     # If time gap found, search for last available, not necessary otherwise
-    if first_available:
+    if not pd.isna(first_available):
         # Go over them end->start, until a moment with no active unavailable intervals is reached
         i = len(times) - 1  # Index to go over the timestamps
         active = 0  # Number of active unavailable intervals
@@ -277,10 +278,11 @@ def _get_first_and_last_available(
                     # Resource available at this point, check time gap until next event
                     last_available = times[i][0]
             i -= 1
-    # Return first available
-    if extrapolate:
+    # If we are extrapolating the timestamps AND both timestamps were found
+    if extrapolate and not pd.isna(first_available) and not pd.isna(last_available):
         first_available = first_available - ((first_available - beginning) / 2)
         last_available = last_available + ((end - last_available) / 2)
+    # Return first and last available timestamps
     return first_available, last_available
 
 

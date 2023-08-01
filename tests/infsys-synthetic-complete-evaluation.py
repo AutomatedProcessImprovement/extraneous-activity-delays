@@ -53,7 +53,10 @@ def inf_sys_evaluation():
             "naive_hyperopt_holdout_precision,naive_hyperopt_holdout_recall,naive_hyperopt_holdout_sMAPE,"
             "complex_direct_precision,complex_direct_recall,complex_direct_sMAPE,"
             "complex_hyperopt_precision,complex_hyperopt_recall,complex_hyperopt_sMAPE,"
-            "complex_hyperopt_holdout_precision,complex_hyperopt_holdout_recall,complex_hyperopt_holdout_sMAPE"
+            "complex_hyperopt_holdout_precision,complex_hyperopt_holdout_recall,complex_hyperopt_holdout_sMAPE,"
+            "complex_adj_direct_precision,complex_adj_direct_recall,complex_adj_direct_sMAPE,"
+            "complex_adj_hyperopt_precision,complex_adj_hyperopt_recall,complex_adj_hyperopt_sMAPE,"
+            "complex_adj_hyperopt_holdout_precision,complex_adj_hyperopt_holdout_recall,complex_adj_hyperopt_holdout_sMAPE"
             "\n"
         )
     # Run
@@ -96,6 +99,7 @@ def inf_sys_evaluation():
             simulation_engine=SimulationEngine.PROSIMOS,
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules,
+            clean_intermediate_files=True,
         )
         config_complex = Configuration(
             log_ids=log_ids,
@@ -108,6 +112,21 @@ def inf_sys_evaluation():
             simulation_engine=SimulationEngine.PROSIMOS,
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules,
+            clean_intermediate_files=True,
+        )
+        config_complex_adj = Configuration(
+            log_ids=log_ids,
+            process_name=process,
+            max_alpha=max_alpha,
+            num_iterations=num_iterations,
+            num_evaluation_simulations=num_evaluation_simulations,
+            discovery_method=DiscoveryMethod.COMPLEX,
+            timer_placement=TimerPlacement.BEFORE,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            optimization_metric=OptimizationMetric.RELATIVE_EMD,
+            working_schedules=working_schedules,
+            clean_intermediate_files=True,
+            extrapolate_complex_delays_estimation=True,
         )
         config_naive_holdout = Configuration(
             log_ids=log_ids,
@@ -121,6 +140,7 @@ def inf_sys_evaluation():
             simulation_engine=SimulationEngine.PROSIMOS,
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules,
+            clean_intermediate_files=True,
         )
         config_complex_holdout = Configuration(
             log_ids=log_ids,
@@ -134,6 +154,22 @@ def inf_sys_evaluation():
             simulation_engine=SimulationEngine.PROSIMOS,
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules,
+            clean_intermediate_files=True,
+        )
+        config_complex_adj_holdout = Configuration(
+            log_ids=log_ids,
+            process_name=process,
+            max_alpha=max_alpha,
+            num_iterations=num_iterations,
+            num_evaluation_simulations=num_evaluation_simulations,
+            training_partition_ratio=0.5,
+            discovery_method=DiscoveryMethod.COMPLEX,
+            timer_placement=TimerPlacement.BEFORE,
+            simulation_engine=SimulationEngine.PROSIMOS,
+            optimization_metric=OptimizationMetric.RELATIVE_EMD,
+            working_schedules=working_schedules,
+            clean_intermediate_files=True,
+            extrapolate_complex_delays_estimation=True,
         )
 
         # --- Discover extraneous delays --- #
@@ -155,6 +191,15 @@ def inf_sys_evaluation():
         # - Complex with hyperopt and holdout
         complex_hyperopt_holdout_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex_holdout)
         complex_hyperopt_holdout_enhanced = complex_hyperopt_holdout_enhancer.enhance_simulation_model_with_delays()
+        # - Complex no hyperopt
+        complex_adj_direct_enhancer = DirectEnhancer(event_log, simulation_model, config_complex_adj)
+        complex_adj_direct_enhanced = complex_adj_direct_enhancer.enhance_simulation_model_with_delays()
+        # - Complex with hyperopt
+        complex_adj_hyperopt_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex_adj)
+        complex_adj_hyperopt_enhanced = complex_adj_hyperopt_enhancer.enhance_simulation_model_with_delays()
+        # - Complex with hyperopt and holdout
+        complex_adj_hyperopt_holdout_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex_adj_holdout)
+        complex_adj_hyperopt_holdout_enhanced = complex_adj_hyperopt_holdout_enhancer.enhance_simulation_model_with_delays()
 
         # --- Write simulation models to file --- #
         _export_simulation_model(eval_folder, "{}_naive_direct_enhanced".format(process), naive_direct_enhanced)
@@ -166,6 +211,11 @@ def inf_sys_evaluation():
         _export_simulation_model(eval_folder, "{}_complex_hyperopt_enhanced".format(process), complex_hyperopt_enhanced)
         _export_simulation_model(
             eval_folder, "{}_complex_hyperopt_holdout_enhanced".format(process), complex_hyperopt_holdout_enhanced
+        )
+        _export_simulation_model(eval_folder, "{}_complex_adj_direct_enhanced".format(process), complex_adj_direct_enhanced)
+        _export_simulation_model(eval_folder, "{}_complex_adj_hyperopt_enhanced".format(process), complex_adj_hyperopt_enhanced)
+        _export_simulation_model(
+            eval_folder, "{}_complex_adj_hyperopt_holdout_enhanced".format(process), complex_adj_hyperopt_holdout_enhanced
         )
 
         # --- Compute and report timer metrics --- #
@@ -187,6 +237,12 @@ def inf_sys_evaluation():
             precision, recall, smape = _compute_statistics(real_delays, complex_hyperopt_enhancer.best_timers)
             file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, complex_hyperopt_holdout_enhancer.best_timers)
+            file.write("{},{},{},".format(precision, recall, smape))
+            precision, recall, smape = _compute_statistics(real_delays, complex_adj_direct_enhancer.timers)
+            file.write("{},{},{},".format(precision, recall, smape))
+            precision, recall, smape = _compute_statistics(real_delays, complex_adj_hyperopt_enhancer.best_timers)
+            file.write("{},{},{},".format(precision, recall, smape))
+            precision, recall, smape = _compute_statistics(real_delays, complex_adj_hyperopt_holdout_enhancer.best_timers)
             file.write("{},{},{}\n".format(precision, recall, smape))
 
 
@@ -244,8 +300,8 @@ def _export_simulation_model(folder: Path, name: str, simulation_model: Simulati
 
 def _json_schedules_to_rcalendar(simulation_parameters: dict) -> dict:
     """
-    Transform the calendars specified as part of the simulation parameters to a dict with the ID of the resources as key, and their
-    calendar (RCalendar) as value.
+    Transform the calendars specified as part of the simulation parameters to a dict with the ID of the resources as
+    key, and their calendar (RCalendar) as value.
 
     :param simulation_parameters: dictionary with the parameters for prosimos simulation.
 

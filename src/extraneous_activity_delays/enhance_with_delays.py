@@ -127,13 +127,13 @@ class HyperOptEnhancer:
         self.log_ids = configuration.log_ids
         # Compute extraneous delay timers
         if self.configuration.discovery_method == DiscoveryMethod.NAIVE:
-            self.timers = compute_naive_extraneous_activity_delays(
+            self.initial_timers = compute_naive_extraneous_activity_delays(
                 self.event_log,
                 self.configuration,
                 self.configuration.should_consider_timer,
             )
         elif self.configuration.discovery_method == DiscoveryMethod.COMPLEX:
-            self.timers = compute_complex_extraneous_activity_delays(
+            self.initial_timers = compute_complex_extraneous_activity_delays(
                 self.event_log,
                 self.configuration,
                 self.configuration.should_consider_timer,
@@ -142,11 +142,11 @@ class HyperOptEnhancer:
             raise ValueError("Invalid delay discovery method selected!")
         # Hyper-optimization search space
         self.opt_space = {
-            activity: hp.uniform(activity, 0.0, self.configuration.max_alpha) for activity in self.timers.keys()
+            activity: hp.uniform(activity, 0.0, self.configuration.max_alpha) for activity in self.initial_timers.keys()
         }
         baseline_iteration_params = [
-            {activity: 0.0 for activity in self.timers.keys()},  # No timers
-            {activity: 1.0 for activity in self.timers.keys()},  # Discovered timers
+            {activity: 0.0 for activity in self.initial_timers.keys()},  # No timers
+            {activity: 1.0 for activity in self.initial_timers.keys()},  # Discovered timers
         ]
         # Variable to store the information of each optimization trial
         self.opt_trials = generate_trials_to_calculate(
@@ -157,7 +157,7 @@ class HyperOptEnhancer:
         self.losses = []
 
     def enhance_simulation_model_with_delays(self) -> SimulationModel:
-        if len(self.timers) > 0:
+        if len(self.initial_timers) > 0:
             # Launch hyper-optimization with the timers
             best_result = fmin(
                 fn=self._enhancement_iteration,
@@ -350,9 +350,9 @@ class HyperOptEnhancer:
     def _get_scaled_timers(self, alphas: dict):
         scaled_timers = {}
         # For each timer
-        for activity in self.timers:
+        for activity in self.initial_timers:
             # If the scaling factor is not 0.0 create a timer
             if (activity in alphas) and (alphas[activity] > 0.0):
-                scaled_timers[activity] = self.timers[activity].scale_distribution(alphas[activity])
+                scaled_timers[activity] = self.initial_timers[activity].scale_distribution(alphas[activity])
         # Return timers
         return scaled_timers

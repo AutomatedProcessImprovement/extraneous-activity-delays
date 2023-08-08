@@ -158,6 +158,7 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
                 starts=list(performed_events[log_ids.start_time]) + [interval.start for interval in resource_off_duty],
                 ends=list(performed_events[log_ids.end_time]) + [interval.end for interval in resource_off_duty],
                 time_gap=config.time_gap,
+                extrapolate=config.extrapolate_complex_delays_estimation,
             )
             if first_instant:
                 # Available instants found
@@ -181,6 +182,7 @@ def _get_first_and_last_available(
     starts: list,
     ends: list,
     time_gap: pd.Timedelta,
+    extrapolate: bool = False,
 ) -> Tuple[pd.Timestamp, pd.Timestamp]:
     """
     Get the first instant from the period [from]-[to] where the resource was available for a [time_gap] amount of time.
@@ -190,6 +192,11 @@ def _get_first_and_last_available(
     :param starts:      List of instants where either a non-working period or an activity instance started.
     :param ends:        List of instants where either an activity instance or a non-working period finished.
     :param time_gap:    Minimum time gap required for a non-working period to be considered as such.
+    :param extrapolate: If 'True', instead of getting the first available time as such, move it to half its distance
+                        between itself and the beginning of the interval. For example, if the beginning is at 1, and
+                        the discovered first available time is at 5, the extrapolated one is 3 (the middle point). The
+                        same is done with the last available and the end of the interval. The objective is to reduce
+                        potential mis-estimations as the real first available time is unknown.
 
     :return: A tuple with the first and last timestamps within all [start] and [end] timestamps where the
     resource was available for a [time_gap] amount of time.
@@ -218,13 +225,14 @@ def _get_first_and_last_available(
         active += 1 if times[i][1] == "start" else -1
         # Check if no active unavailable intervals
         if active == 0 and (  # No active unavailable intervals at this point, and
-            i + 1 == len(times) or times[i + 1][0] - times[i][0] >= time_gap  # either this is the last point, or
-        ):  # there is an available time gap with enough duration
+            i + 1 == len(times) or  # either this is the last point, or
+            times[i + 1][0] - times[i][0] >= time_gap  # there is an available time gap with enough duration
+        ):
             # Resource available at this point, check time gap until next event
             first_available = times[i][0]
         i += 1
     # If time gap found, search for last available, not necessary otherwise
-    if first_available:
+    if not pd.isna(first_available):
         # Go over them end->start, until a moment with no active unavailable intervals is reached
         i = len(times) - 1  # Index to go over the timestamps
         active = 0  # Number of active unavailable intervals
@@ -243,7 +251,11 @@ def _get_first_and_last_available(
                     # Resource available at this point, check time gap until next event
                     last_available = times[i][0]
             i -= 1
-    # Return first available
+    # If we are extrapolating the timestamps AND both timestamps were found
+    if extrapolate and not pd.isna(first_available) and not pd.isna(last_available):
+        first_available = first_available - ((first_available - beginning) / 2)
+        last_available = last_available + ((end - last_available) / 2)
+    # Return first and last available timestamps
     return first_available, last_available
 
 

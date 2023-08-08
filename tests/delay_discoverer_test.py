@@ -1,15 +1,13 @@
 import pandas as pd
-from pix_framework.calendar.resource_calendar import RCalendar, Interval
-from pix_framework.input import read_csv_log
-from pix_framework.log_ids import DEFAULT_CSV_IDS
-from pix_framework.statistics.distribution import DistributionType
-
 from extraneous_activity_delays.config import Configuration, TimerPlacement
 from extraneous_activity_delays.delay_discoverer import (
-    compute_naive_extraneous_activity_delays,
-    compute_complex_extraneous_activity_delays,
     _get_first_and_last_available,
+    compute_complex_extraneous_activity_delays,
+    compute_naive_extraneous_activity_delays,
 )
+from pix_framework.calendar.resource_calendar import Interval, RCalendar
+from pix_framework.io.event_log import DEFAULT_CSV_IDS, read_csv_log
+from pix_framework.statistics.distribution import DistributionType
 
 
 def test_compute_naive_extraneous_activity_delays():

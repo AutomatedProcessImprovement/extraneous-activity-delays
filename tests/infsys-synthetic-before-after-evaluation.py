@@ -1,20 +1,18 @@
 import json
 from pathlib import Path
 
-from lxml import etree
-
 from extraneous_activity_delays.config import (
     Configuration,
-    TimerPlacement,
-    SimulationModel,
     DiscoveryMethod,
     SimulationEngine,
+    SimulationModel,
+    TimerPlacement,
 )
 from extraneous_activity_delays.enhance_with_delays import DirectEnhancer
 from extraneous_activity_delays.utils.file_manager import create_folder
+from lxml import etree
 from pix_framework.calendar.resource_calendar import RCalendar
-from pix_framework.input import read_csv_log
-from pix_framework.log_ids import EventLogIDs
+from pix_framework.io.event_log import EventLogIDs, read_csv_log
 
 log_ids = EventLogIDs(
     case="case_id", activity="activity", resource="resource", start_time="start_time", end_time="end_time"

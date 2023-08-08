@@ -1,29 +1,27 @@
 import json
 import time
 from pathlib import Path
-from typing import Union, Tuple
+from typing import Tuple, Union
 
 import numpy as np
 import pandas as pd
-from lxml import etree
-from scipy.stats import t
-
 from extraneous_activity_delays.config import (
     Configuration,
-    SimulationEngine,
+    DiscoveryMethod,
     OptimizationMetric,
+    SimulationEngine,
     SimulationModel,
     TimerPlacement,
-    DiscoveryMethod,
 )
 from extraneous_activity_delays.enhance_with_delays import DirectEnhancer, HyperOptEnhancer
 from extraneous_activity_delays.prosimos.simulator import simulate
 from extraneous_activity_delays.utils.file_manager import create_folder
 from log_distance_measures.absolute_event_distribution import absolute_event_distribution_distance
 from log_distance_measures.relative_event_distribution import relative_event_distribution_distance
+from lxml import etree
 from pix_framework.calendar.resource_calendar import RCalendar
-from pix_framework.input import read_csv_log
-from pix_framework.log_ids import EventLogIDs
+from pix_framework.io.event_log import EventLogIDs, read_csv_log
+from scipy.stats import t
 
 event_log_ids = EventLogIDs(
     case="case_id", activity="activity", resource="resource", start_time="start_time", end_time="end_time"

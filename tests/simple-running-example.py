@@ -1,19 +1,17 @@
 import json
 
-from lxml import etree
-
-from estimate_start_times.config import DEFAULT_CSV_IDS
 from extraneous_activity_delays.config import (
     Configuration,
+    DiscoveryMethod,
+    OptimizationMetric,
     SimulationEngine,
     SimulationModel,
-    OptimizationMetric,
-    DiscoveryMethod,
     TimerPlacement,
 )
 from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer
 from extraneous_activity_delays.prosimos.simulator import simulate
-from pix_framework.input import read_csv_log
+from lxml import etree
+from pix_framework.io.event_log import DEFAULT_CSV_IDS, read_csv_log
 
 
 def optimize_with_prosimos():

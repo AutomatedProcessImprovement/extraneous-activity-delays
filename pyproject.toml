@@ -7,12 +7,11 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.12"
-prosimos = "^1.2.5"
+prosimos = "^1.2.8"
 hyperopt = "^0.2.7"
 lxml = "^4.9.2"
 log-distance-measures = "^1.0.2"
-start-time-estimator = "^1.10.10"
-pix-framework = "^0.9.0"
+pix-framework = "^0.11.3"
 
 [tool.ruff]
 line-length = 120

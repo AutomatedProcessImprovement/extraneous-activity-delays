@@ -15,7 +15,7 @@ from extraneous_activity_delays.config import (
 from extraneous_activity_delays.enhance_with_delays import DirectEnhancer, HyperOptEnhancer
 from extraneous_activity_delays.utils.file_manager import create_folder
 from lxml import etree
-from pix_framework.calendar.resource_calendar import RCalendar
+from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import RCalendar
 from pix_framework.io.event_log import EventLogIDs, read_csv_log
 
 log_ids = EventLogIDs(

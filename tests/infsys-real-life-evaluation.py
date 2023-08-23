@@ -19,7 +19,7 @@ from extraneous_activity_delays.utils.file_manager import create_folder
 from log_distance_measures.absolute_event_distribution import absolute_event_distribution_distance
 from log_distance_measures.relative_event_distribution import relative_event_distribution_distance
 from lxml import etree
-from pix_framework.calendar.resource_calendar import RCalendar
+from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import RCalendar
 from pix_framework.io.event_log import EventLogIDs, read_csv_log
 from scipy.stats import t
 

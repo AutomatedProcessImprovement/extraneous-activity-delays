@@ -12,7 +12,7 @@ from extraneous_activity_delays.utils.file_manager import create_folder
 from log_distance_measures.absolute_event_distribution import absolute_event_distribution_distance
 from log_distance_measures.cycle_time_distribution import cycle_time_distribution_distance
 from lxml import etree
-from pix_framework.discovery.start_time_estimator.config import EventLogIDs
+from pix_framework.enhancement.start_time_estimator.config import EventLogIDs
 
 sim_log_ids = EventLogIDs(
     case="caseid", activity="task", start_time="start_timestamp", end_time="end_timestamp", resource="resource"

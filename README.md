@@ -155,7 +155,7 @@ enhanced_simulation_model.bpmn_document.write("path_of_enhanced_bps_model.bpmn",
 ### Resource unavailability: working schedules format
 
 ```python
-from pix_framework.calendar.resource_calendar import RCalendar
+from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import RCalendar
 
 weekly_calendars = [
     {

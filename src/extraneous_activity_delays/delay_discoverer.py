@@ -2,9 +2,9 @@ from typing import Callable, Tuple
 
 import pandas as pd
 from pix_framework.calendar.availability import absolute_unavailability_intervals_within
-from pix_framework.discovery.start_time_estimator.concurrency_oracle import OverlappingConcurrencyOracle
-from pix_framework.discovery.start_time_estimator.config import Configuration as StartTimeConfiguration
-from pix_framework.discovery.start_time_estimator.resource_availability import CalendarResourceAvailability
+from pix_framework.enhancement.start_time_estimator.estimator import OverlappingConcurrencyOracle
+from pix_framework.enhancement.start_time_estimator.config import Configuration as StartTimeConfiguration
+from pix_framework.enhancement.resource_availability import CalendarResourceAvailability
 from pix_framework.io.event_log import EventLogIDs
 from pix_framework.statistics.distribution import get_best_fitting_distribution
 

@@ -7,7 +7,7 @@ from extraneous_activity_delays.delay_discoverer import (
     compute_naive_extraneous_activity_delays,
 )
 from extraneous_activity_delays.utils.file_manager import create_folder
-from pix_framework.calendar.resource_calendar import RCalendar
+from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import RCalendar
 from pix_framework.io.event_log import EventLogIDs, read_csv_log
 
 log_ids = EventLogIDs(
@@ -89,11 +89,11 @@ def inf_sys_evaluation():
         mape_complex = _compute_mape(complex_enhanced_event_log)
         mape_complex_adj = _compute_mape(complex_adj_enhanced_event_log)
         with open(smape_file_path, "a") as file:
-            file.write("{},{},{},{},{},{},{}\n".format(
-                process,
-                smape_naive, smape_complex, smape_complex_adj,
-                mape_naive, mape_complex, mape_complex_adj
-            ))
+            file.write(
+                "{},{},{},{},{},{},{}\n".format(
+                    process, smape_naive, smape_complex, smape_complex_adj, mape_naive, mape_complex, mape_complex_adj
+                )
+            )
 
 
 def _compute_smape(event_log: pd.DataFrame) -> float:

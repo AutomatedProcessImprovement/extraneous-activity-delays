@@ -1,17 +1,17 @@
 [tool.poetry]
 name = "extraneous-activity-delays"
-version = "2.1.18"
+version = "2.1.19"
 description = ""
 authors = ["David Chapela de la Campa <david.chapela.delacampa@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.12"
-prosimos = "^1.2.10"
+prosimos = "^2.0.0"
 hyperopt = "^0.2.7"
 lxml = "^4.9.2"
 log-distance-measures = "^1.0.2"
-pix-framework = "^0.12.0"
+pix-framework = "^0.13.0"
 
 [tool.ruff]
 line-length = 120

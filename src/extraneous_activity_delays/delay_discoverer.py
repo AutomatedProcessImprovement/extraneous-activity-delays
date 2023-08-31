@@ -123,8 +123,9 @@ def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: Even
     :param config:      Configuration of the estimation search.
     """
     # Initiate both first and last available columns to NaT
-    event_log["first_available"] = pd.NaT
-    event_log["last_available"] = pd.NaT
+    event_log["first_available"] = None
+    event_log["last_available"] = None
+    # Go over the events of each resource
     for resource, events in event_log.groupby(log_ids.resource):
         # Initialize resource working calendar if existing
         calendar = config.working_schedules[resource] if resource in config.working_schedules else None

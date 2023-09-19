@@ -17,13 +17,14 @@ def compute_naive_extraneous_activity_delays(
     should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0,
 ) -> dict:
     """
-    Compute, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed since the
-    activity is both enabled and its resource available, and the recorded start of the activity.
+    Compute, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed
+    since the activity is both enabled and its resource available, and the recorded start of the activity.
 
     :param event_log:               Event log storing the information of the process.
     :param config:                  Configuration of the estimation search.
-    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered, returns a boolean
-                                    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
+    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered,
+                                    returns a boolean denoting if a timer should be considered or not. By default, no
+                                    consider timer if all delays are 0.
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
@@ -33,6 +34,7 @@ def compute_naive_extraneous_activity_delays(
         log_ids=log_ids,
         concurrency_thresholds=config.concurrency_thresholds,
         working_schedules=config.working_schedules,
+        consider_start_times=True,
     )
     if _should_compute_enabled_times(event_log, config):
         concurrency_oracle = OverlappingConcurrencyOracle(event_log, start_time_config)
@@ -40,7 +42,7 @@ def compute_naive_extraneous_activity_delays(
     if log_ids.available_time not in event_log.columns:
         resource_availability = CalendarResourceAvailability(event_log, start_time_config)
         resource_availability.add_resource_availability_times(event_log)
-    # Who to impute the extraneous delay to: the executed activity if the timer goes before, the enabling activity if it goes after
+    # Who to impute the extraneous delay to: the executed activity (timer before), the enabling activity (timer after)
     impute_to = log_ids.activity if config.timer_placement == TimerPlacement.BEFORE else log_ids.enabling_activity
     # Discover the time distribution of each activity's delay
     timers = {}
@@ -68,15 +70,17 @@ def compute_complex_extraneous_activity_delays(
     should_consider_timer: Callable[[list], bool] = lambda delays: sum(delays) > 0.0,
 ) -> dict:
     """
-    Compute, for each activity, the distribution of its extraneous delays. To compute the extraneous delay of an activity instance,
-    detect the first and lasts instants in time in which the activity was enabled and the resource available for processing it (taking
-    into account both the resource contention and availability calendars). The extraneous delay is the interval between these two
-    instants, no matter if the resource became unavailable in the middle.
+    Compute, for each activity, the distribution of its extraneous delays. To compute the extraneous delay of an
+    activity instance, detect the first and lasts instants in time in which the activity was enabled and the resource
+    available for processing it (taking into account both the resource contention and availability calendars). The
+    extraneous delay is the interval between these two instants, no matter if the resource became unavailable in the
+    middle.
 
     :param event_log:               Event log storing the information of the process.
     :param config:                  Configuration of the estimation search.
-    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered, returns a boolean
-                                    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
+    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered,
+                                    returns a boolean denoting if a timer should be considered or not. By default, no
+                                    consider timer if all delays are 0.
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
@@ -86,13 +90,14 @@ def compute_complex_extraneous_activity_delays(
         log_ids=log_ids,
         concurrency_thresholds=config.concurrency_thresholds,
         working_schedules=config.working_schedules,
+        consider_start_times=True,
     )
     if _should_compute_enabled_times(event_log, config):
         concurrency_oracle = OverlappingConcurrencyOracle(event_log, start_time_config)
         concurrency_oracle.add_enabled_times(event_log, set_nat_to_first_event=True, include_enabling_activity=True)
     # Compute first and last instants where the resource was available
     _extend_log_with_first_last_available(event_log, log_ids, config)
-    # Who to impute the extraneous delay to: the executed activity if the timer goes before, the enabling activity if it goes after
+    # Who to impute the extraneous delay to: the executed activity (timer before), the enabling activity (timer after)
     impute_to = log_ids.activity if config.timer_placement == TimerPlacement.BEFORE else log_ids.enabling_activity
     # Discover the time distribution of each activity's delay
     timers = {}
@@ -116,7 +121,8 @@ def compute_complex_extraneous_activity_delays(
 
 def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: EventLogIDs, config: Configuration):
     """
-    Add, to [event_log], two columns with the first and last timestamps in which the resource that performed that activity was available.
+    Add, to [event_log], two columns with the first and last timestamps in which the resource that performed that
+    activity was available.
 
     :param event_log:   Event log storing the information of the process.
     :param log_ids:     Mapping for the columns in the event log.

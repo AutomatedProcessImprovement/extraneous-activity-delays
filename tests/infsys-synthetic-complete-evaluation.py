@@ -3,8 +3,9 @@ from pathlib import Path
 from statistics import mean
 from typing import Tuple
 
-import pandas as pd
 from lxml import etree
+from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import RCalendar
+from pix_framework.io.event_log import EventLogIDs, read_csv_log
 
 from extraneous_activity_delays.config import (
     Configuration,
@@ -16,9 +17,6 @@ from extraneous_activity_delays.config import (
 )
 from extraneous_activity_delays.enhance_with_delays import DirectEnhancer, HyperOptEnhancer
 from extraneous_activity_delays.utils.file_manager import create_folder
-from pix_framework.calendar.resource_calendar import RCalendar
-from pix_framework.input import read_csv_log
-from pix_framework.log_ids import EventLogIDs
 
 log_ids = EventLogIDs(
     case="case_id", activity="activity", resource="resource", start_time="start_time", end_time="end_time"
@@ -271,25 +269,6 @@ def _compute_statistics(real_delays: dict, estimated_timers: dict) -> Tuple[floa
         precision, recall, smape = float("nan"), 0.0, 2.0
 
     return precision, recall, smape
-
-
-def _compute_smape(event_log: pd.DataFrame) -> float:
-    # Get activity instances with either estimated delay or actual delay
-    estimated = event_log[(event_log["estimated_extraneous_delay"] > 0.0) | (event_log["extraneous_delay"] > 0.0)]
-    # Compute smape
-    if len(estimated) > 0:
-        smape = sum(
-            [
-                2
-                * abs(delays["estimated_extraneous_delay"] - delays["extraneous_delay"])
-                / (delays["extraneous_delay"] + delays["estimated_extraneous_delay"])
-                for index, delays in estimated[["estimated_extraneous_delay", "extraneous_delay"]].iterrows()
-            ]
-        ) / len(estimated)
-    else:
-        smape = 0.0
-    # Return value
-    return smape
 
 
 def _export_simulation_model(folder: Path, name: str, simulation_model: SimulationModel):

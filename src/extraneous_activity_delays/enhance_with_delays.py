@@ -20,8 +20,7 @@ from log_distance_measures.cycle_time_distribution import (
 from log_distance_measures.relative_event_distribution import (
     relative_event_distribution_distance,
 )
-from pix_framework.log_split.log_split import split_log_training_validation_event_wise
-from start_time_estimator.config import EventLogIDs
+from pix_framework.io.event_log import split_log_training_validation_event_wise, EventLogIDs
 
 from extraneous_activity_delays.config import (
     Configuration,

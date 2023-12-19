@@ -1,6 +1,8 @@
 import json
 
 import pandas as pd
+from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import RCalendar
+from pix_framework.io.event_log import EventLogIDs, read_csv_log
 
 from extraneous_activity_delays.config import Configuration, TimerPlacement
 from extraneous_activity_delays.delay_discoverer import (
@@ -8,9 +10,6 @@ from extraneous_activity_delays.delay_discoverer import (
     compute_complex_extraneous_activity_delays,
 )
 from extraneous_activity_delays.utils.file_manager import create_folder
-from pix_framework.calendar.resource_calendar import RCalendar
-from pix_framework.input import read_csv_log
-from pix_framework.log_ids import EventLogIDs
 
 log_ids = EventLogIDs(
     case="case_id", activity="activity", resource="resource", start_time="start_time", end_time="end_time"
@@ -80,7 +79,7 @@ def inf_sys_evaluation():
         )
         complex_enhanced_event_log.to_csv(complex_log_path, index=False)
         complex_adj_enhanced_event_log = compute_complex_extraneous_activity_delays(
-            event_log, configuration_adjusted, configuration.should_consider_timer, experimentation=True
+            event_log, configuration_adjusted, configuration_adjusted.should_consider_timer, experimentation=True
         )
         complex_adj_enhanced_event_log.to_csv(complex_adj_log_path, index=False)
         # --- Measure error --- #
@@ -136,8 +135,8 @@ def _compute_mape(event_log: pd.DataFrame) -> float:
 
 def _json_schedules_to_rcalendar(simulation_parameters: dict) -> dict:
     """
-    Transform the calendars specified as part of the simulation parameters to a dict with the ID of the resources as key, and their
-    calendar (RCalendar) as value.
+    Transform the calendars specified as part of the simulation parameters to a dict with the ID of the resources as
+    key, and their calendar (RCalendar) as value.
 
     :param simulation_parameters: dictionary with the parameters for prosimos simulation.
 

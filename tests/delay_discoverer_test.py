@@ -1,7 +1,6 @@
 import pandas as pd
-from pix_framework.calendar.resource_calendar import RCalendar, Interval
-from pix_framework.input import read_csv_log
-from pix_framework.log_ids import DEFAULT_CSV_IDS
+from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import RCalendar, Interval
+from pix_framework.io.event_log import read_csv_log, DEFAULT_CSV_IDS
 from pix_framework.statistics.distribution import DistributionType
 
 from extraneous_activity_delays.config import Configuration, TimerPlacement
@@ -250,7 +249,7 @@ def test__get_first_and_last_available():
         ends=[pd.Timestamp("2023-01-25T09:30:00+00:00")],
         time_gap=pd.Timedelta(seconds=1),
     ) == (pd.Timestamp("2023-01-25T09:30:00+00:00"), end)
-    # Assert first is the end of an interval that overlaps with the start of the waiting period (with extra working element)
+    # Assert first is the end of an interval that overlaps with the start of the waiting period (+extra working element)
     beginning = pd.Timestamp("2023-01-25T09:00:00+00:00")
     end = pd.Timestamp("2023-01-25T10:00:00+00:00")
     assert _get_first_and_last_available(
@@ -270,7 +269,7 @@ def test__get_first_and_last_available():
         ends=[pd.Timestamp("2023-01-25T11:00:00+00:00")],
         time_gap=pd.Timedelta(seconds=1),
     ) == (beginning, pd.Timestamp("2023-01-25T09:30:00+00:00"))
-    # Assert first is the end of an interval that overlaps with the start of the waiting period (with extra working element)
+    # Assert first is the end of an interval that overlaps with the start of the waiting period (+extra working element)
     beginning = pd.Timestamp("2023-01-25T09:00:00+00:00")
     end = pd.Timestamp("2023-01-25T10:00:00+00:00")
     assert _get_first_and_last_available(
@@ -338,7 +337,7 @@ def test__get_first_and_last_available_extrapolated():
         time_gap=pd.Timedelta(seconds=1),
         extrapolate=True,
     ) == (pd.Timestamp("2023-01-25T09:15:00+00:00"), end)
-    # Assert first is the end of an interval that overlaps with the start of the waiting period (with extra working element)
+    # Assert first is the end of an interval that overlaps with the start of the waiting period (+extra working element)
     beginning = pd.Timestamp("2023-01-25T09:00:00+00:00")
     end = pd.Timestamp("2023-01-25T10:00:00+00:00")
     assert _get_first_and_last_available(
@@ -360,7 +359,7 @@ def test__get_first_and_last_available_extrapolated():
         time_gap=pd.Timedelta(seconds=1),
         extrapolate=True,
     ) == (beginning, pd.Timestamp("2023-01-25T09:45:00+00:00"))
-    # Assert first is the end of an interval that overlaps with the start of the waiting period (with extra working element)
+    # Assert first is the end of an interval that overlaps with the start of the waiting period (+extra working element)
     beginning = pd.Timestamp("2023-01-25T09:00:00+00:00")
     end = pd.Timestamp("2023-01-25T10:00:00+00:00")
     assert _get_first_and_last_available(

@@ -2,11 +2,11 @@ from typing import Callable, Tuple, Union
 
 import pandas as pd
 from pix_framework.calendar.availability import absolute_unavailability_intervals_within
-from pix_framework.log_ids import EventLogIDs
+from pix_framework.enhancement.concurrency_oracle import OverlappingConcurrencyOracle
+from pix_framework.enhancement.resource_availability import CalendarResourceAvailability
+from pix_framework.enhancement.start_time_estimator.config import Configuration as StartTimeConfiguration
+from pix_framework.io.event_log import EventLogIDs
 from pix_framework.statistics.distribution import get_best_fitting_distribution
-from start_time_estimator.concurrency_oracle import OverlappingConcurrencyOracle
-from start_time_estimator.config import Configuration as StartTimeConfiguration
-from start_time_estimator.resource_availability import CalendarResourceAvailability
 
 from extraneous_activity_delays.config import Configuration, TimerPlacement
 
@@ -18,15 +18,16 @@ def compute_naive_extraneous_activity_delays(
     experimentation: bool = False,
 ) -> Union[dict, pd.DataFrame]:
     """
-    Compute, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed since the
-    activity is both enabled and its resource available, and the recorded start of the activity.
+    Compute, for each activity, the distribution of its extraneous delays. I.e., the distribution of the time passed
+    since the activity is both enabled and its resource available, and the recorded start of the activity.
 
     :param event_log:               Event log storing the information of the process.
     :param config:                  Configuration of the estimation search.
-    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered, returns a boolean
-                                    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
-    :param experimentation:         Experimentation option, if true, returns the event log enhanced with the detected extraneous delay for
-                                    each activity instance.
+    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered,
+                                    returns a boolean denoting if a timer should be considered or not. By default, no
+                                    consider timer if all delays are 0.
+    :param experimentation:         Experimentation option, if true, returns the event log enhanced with the detected
+                                    extraneous delay for each activity instance.
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
@@ -43,7 +44,7 @@ def compute_naive_extraneous_activity_delays(
     if log_ids.available_time not in event_log.columns:
         resource_availability = CalendarResourceAvailability(event_log, start_time_config)
         resource_availability.add_resource_availability_times(event_log)
-    # Who to impute the extraneous delay to: the executed activity if the timer goes before, the enabling activity if it goes after
+    # Who to impute the extraneous delay to: the executed activity (timer before), the enabling activity (timer after)
     impute_to = log_ids.activity if config.timer_placement == TimerPlacement.BEFORE else log_ids.enabling_activity
     # Discover the time distribution of each activity's delay
     if experimentation:
@@ -83,17 +84,19 @@ def compute_complex_extraneous_activity_delays(
 ) -> Union[dict, pd.DataFrame]:
 
     """
-    Compute, for each activity, the distribution of its extraneous delays. To compute the extraneous delay of an activity instance,
-    detect the first and lasts instants in time in which the activity was enabled and the resource available for processing it (taking
-    into account both the resource contention and availability calendars). The extraneous delay is the interval between these two
-    instants, no matter if the resource became unavailable in the middle.
+    Compute, for each activity, the distribution of its extraneous delays. To compute the extraneous delay of an
+    activity instance, detect the first and lasts instants in time in which the activity was enabled and the resource
+    available for processing it (taking into account both the resource contention and availability calendars). The
+    extraneous delay is the interval between these two instants, no matter if the resource became unavailable in the
+    middle.
 
     :param event_log:               Event log storing the information of the process.
     :param config:                  Configuration of the estimation search.
-    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered, returns a boolean
-                                    denoting if a timer should be considered or not. By default, no consider timer if all delays are 0.
-    :param experimentation:         Experimentation option, if true, returns the event log enhanced with the detected extraneous delay for
-                                    each activity instance.
+    :param should_consider_timer:   Lambda function that, given a list of floats representing all the delays registered,
+                                    returns a boolean denoting if a timer should be considered or not. By default, no
+                                    consider timer if all delays are 0.
+    :param experimentation:         Experimentation option, if true, returns the event log enhanced with the detected
+                                    extraneous delay for each activity instance.
 
     :return: a dictionary with the activity name as key and the time distribution of its delay.
     """
@@ -109,7 +112,7 @@ def compute_complex_extraneous_activity_delays(
         concurrency_oracle.add_enabled_times(event_log, set_nat_to_first_event=True, include_enabling_activity=True)
     # Compute first and last instants where the resource was available
     _extend_log_with_first_last_available(event_log, log_ids, config)
-    # Who to impute the extraneous delay to: the executed activity if the timer goes before, the enabling activity if it goes after
+    # Who to impute the extraneous delay to: the executed activity (timer before), the enabling activity (timer after)
     impute_to = log_ids.activity if config.timer_placement == TimerPlacement.BEFORE else log_ids.enabling_activity
     # Discover the time distribution of each activity's delay
     if experimentation:
@@ -143,15 +146,16 @@ def compute_complex_extraneous_activity_delays(
 
 def _extend_log_with_first_last_available(event_log: pd.DataFrame, log_ids: EventLogIDs, config: Configuration):
     """
-    Add, to [event_log], two columns with the first and last timestamps in which the resource that performed that activity was available.
+    Add, to [event_log], two columns with the first and last timestamps in which the resource that performed that
+    activity was available.
 
     :param event_log:   Event log storing the information of the process.
     :param log_ids:     Mapping for the columns in the event log.
     :param config:      Configuration of the estimation search.
     """
     # Initiate both first and last available columns to NaT
-    event_log["first_available"] = pd.NaT
-    event_log["last_available"] = pd.NaT
+    event_log["first_available"] = None
+    event_log["last_available"] = None
     for resource, events in event_log.groupby(log_ids.resource):
         # Initialize resource working calendar if existing
         calendar = config.working_schedules[resource] if resource in config.working_schedules else None

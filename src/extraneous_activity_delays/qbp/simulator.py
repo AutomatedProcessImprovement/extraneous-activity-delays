@@ -1,6 +1,6 @@
 import subprocess
 
-from start_time_estimator.config import EventLogIDs
+from pix_framework.io.event_log import EventLogIDs
 
 from extraneous_activity_delays.config import Configuration, SimulationOutput
 

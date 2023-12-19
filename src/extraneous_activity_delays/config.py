@@ -6,8 +6,8 @@ from typing import Callable
 
 import pandas as pd
 from lxml.etree import ElementTree
-from pix_framework.log_ids import DEFAULT_CSV_IDS, EventLogIDs
-from start_time_estimator.config import ConcurrencyThresholds
+from pix_framework.enhancement.start_time_estimator.config import ConcurrencyThresholds
+from pix_framework.io.event_log import DEFAULT_CSV_IDS, EventLogIDs
 
 
 def get_project_dir() -> Path:

@@ -403,15 +403,6 @@
           "distribution_params": [
             {
               "value": 0
-            },
-            {
-              "value": 0
-            },
-            {
-              "value": 0
-            },
-            {
-              "value": 0
             }
           ]
         }
@@ -422,337 +413,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -763,337 +706,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -1104,337 +999,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -1445,337 +1292,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -1786,337 +1585,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -2127,337 +1878,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -2468,337 +2171,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -2809,337 +2464,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -3150,337 +2757,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -3491,337 +3050,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -3832,337 +3343,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -4173,337 +3636,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -4514,337 +3929,289 @@
       "resources": [
         {
           "resource_id": "Clerk-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000006",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Slow Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Applicant-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000003",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000007",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Senior Officer-000002",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000004",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000005",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Clerk-000008",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         },
         {
           "resource_id": "Loan Officer-000001",
-          "distribution_name": "lognorm",
+          "distribution_name": "norm",
           "distribution_params": [
             {
-              "value": 1.3918704568082476
+              "value": 360
             },
             {
-              "value": 0
+              "value": 20
             },
             {
-              "value": 2106.979046600619
+              "value": 300
             },
             {
-              "value": 300.0
-            },
-            {
-              "value": 86399.999999
+              "value": 3600
             }
           ]
         }
@@ -4859,15 +4226,6 @@
           "distribution_params": [
             {
               "value": 0
-            },
-            {
-              "value": 0
-            },
-            {
-              "value": 0
-            },
-            {
-              "value": 0
             }
           ]
         }
@@ -4875,22 +4233,19 @@
     }
   ],
   "arrival_time_distribution": {
-    "distribution_name": "lognorm",
+    "distribution_name": "norm",
     "distribution_params": [
       {
-        "value": 0.7428021682963482
+        "value": 360
       },
       {
-        "value": 0
+        "value": 20
       },
       {
-        "value": 681.175509225257
+        "value": 300
       },
       {
-        "value": 0.0
-      },
-      {
-        "value": 8100.0
+        "value": 3600
       }
     ]
   },

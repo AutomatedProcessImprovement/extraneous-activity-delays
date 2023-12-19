@@ -37,6 +37,7 @@ def compute_naive_extraneous_activity_delays(
         log_ids=log_ids,
         concurrency_thresholds=config.concurrency_thresholds,
         working_schedules=config.working_schedules,
+        consider_start_times=True,
     )
     if _should_compute_enabled_times(event_log, config):
         concurrency_oracle = OverlappingConcurrencyOracle(event_log, start_time_config)
@@ -106,6 +107,7 @@ def compute_complex_extraneous_activity_delays(
         log_ids=log_ids,
         concurrency_thresholds=config.concurrency_thresholds,
         working_schedules=config.working_schedules,
+        consider_start_times=True,
     )
     if _should_compute_enabled_times(event_log, config):
         concurrency_oracle = OverlappingConcurrencyOracle(event_log, start_time_config)
@@ -284,8 +286,10 @@ def _get_first_and_last_available(
             i -= 1
     # If we are extrapolating the timestamps AND both timestamps were found
     if extrapolate and not pd.isna(first_available) and not pd.isna(last_available):
-        first_available = first_available - ((first_available - beginning) / 2)
-        last_available = last_available + ((end - last_available) / 2)
+        # And there is a extraneous delay discovered
+        if first_available != end and last_available != end:
+            first_available = first_available - ((first_available - beginning) / 2)
+            last_available = last_available + ((end - last_available) / 2)
     # Return first and last available timestamps
     return first_available, last_available
 

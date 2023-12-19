@@ -93,6 +93,7 @@ def inf_sys_evaluation():
             simulation_engine=SimulationEngine.PROSIMOS,
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules,
+            extrapolate_complex_delays_estimation=True,
         )
         config_naive_after = Configuration(
             log_ids=event_log_ids,
@@ -117,6 +118,7 @@ def inf_sys_evaluation():
             simulation_engine=SimulationEngine.PROSIMOS,
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules,
+            extrapolate_complex_delays_estimation=True,
         )
         config_naive_holdout_before = Configuration(
             log_ids=event_log_ids,
@@ -143,6 +145,7 @@ def inf_sys_evaluation():
             simulation_engine=SimulationEngine.PROSIMOS,
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules,
+            extrapolate_complex_delays_estimation=True,
         )
         config_naive_holdout_after = Configuration(
             log_ids=event_log_ids,
@@ -169,6 +172,7 @@ def inf_sys_evaluation():
             simulation_engine=SimulationEngine.PROSIMOS,
             optimization_metric=OptimizationMetric.RELATIVE_EMD,
             working_schedules=working_schedules,
+            extrapolate_complex_delays_estimation=True,
         )
 
         # --- Discover extraneous delays --- #
@@ -179,12 +183,6 @@ def inf_sys_evaluation():
         naive_direct_before_enhanced = naive_direct_before_enhancer.enhance_simulation_model_with_delays()
         runtime_naive_direct_before = time.time() - runtime_start
         _report_timers(eval_folder, "naive_direct_before_enhanced", naive_direct_before_enhancer)
-        # - Naive with hyperopt
-        runtime_start = time.time()
-        naive_hyperopt_before_enhancer = HyperOptEnhancer(train_log, simulation_model, config_naive_before)
-        naive_hyperopt_before_enhanced = naive_hyperopt_before_enhancer.enhance_simulation_model_with_delays()
-        runtime_naive_hyperopt_before = time.time() - runtime_start
-        _report_timers(eval_folder, "naive_hyperopt_before_enhancer", naive_hyperopt_before_enhancer)
         # - Naive with hyperopt and holdout
         runtime_start = time.time()
         naive_hyperopt_holdout_before_enhancer = HyperOptEnhancer(
@@ -201,12 +199,6 @@ def inf_sys_evaluation():
         complex_direct_before_enhanced = complex_direct_before_enhancer.enhance_simulation_model_with_delays()
         runtime_complex_direct_before = time.time() - runtime_start
         _report_timers(eval_folder, "complex_direct_before_enhanced", complex_direct_before_enhancer)
-        # - Complex with hyperopt
-        runtime_start = time.time()
-        complex_hyperopt_before_enhancer = HyperOptEnhancer(train_log, simulation_model, config_complex_before)
-        complex_hyperopt_before_enhanced = complex_hyperopt_before_enhancer.enhance_simulation_model_with_delays()
-        runtime_complex_hyperopt_before = time.time() - runtime_start
-        _report_timers(eval_folder, "complex_hyperopt_before_enhancer", complex_hyperopt_before_enhancer)
         # - Complex with hyperopt and holdout
         runtime_start = time.time()
         complex_hyperopt_holdout_before_enhancer = HyperOptEnhancer(
@@ -227,12 +219,6 @@ def inf_sys_evaluation():
         naive_direct_after_enhanced = naive_direct_after_enhancer.enhance_simulation_model_with_delays()
         runtime_naive_direct_after = time.time() - runtime_start
         _report_timers(eval_folder, "naive_direct_after_enhanced", naive_direct_after_enhancer)
-        # - Naive with hyperopt
-        runtime_start = time.time()
-        naive_hyperopt_after_enhancer = HyperOptEnhancer(train_log, simulation_model, config_naive_after)
-        naive_hyperopt_after_enhanced = naive_hyperopt_after_enhancer.enhance_simulation_model_with_delays()
-        runtime_naive_hyperopt_after = time.time() - runtime_start
-        _report_timers(eval_folder, "naive_hyperopt_after_enhancer", naive_hyperopt_after_enhancer)
         # - Naive with hyperopt and holdout
         runtime_start = time.time()
         naive_hyperopt_holdout_after_enhancer = HyperOptEnhancer(
@@ -249,12 +235,6 @@ def inf_sys_evaluation():
         complex_direct_after_enhanced = complex_direct_after_enhancer.enhance_simulation_model_with_delays()
         runtime_complex_direct_after = time.time() - runtime_start
         _report_timers(eval_folder, "complex_direct_after_enhanced", complex_direct_after_enhancer)
-        # - Complex with hyperopt
-        runtime_start = time.time()
-        complex_hyperopt_after_enhancer = HyperOptEnhancer(train_log, simulation_model, config_complex_after)
-        complex_hyperopt_after_enhanced = complex_hyperopt_after_enhancer.enhance_simulation_model_with_delays()
-        runtime_complex_hyperopt_after = time.time() - runtime_start
-        _report_timers(eval_folder, "complex_hyperopt_after_enhancer", complex_hyperopt_after_enhancer)
         # - Complex with hyperopt and holdout
         runtime_start = time.time()
         complex_hyperopt_holdout_after_enhancer = HyperOptEnhancer(
@@ -269,28 +249,24 @@ def inf_sys_evaluation():
         # --- Write simulation models to file --- #
         export_sm(eval_folder, "{}_original".format(process), simulation_model)
         export_sm(eval_folder, "{}_naive_direct_before_enhanced".format(process), naive_direct_before_enhanced)
-        export_sm(eval_folder, "{}_naive_hyperopt_before_enhanced".format(process), naive_hyperopt_before_enhanced)
         export_sm(
             eval_folder,
             "{}_naive_hyperopt_holdout_before_enhanced".format(process),
             naive_hyperopt_holdout_before_enhanced,
         )
         export_sm(eval_folder, "{}_complex_direct_before_enhanced".format(process), complex_direct_before_enhanced)
-        export_sm(eval_folder, "{}_complex_hyperopt_before_enhanced".format(process), complex_hyperopt_before_enhanced)
         export_sm(
             eval_folder,
             "{}_complex_hyperopt_holdout_before_enhanced".format(process),
             complex_hyperopt_holdout_before_enhanced,
         )
         export_sm(eval_folder, "{}_naive_direct_after_enhanced".format(process), naive_direct_after_enhanced)
-        export_sm(eval_folder, "{}_naive_hyperopt_after_enhanced".format(process), naive_hyperopt_after_enhanced)
         export_sm(
             eval_folder,
             "{}_naive_hyperopt_holdout_after_enhanced".format(process),
             naive_hyperopt_holdout_after_enhanced,
         )
         export_sm(eval_folder, "{}_complex_direct_after_enhanced".format(process), complex_direct_after_enhanced)
-        export_sm(eval_folder, "{}_complex_hyperopt_after_enhanced".format(process), complex_hyperopt_after_enhanced)
         export_sm(
             eval_folder,
             "{}_complex_hyperopt_holdout_after_enhanced".format(process),
@@ -301,28 +277,24 @@ def inf_sys_evaluation():
         # Set lists to store the results of each comparison and get the mean
         original_relative, original_absolute, original_cts = [], [], []
         naive_direct_before_relative, naive_direct_before_absolute, naive_direct_before_cts = [], [], []
-        naive_hyperopt_before_relative, naive_hyperopt_before_absolute, naive_hyperopt_before_cts = [], [], []
         (
             naive_hyperopt_holdout_before_relative,
             naive_hyperopt_holdout_before_absolute,
             naive_hyperopt_holdout_before_cts,
         ) = ([], [], [])
         complex_direct_before_relative, complex_direct_before_absolute, complex_direct_before_cts = [], [], []
-        complex_hyperopt_before_relative, complex_hyperopt_before_absolute, complex_hyperopt_before_cts = [], [], []
         (
             complex_hyperopt_holdout_before_relative,
             complex_hyperopt_holdout_before_absolute,
             complex_hyperopt_holdout_before_cts,
         ) = ([], [], [])
         naive_direct_after_relative, naive_direct_after_absolute, naive_direct_after_cts = [], [], []
-        naive_hyperopt_after_relative, naive_hyperopt_after_absolute, naive_hyperopt_after_cts = [], [], []
         (
             naive_hyperopt_holdout_after_relative,
             naive_hyperopt_holdout_after_absolute,
             naive_hyperopt_holdout_after_cts,
         ) = ([], [], [])
         complex_direct_after_relative, complex_direct_after_absolute, complex_direct_after_cts = [], [], []
-        complex_hyperopt_after_relative, complex_hyperopt_after_absolute, complex_hyperopt_after_cts = [], [], []
         (
             complex_hyperopt_holdout_after_relative,
             complex_hyperopt_holdout_after_absolute,
@@ -346,13 +318,6 @@ def inf_sys_evaluation():
             naive_direct_before_relative += [relative]
             naive_direct_before_absolute += [absolute]
             naive_direct_before_cts += [cycle_times]
-            # Naive with hyperopt
-            relative, absolute, cycle_times = _simulate_and_evaluate(
-                eval_folder, process, "naive_hyperopt_before_enhanced", i, test_num_instances, test_start_time, test_log
-            )
-            naive_hyperopt_before_relative += [relative]
-            naive_hyperopt_before_absolute += [absolute]
-            naive_hyperopt_before_cts += [cycle_times]
             # Naive with hyperopt and holdout
             relative, absolute, cycle_times = _simulate_and_evaluate(
                 eval_folder,
@@ -373,19 +338,6 @@ def inf_sys_evaluation():
             complex_direct_before_relative += [relative]
             complex_direct_before_absolute += [absolute]
             complex_direct_before_cts += [cycle_times]
-            # Complex with hyperopt
-            relative, absolute, cycle_times = _simulate_and_evaluate(
-                eval_folder,
-                process,
-                "complex_hyperopt_before_enhanced",
-                i,
-                test_num_instances,
-                test_start_time,
-                test_log,
-            )
-            complex_hyperopt_before_relative += [relative]
-            complex_hyperopt_before_absolute += [absolute]
-            complex_hyperopt_before_cts += [cycle_times]
             # Complex with hyperopt and holdout
             relative, absolute, cycle_times = _simulate_and_evaluate(
                 eval_folder,
@@ -408,13 +360,6 @@ def inf_sys_evaluation():
             naive_direct_after_relative += [relative]
             naive_direct_after_absolute += [absolute]
             naive_direct_after_cts += [cycle_times]
-            # Naive with hyperopt
-            relative, absolute, cycle_times = _simulate_and_evaluate(
-                eval_folder, process, "naive_hyperopt_after_enhanced", i, test_num_instances, test_start_time, test_log
-            )
-            naive_hyperopt_after_relative += [relative]
-            naive_hyperopt_after_absolute += [absolute]
-            naive_hyperopt_after_cts += [cycle_times]
             # Naive with hyperopt and holdout
             relative, absolute, cycle_times = _simulate_and_evaluate(
                 eval_folder,
@@ -435,20 +380,7 @@ def inf_sys_evaluation():
             complex_direct_after_relative += [relative]
             complex_direct_after_absolute += [absolute]
             complex_direct_after_cts += [cycle_times]
-            # Complex with hyperopt
-            relative, absolute, cycle_times = _simulate_and_evaluate(
-                eval_folder,
-                process,
-                "complex_hyperopt_after_enhanced",
-                i,
-                test_num_instances,
-                test_start_time,
-                test_log,
-            )
-            complex_hyperopt_after_relative += [relative]
-            complex_hyperopt_after_absolute += [absolute]
-            complex_hyperopt_after_cts += [cycle_times]
-            # Complex with hyperopt
+            # Complex with hyperopt and holdout
             relative, absolute, cycle_times = _simulate_and_evaluate(
                 eval_folder,
                 process,
@@ -485,19 +417,6 @@ def inf_sys_evaluation():
                     runtime_naive_direct_before,
                 )
             )
-            # Naive Hyperopt Before
-            relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_before_relative)
-            absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_before_absolute)
-            output_file.write(
-                "{},{},{},{},{},{}\n".format(
-                    "{}_naive_hyperopt_before".format(process),
-                    relative_avg,
-                    relative_cnf,
-                    absolute_avg,
-                    absolute_cnf,
-                    runtime_naive_hyperopt_before,
-                )
-            )
             # Naive Hyperopt and Holdout Before
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_holdout_before_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_holdout_before_absolute)
@@ -522,19 +441,6 @@ def inf_sys_evaluation():
                     absolute_avg,
                     absolute_cnf,
                     runtime_complex_direct_before,
-                )
-            )
-            # Complex Hyperopt Before
-            relative_avg, relative_cnf = compute_mean_conf_interval(complex_hyperopt_before_relative)
-            absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_hyperopt_before_absolute)
-            output_file.write(
-                "{},{},{},{},{},{}\n".format(
-                    "{}_complex_hyperopt_before".format(process),
-                    relative_avg,
-                    relative_cnf,
-                    absolute_avg,
-                    absolute_cnf,
-                    runtime_complex_hyperopt_before,
                 )
             )
             # Complex Hyperopt and Holdout Before
@@ -563,19 +469,6 @@ def inf_sys_evaluation():
                     runtime_naive_direct_after,
                 )
             )
-            # Naive Hyperopt After
-            relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_after_relative)
-            absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_after_absolute)
-            output_file.write(
-                "{},{},{},{},{},{}\n".format(
-                    "{}_naive_hyperopt_after".format(process),
-                    relative_avg,
-                    relative_cnf,
-                    absolute_avg,
-                    absolute_cnf,
-                    runtime_naive_hyperopt_after,
-                )
-            )
             # Naive Hyperopt and Holdout After
             relative_avg, relative_cnf = compute_mean_conf_interval(naive_hyperopt_holdout_after_relative)
             absolute_avg, absolute_cnf = compute_mean_conf_interval(naive_hyperopt_holdout_after_absolute)
@@ -600,19 +493,6 @@ def inf_sys_evaluation():
                     absolute_avg,
                     absolute_cnf,
                     runtime_complex_direct_after,
-                )
-            )
-            # Complex Hyperopt After
-            relative_avg, relative_cnf = compute_mean_conf_interval(complex_hyperopt_after_relative)
-            absolute_avg, absolute_cnf = compute_mean_conf_interval(complex_hyperopt_after_absolute)
-            output_file.write(
-                "{},{},{},{},{},{}\n".format(
-                    "{}_complex_hyperopt_after".format(process),
-                    relative_avg,
-                    relative_cnf,
-                    absolute_avg,
-                    absolute_cnf,
-                    runtime_complex_hyperopt_after,
                 )
             )
             # Complex Hyperopt and Holdout After
@@ -673,9 +553,6 @@ def inf_sys_evaluation():
             # Naive Direct Before
             formatted_output = format_output_cycle_times(process, "naive_direct_before", naive_direct_before_cts)
             output_file.write(formatted_output)
-            # Naive Hyperopt Before
-            formatted_output = format_output_cycle_times(process, "naive_hyperopt_before", naive_hyperopt_before_cts)
-            output_file.write(formatted_output)
             # Naive Hyperopt and Holdout Before
             formatted_output = format_output_cycle_times(
                 process, "naive_hyperopt_holdout_before", naive_hyperopt_holdout_before_cts
@@ -683,11 +560,6 @@ def inf_sys_evaluation():
             output_file.write(formatted_output)
             # Complex Direct Before
             formatted_output = format_output_cycle_times(process, "complex_direct_before", complex_direct_before_cts)
-            output_file.write(formatted_output)
-            # Complex Hyperopt Before
-            formatted_output = format_output_cycle_times(
-                process, "complex_hyperopt_before", complex_hyperopt_before_cts
-            )
             output_file.write(formatted_output)
             # Complex Hyperopt and Holdout Before
             formatted_output = format_output_cycle_times(
@@ -697,9 +569,6 @@ def inf_sys_evaluation():
             # Naive Direct After
             formatted_output = format_output_cycle_times(process, "naive_direct_after", naive_direct_after_cts)
             output_file.write(formatted_output)
-            # Naive Hyperopt After
-            formatted_output = format_output_cycle_times(process, "naive_hyperopt_after", naive_hyperopt_after_cts)
-            output_file.write(formatted_output)
             # Naive Hyperopt and Holdout After
             formatted_output = format_output_cycle_times(
                 process, "naive_hyperopt_holdout_after", naive_hyperopt_holdout_after_cts
@@ -707,9 +576,6 @@ def inf_sys_evaluation():
             output_file.write(formatted_output)
             # Complex Direct After
             formatted_output = format_output_cycle_times(process, "complex_direct_after", complex_direct_after_cts)
-            output_file.write(formatted_output)
-            # Complex Hyperopt After
-            formatted_output = format_output_cycle_times(process, "complex_hyperopt_after", complex_hyperopt_after_cts)
             output_file.write(formatted_output)
             # Complex Hyperopt and Holdout After
             formatted_output = format_output_cycle_times(

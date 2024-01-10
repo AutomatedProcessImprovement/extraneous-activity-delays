@@ -69,6 +69,7 @@ def inf_sys_evaluation():
             timer_placement=TimerPlacement.BEFORE,
             simulation_engine=SimulationEngine.PROSIMOS,
             working_schedules=working_schedules,
+            extrapolate_complex_delays_estimation=True,
         )
         config_naive_after = Configuration(
             log_ids=log_ids,
@@ -85,6 +86,7 @@ def inf_sys_evaluation():
             timer_placement=TimerPlacement.AFTER,
             simulation_engine=SimulationEngine.PROSIMOS,
             working_schedules=working_schedules,
+            extrapolate_complex_delays_estimation=True,
         )
 
         # --- Discover extraneous delays --- #

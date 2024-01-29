@@ -32,27 +32,7 @@ Models with Extraneous Activity Delays".
 
 - **Python v3.9.5+**
 - **PIP v21.1.2+**
-- Python dependencies: Packages listed in `requirements.txt`
-- Git submodule dependencies:
-    - [Prosimos](https://github.com/AutomatedProcessImprovement/Prosimos)
-    - [Start Time Estimator](https://github.com/AutomatedProcessImprovement/start-time-estimator)
-    - [PIX Utils](https://github.com/AutomatedProcessImprovement/pix-utils)
-    - [Log Distance Measures](https://github.com/AutomatedProcessImprovement/log-distance-measures)
-
-```shell
-$ git submodule update --init --recursive
-$ cd ./external_tools/
-$ cd ./pix-utils/
-$ pip install -e .
-$ cd ../log-distance-measures/
-$ pip install -e .
-$ cd ../start-time-estimator/
-$ pip install -e .
-$ cd ../Prosimos/
-$ pip install -e .
-$ cd ../..
-$ pip install -e .
-```
+- Python dependencies: All packages are listed in [_pyproject.toml_](https://github.com/AutomatedProcessImprovement/extraneous-activity-delays/blob/main/pyproject.toml).
 
 ## Basic Usage
 
@@ -60,11 +40,6 @@ Check this [test file](https://github.com/AutomatedProcessImprovement/extraneous
 for a simple example of how to run the technique with Prosimos,
 and [config file](https://github.com/AutomatedProcessImprovement/extraneous-activity-delays/blob/main/src/extraneous_activity_delays/config.py)
 for an explanation of the configuration parameters.
-
-More sophisticated configurations of the approach are used in the test files
-for [synthetic](https://github.com/AutomatedProcessImprovement/extraneous-activity-delays/blob/main/tests/infsys-synthetic-complete-evaluation.py)
-and [real-life](https://github.com/AutomatedProcessImprovement/extraneous-activity-delays/blob/main/tests/infsys-real-life-evaluation.py)
-evaluations.
 
 Here, we provide two example of the proposal:
 
@@ -75,8 +50,8 @@ import json
 
 import pandas as pd
 from lxml import etree
+from pix_framework.io.event_log import DEFAULT_CSV_IDS
 
-from estimate_start_times.config import DEFAULT_CSV_IDS
 from extraneous_activity_delays.config import Configuration, SimulationModel, SimulationEngine
 from extraneous_activity_delays.config import DiscoveryMethod, TimerPlacement, OptimizationMetric
 from extraneous_activity_delays.enhance_with_delays import DirectEnhancer
@@ -84,12 +59,12 @@ from extraneous_activity_delays.enhance_with_delays import DirectEnhancer
 # Set up default configuration
 log_ids = DEFAULT_CSV_IDS
 config = Configuration(
-    log_ids=log_ids, process_name="prosimos-example",
-    simulation_engine=SimulationEngine.PROSIMOS,
-    discovery_method=DiscoveryMethod.COMPLEX,  # Eclipse-aware method
-    timer_placement=TimerPlacement.BEFORE,  # ex-ante configuration
-    optimization_metric=OptimizationMetric.RELATIVE_EMD
-    # working_schedules=working_schedules  # Use this to consider resource unavailability
+  log_ids=log_ids, process_name="prosimos-example",
+  simulation_engine=SimulationEngine.PROSIMOS,
+  discovery_method=DiscoveryMethod.COMPLEX,  # Eclipse-aware method
+  timer_placement=TimerPlacement.BEFORE,  # ex-ante configuration
+  optimization_metric=OptimizationMetric.RELATIVE_EMD
+  # working_schedules=working_schedules  # Use this to consider resource unavailability
 )
 # Read event log
 event_log = pd.read_csv("path_to_input_log.csv")
@@ -102,7 +77,7 @@ parser = etree.XMLParser(remove_blank_text=True)
 bpmn_model = etree.parse("path_to_bps_model.bpmn", parser)
 # Read simulation parameters
 with open("path_to_bps_parameters.json") as json_file:
-    simulation_parameters = json.load(json_file)
+  simulation_parameters = json.load(json_file)
 simulation_model = SimulationModel(bpmn_model, simulation_parameters)
 # Enhance with hyper-parametrized activity delays with hold-out
 enhancer = DirectEnhancer(event_log, simulation_model, config)
@@ -110,7 +85,7 @@ enhanced_simulation_model = enhancer.enhance_simulation_model_with_delays()
 # Write enhanced BPS model (BPMN and parameters)
 enhanced_simulation_model.bpmn_document.bpmn_document.write("path_of_enhanced_bps_model.bpmn", pretty_print=True)
 with open("path_to_enhanced_bps_parameters.json") as json_file:
-    json.dump(enhanced_simulation_model.simulation_parameters, json_file)
+  json.dump(enhanced_simulation_model.simulation_parameters, json_file)
 ```
 
 ### Using QBP as simulation engine with TPE optimization stage
@@ -118,8 +93,8 @@ with open("path_to_enhanced_bps_parameters.json") as json_file:
 ```python
 import pandas as pd
 from lxml import etree
+from pix_framework.io.event_log import DEFAULT_CSV_IDS
 
-from estimate_start_times.config import DEFAULT_CSV_IDS
 from extraneous_activity_delays.config import Configuration, SimulationModel, SimulationEngine
 from extraneous_activity_delays.config import DiscoveryMethod, TimerPlacement, OptimizationMetric
 from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer
@@ -127,13 +102,13 @@ from extraneous_activity_delays.enhance_with_delays import HyperOptEnhancer
 # Set up default configuration
 log_ids = DEFAULT_CSV_IDS
 config = Configuration(
-    log_ids=log_ids, process_name="qbp-example",
-    max_alpha=10.0, training_partition_ratio=0.5,
-    num_iterations=100, simulation_engine=SimulationEngine.QBP,
-    discovery_method=DiscoveryMethod.COMPLEX,  # Eclipse-aware method
-    timer_placement=TimerPlacement.BEFORE,  # ex-ante configuration
-    optimization_metric=OptimizationMetric.RELATIVE_EMD
-    # working_schedules=working_schedules  # Use this to consider resource unavailability
+  log_ids=log_ids, process_name="qbp-example",
+  max_alpha=10.0, training_partition_ratio=0.5,
+  num_iterations=100, simulation_engine=SimulationEngine.QBP,
+  discovery_method=DiscoveryMethod.COMPLEX,  # Eclipse-aware method
+  timer_placement=TimerPlacement.BEFORE,  # ex-ante configuration
+  optimization_metric=OptimizationMetric.RELATIVE_EMD
+  # working_schedules=working_schedules  # Use this to consider resource unavailability
 )
 # Read event log
 event_log = pd.read_csv("path_to_input_log.csv")

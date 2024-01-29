@@ -261,7 +261,7 @@ def _get_first_and_last_available(
     # If we are extrapolating the timestamps AND both timestamps were found
     if extrapolate and not pd.isna(first_available) and not pd.isna(last_available):
         # And there is a extraneous delay discovered
-        if first_available != end and last_available != end:
+        if first_available != end or last_available != end:
             first_available = first_available - ((first_available - beginning) / 2)
             last_available = last_available + ((end - last_available) / 2)
     # Return first and last available timestamps

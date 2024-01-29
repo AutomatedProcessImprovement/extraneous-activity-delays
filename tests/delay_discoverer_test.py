@@ -1,13 +1,14 @@
 import pandas as pd
+from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import Interval, RCalendar
+from pix_framework.io.event_log import DEFAULT_CSV_IDS, read_csv_log
+from pix_framework.statistics.distribution import DistributionType
+
 from extraneous_activity_delays.config import Configuration, TimerPlacement
 from extraneous_activity_delays.delay_discoverer import (
     _get_first_and_last_available,
     compute_complex_extraneous_activity_delays,
     compute_naive_extraneous_activity_delays,
 )
-from pix_framework.discovery.resource_calendar_and_performance.crisp.resource_calendar import Interval, RCalendar
-from pix_framework.io.event_log import DEFAULT_CSV_IDS, read_csv_log
-from pix_framework.statistics.distribution import DistributionType
 
 
 def test_compute_naive_extraneous_activity_delays():
@@ -379,7 +380,7 @@ def test__get_first_and_last_available_extrapolated():
         ends=[pd.Timestamp("2023-01-25T09:21:00+00:00"), pd.Timestamp("2023-01-25T10:00:00+00:00")],
         time_gap=pd.Timedelta(minutes=10),
         extrapolate=True,
-    ) == (pd.Timestamp("2023-01-25T09:30:00+00:00"), end)
+    ) == (end, end)
     # Assert when many activities in the middle, some breaking the time gap, some not
     beginning = pd.Timestamp("2023-01-25T09:00:00+00:00")
     end = pd.Timestamp("2023-01-25T12:00:00+00:00")

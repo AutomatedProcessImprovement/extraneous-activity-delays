@@ -47,13 +47,10 @@ def inf_sys_evaluation():
         file.write(
             "dataset,"
             "naive_direct_precision,naive_direct_recall,naive_direct_sMAPE,"
-            "naive_hyperopt_precision,naive_hyperopt_recall,naive_hyperopt_sMAPE,"
             "naive_hyperopt_holdout_precision,naive_hyperopt_holdout_recall,naive_hyperopt_holdout_sMAPE,"
             "complex_direct_precision,complex_direct_recall,complex_direct_sMAPE,"
-            "complex_hyperopt_precision,complex_hyperopt_recall,complex_hyperopt_sMAPE,"
             "complex_hyperopt_holdout_precision,complex_hyperopt_holdout_recall,complex_hyperopt_holdout_sMAPE,"
             "complex_adj_direct_precision,complex_adj_direct_recall,complex_adj_direct_sMAPE,"
-            "complex_adj_hyperopt_precision,complex_adj_hyperopt_recall,complex_adj_hyperopt_sMAPE,"
             "complex_adj_hyperopt_holdout_precision,complex_adj_hyperopt_holdout_recall,complex_adj_hyperopt_holdout_sMAPE"
             "\n"
         )
@@ -174,47 +171,29 @@ def inf_sys_evaluation():
         # - Naive no hyperopt
         naive_direct_enhancer = DirectEnhancer(event_log, simulation_model, config_naive)
         naive_direct_enhanced = naive_direct_enhancer.enhance_simulation_model_with_delays()
-        # - Naive with hyperopt
-        naive_hyperopt_enhancer = HyperOptEnhancer(event_log, simulation_model, config_naive)
-        naive_hyperopt_enhanced = naive_hyperopt_enhancer.enhance_simulation_model_with_delays()
         # - Naive with hyperopt and holdout
         naive_hyperopt_holdout_enhancer = HyperOptEnhancer(event_log, simulation_model, config_naive_holdout)
         naive_hyperopt_holdout_enhanced = naive_hyperopt_holdout_enhancer.enhance_simulation_model_with_delays()
         # - Complex no hyperopt
         complex_direct_enhancer = DirectEnhancer(event_log, simulation_model, config_complex)
         complex_direct_enhanced = complex_direct_enhancer.enhance_simulation_model_with_delays()
-        # - Complex with hyperopt
-        complex_hyperopt_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex)
-        complex_hyperopt_enhanced = complex_hyperopt_enhancer.enhance_simulation_model_with_delays()
         # - Complex with hyperopt and holdout
         complex_hyperopt_holdout_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex_holdout)
         complex_hyperopt_holdout_enhanced = complex_hyperopt_holdout_enhancer.enhance_simulation_model_with_delays()
         # - Complex no hyperopt
         complex_adj_direct_enhancer = DirectEnhancer(event_log, simulation_model, config_complex_adj)
         complex_adj_direct_enhanced = complex_adj_direct_enhancer.enhance_simulation_model_with_delays()
-        # - Complex with hyperopt
-        complex_adj_hyperopt_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex_adj)
-        complex_adj_hyperopt_enhanced = complex_adj_hyperopt_enhancer.enhance_simulation_model_with_delays()
         # - Complex with hyperopt and holdout
         complex_adj_hyperopt_holdout_enhancer = HyperOptEnhancer(event_log, simulation_model, config_complex_adj_holdout)
         complex_adj_hyperopt_holdout_enhanced = complex_adj_hyperopt_holdout_enhancer.enhance_simulation_model_with_delays()
 
         # --- Write simulation models to file --- #
         _export_simulation_model(eval_folder, "{}_naive_direct_enhanced".format(process), naive_direct_enhanced)
-        _export_simulation_model(eval_folder, "{}_naive_hyperopt_enhanced".format(process), naive_hyperopt_enhanced)
-        _export_simulation_model(
-            eval_folder, "{}_naive_hyperopt_holdout_enhanced".format(process), naive_hyperopt_holdout_enhanced
-        )
+        _export_simulation_model(eval_folder, "{}_naive_hyperopt_holdout_enhanced".format(process), naive_hyperopt_holdout_enhanced)
         _export_simulation_model(eval_folder, "{}_complex_direct_enhanced".format(process), complex_direct_enhanced)
-        _export_simulation_model(eval_folder, "{}_complex_hyperopt_enhanced".format(process), complex_hyperopt_enhanced)
-        _export_simulation_model(
-            eval_folder, "{}_complex_hyperopt_holdout_enhanced".format(process), complex_hyperopt_holdout_enhanced
-        )
+        _export_simulation_model(eval_folder, "{}_complex_hyperopt_holdout_enhanced".format(process), complex_hyperopt_holdout_enhanced)
         _export_simulation_model(eval_folder, "{}_complex_adj_direct_enhanced".format(process), complex_adj_direct_enhanced)
-        _export_simulation_model(eval_folder, "{}_complex_adj_hyperopt_enhanced".format(process), complex_adj_hyperopt_enhanced)
-        _export_simulation_model(
-            eval_folder, "{}_complex_adj_hyperopt_holdout_enhanced".format(process), complex_adj_hyperopt_holdout_enhanced
-        )
+        _export_simulation_model(eval_folder, "{}_complex_adj_hyperopt_holdout_enhanced".format(process), complex_adj_hyperopt_holdout_enhanced)
 
         # --- Compute and report timer metrics --- #
         real_delays = {
@@ -226,19 +205,13 @@ def inf_sys_evaluation():
             file.write("{},".format(process))
             precision, recall, smape = _compute_statistics(real_delays, naive_direct_enhancer.timers)
             file.write("{},{},{},".format(precision, recall, smape))
-            precision, recall, smape = _compute_statistics(real_delays, naive_hyperopt_enhancer.best_timers)
-            file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, naive_hyperopt_holdout_enhancer.best_timers)
             file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, complex_direct_enhancer.timers)
             file.write("{},{},{},".format(precision, recall, smape))
-            precision, recall, smape = _compute_statistics(real_delays, complex_hyperopt_enhancer.best_timers)
-            file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, complex_hyperopt_holdout_enhancer.best_timers)
             file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, complex_adj_direct_enhancer.timers)
-            file.write("{},{},{},".format(precision, recall, smape))
-            precision, recall, smape = _compute_statistics(real_delays, complex_adj_hyperopt_enhancer.best_timers)
             file.write("{},{},{},".format(precision, recall, smape))
             precision, recall, smape = _compute_statistics(real_delays, complex_adj_hyperopt_holdout_enhancer.best_timers)
             file.write("{},{},{}\n".format(precision, recall, smape))
@@ -269,25 +242,6 @@ def _compute_statistics(real_delays: dict, estimated_timers: dict) -> Tuple[floa
         precision, recall, smape = float("nan"), 0.0, 2.0
 
     return precision, recall, smape
-
-
-def _compute_smape(event_log: pd.DataFrame) -> float:
-    # Get activity instances with either estimated delay or actual delay
-    estimated = event_log[(event_log["estimated_extraneous_delay"] > 0.0) | (event_log["extraneous_delay"] > 0.0)]
-    # Compute smape
-    if len(estimated) > 0:
-        smape = sum(
-            [
-                2
-                * abs(delays["estimated_extraneous_delay"] - delays["extraneous_delay"])
-                / (delays["extraneous_delay"] + delays["estimated_extraneous_delay"])
-                for index, delays in estimated[["estimated_extraneous_delay", "extraneous_delay"]].iterrows()
-            ]
-        ) / len(estimated)
-    else:
-        smape = 0.0
-    # Return value
-    return smape
 
 
 def _export_simulation_model(folder: Path, name: str, simulation_model: SimulationModel):

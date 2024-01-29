@@ -8,12 +8,6 @@
           "distribution_params": [
             {
               "value": 540
-            },
-            {
-              "value": 540
-            },
-            {
-              "value": 540
             }
           ],
           "resource_id": "sid-3491f3ad-2600-4cbf-b89d-e00fd869c4d6_1"
@@ -26,12 +20,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 1800
-            },
-            {
-              "value": 1800
-            },
             {
               "value": 1800
             }
@@ -48,12 +36,6 @@
           "distribution_params": [
             {
               "value": 120
-            },
-            {
-              "value": 120
-            },
-            {
-              "value": 120
             }
           ],
           "resource_id": "sid-e2f911bb-fc2c-46cc-99fe-7f0b838cf96b_1"
@@ -66,12 +48,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 1680
-            },
-            {
-              "value": 1680
-            },
             {
               "value": 1680
             }
@@ -88,12 +64,6 @@
           "distribution_params": [
             {
               "value": 1140
-            },
-            {
-              "value": 1140
-            },
-            {
-              "value": 1140
             }
           ],
           "resource_id": "sid-e2f911bb-fc2c-46cc-99fe-7f0b838cf96b_1"
@@ -106,12 +76,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 420
-            },
-            {
-              "value": 420
-            },
             {
               "value": 420
             }
@@ -128,12 +92,6 @@
           "distribution_params": [
             {
               "value": 1440
-            },
-            {
-              "value": 1440
-            },
-            {
-              "value": 1440
             }
           ],
           "resource_id": "sid-4ef0ec4b-e9fe-4a04-aa16-659cb385b854_1"
@@ -146,12 +104,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 12120
-            },
-            {
-              "value": 12120
-            },
             {
               "value": 12120
             }
@@ -168,12 +120,6 @@
           "distribution_params": [
             {
               "value": 1200
-            },
-            {
-              "value": 1200
-            },
-            {
-              "value": 1200
             }
           ],
           "resource_id": "sid-3491f3ad-2600-4cbf-b89d-e00fd869c4d6_1"
@@ -186,12 +132,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 1
-            },
-            {
-              "value": 1
-            },
             {
               "value": 1
             }
@@ -208,12 +148,6 @@
           "distribution_params": [
             {
               "value": 540
-            },
-            {
-              "value": 540
-            },
-            {
-              "value": 540
             }
           ],
           "resource_id": "sid-4ef0ec4b-e9fe-4a04-aa16-659cb385b854_1"
@@ -226,12 +160,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 600
-            },
-            {
-              "value": 600
-            },
             {
               "value": 600
             }
@@ -248,12 +176,6 @@
           "distribution_params": [
             {
               "value": 1200
-            },
-            {
-              "value": 1200
-            },
-            {
-              "value": 1200
             }
           ],
           "resource_id": "sid-bd32b670-15e3-4e91-99a2-34a85161ead4_1"
@@ -266,12 +188,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 21600
-            },
-            {
-              "value": 21600
-            },
             {
               "value": 21600
             }
@@ -288,12 +204,6 @@
           "distribution_params": [
             {
               "value": 60
-            },
-            {
-              "value": 60
-            },
-            {
-              "value": 60
             }
           ],
           "resource_id": "sid-3491f3ad-2600-4cbf-b89d-e00fd869c4d6_1"
@@ -306,12 +216,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 33360
-            },
-            {
-              "value": 33360
-            },
             {
               "value": 33360
             }
@@ -328,12 +232,6 @@
           "distribution_params": [
             {
               "value": 60
-            },
-            {
-              "value": 60
-            },
-            {
-              "value": 60
             }
           ],
           "resource_id": "sid-4ef0ec4b-e9fe-4a04-aa16-659cb385b854_1"
@@ -346,12 +244,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 1
-            },
-            {
-              "value": 1
-            },
             {
               "value": 1
             }
@@ -368,12 +260,6 @@
           "distribution_params": [
             {
               "value": 270
-            },
-            {
-              "value": 270
-            },
-            {
-              "value": 270
             }
           ],
           "resource_id": "sid-ec2ae97a-acbb-4b6a-af0a-22074468db82_1"
@@ -386,12 +272,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 590
-            },
-            {
-              "value": 590
-            },
             {
               "value": 590
             }
@@ -408,12 +288,6 @@
           "distribution_params": [
             {
               "value": 1380
-            },
-            {
-              "value": 1380
-            },
-            {
-              "value": 1380
             }
           ],
           "resource_id": "sid-4ef0ec4b-e9fe-4a04-aa16-659cb385b854_1"
@@ -426,12 +300,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 1
-            },
-            {
-              "value": 1
-            },
             {
               "value": 1
             }
@@ -448,12 +316,6 @@
           "distribution_params": [
             {
               "value": 1380
-            },
-            {
-              "value": 1380
-            },
-            {
-              "value": 1380
             }
           ],
           "resource_id": "sid-ec2ae97a-acbb-4b6a-af0a-22074468db82_1"
@@ -466,12 +328,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 560
-            },
-            {
-              "value": 560
-            },
             {
               "value": 560
             }
@@ -604,13 +460,10 @@
     "distribution_name": "expon",
     "distribution_params": [
       {
-        "value": 1800
+        "value": 1805
       },
       {
         "value": 5
-      },
-      {
-        "value": 0
       },
       {
         "value": 3600
@@ -699,10 +552,7 @@
       "distribution_name": "expon",
       "distribution_params": [
         {
-          "value": 9000
-        },
-        {
-          "value": 400
+          "value": 9400
         },
         {
           "value": 9000
@@ -717,10 +567,7 @@
       "distribution_name": "expon",
       "distribution_params": [
         {
-          "value": 1200
-        },
-        {
-          "value": 120
+          "value": 1320
         },
         {
           "value": 1200
@@ -735,10 +582,7 @@
       "distribution_name": "expon",
       "distribution_params": [
         {
-          "value": 1500
-        },
-        {
-          "value": 150
+          "value": 1650
         },
         {
           "value": 1500

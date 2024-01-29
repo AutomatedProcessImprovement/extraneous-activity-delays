@@ -78,7 +78,7 @@ def inf_sys_evaluation():
         )
         complex_enhanced_event_log.to_csv(complex_log_path, index=False)
         complex_adj_enhanced_event_log = compute_complex_extraneous_activity_delays(
-            event_log, configuration_adjusted, configuration.should_consider_timer, experimentation=True
+            event_log, configuration_adjusted, configuration_adjusted.should_consider_timer, experimentation=True
         )
         complex_adj_enhanced_event_log.to_csv(complex_adj_log_path, index=False)
         # --- Measure error --- #
@@ -89,11 +89,11 @@ def inf_sys_evaluation():
         mape_complex = _compute_mape(complex_enhanced_event_log)
         mape_complex_adj = _compute_mape(complex_adj_enhanced_event_log)
         with open(smape_file_path, "a") as file:
-            file.write(
-                "{},{},{},{},{},{},{}\n".format(
-                    process, smape_naive, smape_complex, smape_complex_adj, mape_naive, mape_complex, mape_complex_adj
-                )
-            )
+            file.write("{},{},{},{},{},{},{}\n".format(
+                process,
+                smape_naive, smape_complex, smape_complex_adj,
+                mape_naive, mape_complex, mape_complex_adj
+            ))
 
 
 def _compute_smape(event_log: pd.DataFrame) -> float:
@@ -134,8 +134,8 @@ def _compute_mape(event_log: pd.DataFrame) -> float:
 
 def _json_schedules_to_rcalendar(simulation_parameters: dict) -> dict:
     """
-    Transform the calendars specified as part of the simulation parameters to a dict with the ID of the resources as key, and their
-    calendar (RCalendar) as value.
+    Transform the calendars specified as part of the simulation parameters to a dict with the ID of the resources as
+    key, and their calendar (RCalendar) as value.
 
     :param simulation_parameters: dictionary with the parameters for prosimos simulation.
 

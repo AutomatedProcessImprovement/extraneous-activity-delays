@@ -7,10 +7,7 @@
           "distribution_name": "expon",
           "distribution_params": [
             {
-              "value": 120
-            },
-            {
-              "value": 10
+              "value": 130
             },
             {
               "value": 120
@@ -30,10 +27,7 @@
           "distribution_name": "expon",
           "distribution_params": [
             {
-              "value": 600
-            },
-            {
-              "value": 30
+              "value": 630
             },
             {
               "value": 600
@@ -122,10 +116,7 @@
           "distribution_name": "expon",
           "distribution_params": [
             {
-              "value": 1200
-            },
-            {
-              "value": 30
+              "value": 1230
             },
             {
               "value": 1200
@@ -168,10 +159,7 @@
           "distribution_name": "expon",
           "distribution_params": [
             {
-              "value": 300
-            },
-            {
-              "value": 10
+              "value": 310
             },
             {
               "value": 300
@@ -192,12 +180,6 @@
           "distribution_params": [
             {
               "value": 1
-            },
-            {
-              "value": 1
-            },
-            {
-              "value": 1
             }
           ],
           "resource_id": "sid-9c0a61b4-35d5-4b3a-994f-e8701006ef5d_1"
@@ -212,12 +194,6 @@
           "distribution_params": [
             {
               "value": 1
-            },
-            {
-              "value": 1
-            },
-            {
-              "value": 1
             }
           ],
           "resource_id": "sid-9c0a61b4-35d5-4b3a-994f-e8701006ef5d_1"
@@ -230,12 +206,6 @@
         {
           "distribution_name": "fix",
           "distribution_params": [
-            {
-              "value": 1
-            },
-            {
-              "value": 1
-            },
             {
               "value": 1
             }
@@ -425,12 +395,6 @@
     "distribution_params": [
       {
         "value": 120
-      },
-      {
-        "value": 120
-      },
-      {
-        "value": 120
       }
     ]
   },
@@ -490,10 +454,7 @@
       "distribution_name": "expon",
       "distribution_params": [
         {
-          "value": 300
-        },
-        {
-          "value": 30
+          "value": 330
         },
         {
           "value": 300
@@ -508,10 +469,7 @@
       "distribution_name": "expon",
       "distribution_params": [
         {
-          "value": 180
-        },
-        {
-          "value": 18
+          "value": 198
         },
         {
           "value": 180
@@ -526,10 +484,7 @@
       "distribution_name": "expon",
       "distribution_params": [
         {
-          "value": 180
-        },
-        {
-          "value": 18
+          "value": 198
         },
         {
           "value": 180

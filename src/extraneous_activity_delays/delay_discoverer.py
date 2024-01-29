@@ -2,9 +2,9 @@ from typing import Callable, Tuple
 
 import pandas as pd
 from pix_framework.calendar.availability import absolute_unavailability_intervals_within
-from pix_framework.enhancement.start_time_estimator.estimator import OverlappingConcurrencyOracle
-from pix_framework.enhancement.start_time_estimator.config import Configuration as StartTimeConfiguration
+from pix_framework.enhancement.concurrency_oracle import OverlappingConcurrencyOracle
 from pix_framework.enhancement.resource_availability import CalendarResourceAvailability
+from pix_framework.enhancement.start_time_estimator.config import Configuration as StartTimeConfiguration
 from pix_framework.io.event_log import EventLogIDs
 from pix_framework.statistics.distribution import get_best_fitting_distribution
 
@@ -260,8 +260,10 @@ def _get_first_and_last_available(
             i -= 1
     # If we are extrapolating the timestamps AND both timestamps were found
     if extrapolate and not pd.isna(first_available) and not pd.isna(last_available):
-        first_available = first_available - ((first_available - beginning) / 2)
-        last_available = last_available + ((end - last_available) / 2)
+        # And there is a extraneous delay discovered
+        if first_available != end and last_available != end:
+            first_available = first_available - ((first_available - beginning) / 2)
+            last_available = last_available + ((end - last_available) / 2)
     # Return first and last available timestamps
     return first_available, last_available
 
